@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 import 'package:flutter/material.dart';
+import 'pag5.dart';
+
 class LogIn extends StatelessWidget {
   const LogIn({super.key});
   @override
@@ -51,7 +53,10 @@ class LogIn extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 print('¡El botón de inicio de sesión ha sido presionado!');
-                // Agrega la lógica para el botón de Iniciar Sesión
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Index()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(300, 40),
