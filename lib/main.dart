@@ -91,7 +91,7 @@ class Inicio extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               // Agrega la lógica para el botón de Crear Cuenta
-              print('¡El botón de crear cuenta ha sido presionado!');
+              //print('¡El botón de crear cuenta ha sido presionado!');
 
               /*Navigator.push(
                 context,
