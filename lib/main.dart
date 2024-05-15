@@ -1,5 +1,5 @@
 // ignore_for_file: avoid_print
-
+import 'pag2.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -62,15 +62,15 @@ class Inicio extends StatelessWidget {
             ],
           ),
 
-          const SizedBox(height: 10.0), // Espacio entre la imagen y los botones
+          const SizedBox(height: 20.0), // Espacio entre la imagen y los botones
           ElevatedButton(
             onPressed: () async {
               // Agrega la lógica para el botón de Iniciar Sesión
-              print('¡El botón de inicio de sesión ha sido presionado!');
-              /*Navigator.push(
+              //print('¡El botón de inicio de sesión ha sido presionado!');
+              Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const LogIn()),
-              );*/
+              );
             },
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(300, 40),
@@ -87,7 +87,7 @@ class Inicio extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 10.0), // Espacio entre los botones
+          const SizedBox(height: 20.0), // Espacio entre los botones
           ElevatedButton(
             onPressed: () {
               // Agrega la lógica para el botón de Crear Cuenta
@@ -113,7 +113,7 @@ class Inicio extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 10.0), // Espacio entre los botones
+          const SizedBox(height: 20.0), // Espacio entre los botones
           TextButton(
             onPressed: () {
               // Función que se ejecuta cuando se presiona el botón
