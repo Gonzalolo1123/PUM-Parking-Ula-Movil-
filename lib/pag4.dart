@@ -40,7 +40,26 @@ class LogInGuest extends StatelessWidget {
                 SizedBox(
                   width: 300, // Ajusta el ancho según tus necesidades
                   height: 40, // Ajusta el alto según tus necesidades
-                  child: TextFormField(
+                  child: DropdownButtonFormField<String>(
+                    decoration: const InputDecoration(
+                      labelText: 'Motivo',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(100)),
+                      ),
+                    ),
+                    items: <String>['opcion1', 'opcion2', 'opcion3']
+                        .map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (String? value) {
+                      if (value != null) {}
+                    },
+                  ),
+                ),
+                  /*child: TextFormField(
                     obscureText: true,
                     decoration: const InputDecoration(
                       labelText: 'Motivo',
@@ -54,7 +73,7 @@ class LogInGuest extends StatelessWidget {
                           borderRadius: BorderRadius.all(Radius.circular(100))),
                     ),
                   ),
-                ),
+                ),*/
                 const SizedBox(height: 20.0),
                 SizedBox(
                   width: 300, // Ajusta el ancho según tus necesidades
