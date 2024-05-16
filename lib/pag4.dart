@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-class LogUp extends StatelessWidget {
-  const LogUp({super.key});
+class LogInGuest extends StatelessWidget {
+  const LogInGuest({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +14,14 @@ class LogUp extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/logo.png',
+              'assets/logo2.png',
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 10.0),
                 const Text(
-                  'Crear Cuenta',
+                  'Invitados',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
                 ),
                 const SizedBox(height: 40.0),
@@ -30,39 +30,20 @@ class LogUp extends StatelessWidget {
                   height: 40, // Ajusta el alto según tus necesidades
                   child: TextFormField(
                     decoration: const InputDecoration(
-                      labelText: 'Nombre',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(100))),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20.0),
-                SizedBox(
-                  width: 300, // Ajusta el ancho según tus necesidades
-                  height: 40, // Ajusta el alto según tus necesidades
-                  child: TextFormField(
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Apellido',
-                      hintStyle: TextStyle(
-                        fontSize:
-                            15, // Ajusta el tamaño de fuente según tus necesidades
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(100))),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20.0),
-                SizedBox(
-                  width: 300, // Ajusta el ancho según tus necesidades
-                  height: 40, // Ajusta el alto según tus necesidades
-                  child: TextFormField(
-                    obscureText: true,
-                    decoration: const InputDecoration(
                       labelText: 'Correo',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(100))),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+                SizedBox(
+                  width: 300, // Ajusta el ancho según tus necesidades
+                  height: 40, // Ajusta el alto según tus necesidades
+                  child: TextFormField(
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      labelText: 'Motivo',
                       hintStyle: TextStyle(
                         fontSize:
                             15, // Ajusta el tamaño de fuente según tus necesidades
@@ -81,26 +62,7 @@ class LogUp extends StatelessWidget {
                   child: TextFormField(
                     obscureText: true,
                     decoration: const InputDecoration(
-                      labelText: 'Contraseña',
-                      hintStyle: TextStyle(
-                        fontSize:
-                            15, // Ajusta el tamaño de fuente según tus necesidades
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(100))),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20.0),
-                SizedBox(
-                  width: 300, // Ajusta el ancho según tus necesidades
-                  height: 40, // Ajusta el alto según tus necesidades
-                  child: TextFormField(
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Confirmar Contraseña',
+                      labelText: 'Patente',
                       hintStyle: TextStyle(
                         fontSize:
                             15, // Ajusta el tamaño de fuente según tus necesidades
@@ -121,14 +83,14 @@ class LogUp extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(300, 40),
                     padding: const EdgeInsets.all(10.0),
-                    backgroundColor: const Color(0xFF87CEEB),
+                    backgroundColor: Color.fromARGB(255, 170, 170, 170),
                   ),
                   child: const Text(
-                    'Crear Cuenta',
+                    'Ingresar',
                     style: TextStyle(
                       fontSize:
                           20, // Ajusta el tamaño de fuente según tus necesidades
-                      color: Color(0xFF003DA6),
+                      color: Color.fromARGB(255, 255, 255, 255),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -138,7 +100,7 @@ class LogUp extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      '¿Ya tienes cuenta?',
+                      '¿Ya eres parte de la Universidad?',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Color.fromARGB(130, 0, 0, 0),
@@ -148,11 +110,11 @@ class LogUp extends StatelessWidget {
                     const SizedBox(width: 5), // Espacio entre los textos
                     GestureDetector(
                       onTap: () {
-                        print('iniciar sesión click');
+                        //print('iniciar sesión click');
                         /*
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const LogIn()),
+                          MaterialPageRoute(builder: (context) => const LogUp()),
                         );
                         */
                       },
