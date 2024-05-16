@@ -117,7 +117,7 @@ class Index extends StatelessWidget {
               const SizedBox(
                 height: 20.0,
               ),
-               Container(
+              Container(
                 width: 320,
                 height: 250,
                 decoration: const BoxDecoration(
@@ -128,27 +128,46 @@ class Index extends StatelessWidget {
                 height: 20.0,
               ),
               ElevatedButton(
-                          onPressed: () {
-                            // Lógica para el botón de Edificio
-                            print('Reservar ha sido presionado!');
-                          },
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(320, 40),
-                            padding: const EdgeInsets.all(10.0),
-                            side: const BorderSide(width: 2,color: Color(0xFF003DA6)),
-                          ),
-                          child: const Text(
-                            'Reservar',
-                            style: TextStyle(
-                              fontSize: 25,
-                              color: Color(0xFF003DA6),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
+                onPressed: () {
+                  // Lógica para el botón de Edificio
+                  print('Reservar ha sido presionado!');
+                },
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(320, 40),
+                  padding: const EdgeInsets.all(10.0),
+                  side: const BorderSide(width: 2, color: Color(0xFF003DA6)),
+                ),
+                child: const Text(
+                  'Reservar',
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: Color(0xFF003DA6),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
+        bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.qr_code),
+            label: 'QR',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+
+        selectedItemColor: Colors.blue,
+      ),
+
       ),
     );
   }
