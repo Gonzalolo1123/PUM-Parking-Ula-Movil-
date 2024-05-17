@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 import 'package:flutter/material.dart';
+import 'pag3.dart';
 import 'pag5.dart';
 
 class LogIn extends StatelessWidget {
@@ -87,8 +88,12 @@ class LogIn extends StatelessWidget {
                 const SizedBox(width: 5),
                 GestureDetector(
                   onTap: () {
-                    print('registrate click');
                     // Agrega la lógica para el botón de Registro
+                    Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LogUp()),
+                        );
                   },
                   child: const Text(
                     'Registrate',
@@ -102,7 +107,7 @@ class LogIn extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 70.0),
+            const SizedBox(height: 115.0),
           ],
         ),
       ),

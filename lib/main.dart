@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 import 'pag2.dart';
+import 'pag3.dart';
+import 'pag4.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -91,12 +93,10 @@ class Inicio extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               // Agrega la lógica para el botón de Crear Cuenta
-              print('¡El botón de crear cuenta ha sido presionado!');
-
-              /*Navigator.push(
+              Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const LogUp()),
-              );*/
+              );
             },
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(300, 40),
@@ -117,7 +117,10 @@ class Inicio extends StatelessWidget {
           TextButton(
             onPressed: () {
               // Función que se ejecuta cuando se presiona el botón
-              print('¡El botón de invitado ha sido presionado!');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LogInGuest()),
+              );
             },
             style: TextButton.styleFrom(
               padding: const EdgeInsets.all(15.0),
@@ -131,6 +134,7 @@ class Inicio extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(height: 19.0),
         ],
       ),
     );
