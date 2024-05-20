@@ -70,7 +70,7 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
                 backgroundColor: const Color(0xFF87CEEB),
               ),
               child: const Text(
-                'Vehículo',
+                'Edificio',
                 style: TextStyle(
                   fontSize: 25,
                   // Ajusta el tamaño de fuente según tus necesidades

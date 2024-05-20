@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+
+import 'package:carousel_slider/carousel_slider.dart'; // Carrusel
+
 class Index extends StatelessWidget {
   // ignore: use_key_in_widget_constructors 
   const Index({Key? key});
@@ -50,122 +53,47 @@ class _EdificioState extends State<Edificio> {
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(
-              height: 20.0,
+
+            const Text(
+              'Edificios',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 33),
             ),
-            // Aquí va el contenido del cuerpo de la pantalla
-            ElevatedButton(
-              onPressed: () {
-                // Agrega la lógica para el botón de Crear Cuenta
-                print('¡Vehículo ha sido presionado!');
-                /*Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LogUp()),
-                );*/
-              },
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(320, 40),
-                padding: const EdgeInsets.all(10.0),
-                backgroundColor: const Color(0xFF87CEEB),
-              ),
-              child: const Text(
-                'Vehículo',
-                style: TextStyle(
-                  fontSize: 25,
-                  // Ajusta el tamaño de fuente según tus necesidades
-                  color: Color(0xFF003DA6),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 330,
-                  height: 50,
-                  child: Row(
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          // Lógica para el botón de Hora
-                          print('Hora ha sido presionado!');
-                        },
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(160, 40),
-                          padding: const EdgeInsets.all(10.0),
-                          backgroundColor: const Color(0xFF87CEEB),
-                        ),
-                        child: const Text(
-                          'Hora',
-                          style: TextStyle(
-                            fontSize: 25,
-                            color: Color(0xFF003DA6),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 10.0), // Espacio entre los botones
-                      ElevatedButton(
-                        onPressed: () {
-                          // Lógica para el botón de Edificio
-                          print('Edificio ha sido presionado!');
-                        },
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(160, 40),
-                          padding: const EdgeInsets.all(10.0),
-                          backgroundColor: const Color(0xFF87CEEB),
-                        ),
-                        child: const Text(
-                          'Edificio',
-                          style: TextStyle(
-                            fontSize: 25,
-                            color: Color(0xFF003DA6),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
+            const SizedBox(height: 70.0),
+            CarouselSlider( // Inicia carrusel
+                options: CarouselOptions(height: 400.0),
+                items: [
+                card1(),
+                card2(),
+                card3(),
+              ],
+
+                  ),
+
+            const SizedBox(height: 40.0),
+                ElevatedButton(
+                  onPressed: () {
+                    // Lógica para el botón de Edificio
+                    print('Seleccionar ha sido presionado!');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(320, 40),
+                    padding: const EdgeInsets.all(10.0),
+                    side: const BorderSide(width: 2, color: Color(0xFF003DA6)),
+                  ),
+                  child: const Text(
+                    'Seleccionar',
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Color(0xFF003DA6),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            Container(
-              width: 320,
-              height: 250,
-              decoration: const BoxDecoration(
-                color: Color(0xFFD9D9D9), // Color de fondo
-              ),
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // Lógica para el botón de Edificio
-                print('Reservar ha sido presionado!');
-              },
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(320, 40),
-                padding: const EdgeInsets.all(10.0),
-                side: const BorderSide(width: 2, color: Color(0xFF003DA6)),
-              ),
-              child: const Text(
-                'Reservar',
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Color(0xFF003DA6),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+                const SizedBox(height: 10.0),
+
           ],
         ),
       ),
@@ -205,6 +133,123 @@ class _EdificioState extends State<Edificio> {
         icon,
         size: 40.0,
         color: _selectedIndex == index ? const Color(0xFF003DA6) : Colors.white,
+      ),
+    );
+  }
+}
+
+// IMÁGENES
+// Cards para cada edificio (método que utilize para la pokedex -s)
+
+// Primer card con primera imágen y descripción
+class card1 extends StatelessWidget {
+  const card1({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Card(
+        color: Colors.grey,
+        // clipBehavior is necessary because, without it, the InkWell's animation
+        // will extend beyond the rounded edges of the [Card] (see https://github.com/flutter/flutter/issues/109776)
+        // This comes with a small performance cost, and you should not set [clipBehavior]
+        // unless you need it.
+        clipBehavior: Clip.hardEdge,
+
+        child: SizedBox(
+            width: 300,
+            height: 300,
+
+        child: Column(
+          mainAxisAlignment : MainAxisAlignment.center,
+          children: <Widget>[Image.asset(
+                'edificio1.png',
+                width: 270,
+                height: 270,
+              ), // Añade la imágen
+            //),
+            //const Text('edificio1')
+          ],
+        ),
+      ),
+
+
+      ),
+    );
+  }
+}
+
+// Segundo card con segunda imágen y descripción
+class card2 extends StatelessWidget {
+  const card2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Card(
+        color: Colors.grey,
+        // clipBehavior is necessary because, without it, the InkWell's animation
+        // will extend beyond the rounded edges of the [Card] (see https://github.com/flutter/flutter/issues/109776)
+        // This comes with a small performance cost, and you should not set [clipBehavior]
+        // unless you need it.
+        clipBehavior: Clip.hardEdge,
+
+        child: SizedBox(
+            width: 300,
+            height: 300,
+
+        child: Column(
+          mainAxisAlignment : MainAxisAlignment.center,
+          children: <Widget>[Image.asset(
+                'edificio2.png',
+                width: 270,
+                height: 270,
+              ), // Añade la imágen
+            //),
+            //const Text('edificio2')
+          ],
+        ),
+      ),
+
+
+      ),
+    );
+  }
+}
+
+// Tercer card con tercera imágen y descripción
+class card3 extends StatelessWidget {
+  const card3({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Card(
+        color: Colors.grey,
+        // clipBehavior is necessary because, without it, the InkWell's animation
+        // will extend beyond the rounded edges of the [Card] (see https://github.com/flutter/flutter/issues/109776)
+        // This comes with a small performance cost, and you should not set [clipBehavior]
+        // unless you need it.
+        clipBehavior: Clip.hardEdge,
+
+        child: SizedBox(
+            width: 300,
+            height: 300,
+
+        child: Column(
+          mainAxisAlignment : MainAxisAlignment.center,
+          children: <Widget>[Image.asset(
+                'edificio3.png',
+                width: 270,
+                height: 270,
+              ), // Añade la imágen
+            //),
+            //const Text('edificio3')
+          ],
+        ),
+      ),
+
+
       ),
     );
   }
