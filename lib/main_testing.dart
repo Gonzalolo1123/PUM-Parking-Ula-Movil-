@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import 'pag7.dart'; // PARA TESTING
+import 'pag7b.dart'; // PARA TESTING
 import 'pag8.dart'; // PARA TESTING
 import 'pag12.dart'; // PARA TESTING
 
@@ -47,6 +48,33 @@ ElevatedButton(
 ),
 const SizedBox(height: 10.0),
 
+// PAG 7b
+ElevatedButton(
+  onPressed: () {
+    // Agrega la lógica para el botón de Crear Cuenta
+    //print('¡El botón de crear cuenta ha sido presionado!');
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SeleccionarVehiculo()),
+    );
+  },
+  style: ElevatedButton.styleFrom(
+    minimumSize: const Size(300, 40),
+    padding: const EdgeInsets.all(10.0),
+    backgroundColor: const Color(0xFF87CEEB),
+  ),
+  child: const Text(
+    'PAG 7b',
+    style: TextStyle(
+      fontSize:
+          20, // Ajusta el tamaño de fuente según tus necesidades
+      color: Color(0xFF003DA6),
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+),
+const SizedBox(height: 10.0),
 
 // PAG 8
 ElevatedButton(
