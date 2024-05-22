@@ -1,21 +1,4 @@
-// ignore_for_file: unused_element, library_private_types_in_public_api, avoid_print
-
 import 'package:flutter/material.dart';
-import 'pag6.dart';
-import 'pag7b.dart';
-import 'pag8.dart';
-//import 'pag7.dart';
-
-//import 'pag12.dart';
-void _showReservarBottomSheet(BuildContext context) {
-  showModalBottomSheet(
-    context: context,
-    builder: (BuildContext context) {
-      return const ConfirmacionReserva();
-    },
-    isScrollControlled: true,
-  );
-}
 
 class Index extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
@@ -23,20 +6,18 @@ class Index extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MyHomePage(),
+    return MaterialApp(
+      home: IndexSeguridad(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
+class IndexSeguridad extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _IndexSeguridadState createState() => _IndexSeguridadState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _IndexSeguridadState extends State<IndexSeguridad> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -78,11 +59,10 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 // Agrega la lógica para el botón de Crear Cuenta
                 print('¡Vehículo ha sido presionado!');
-                Navigator.push(
+                /*Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => SeleccionarVehiculo()),
-                );
+                  MaterialPageRoute(builder: (context) => const LogUp()),
+                );*/
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(320, 40),
@@ -90,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 backgroundColor: const Color(0xFF87CEEB),
               ),
               child: const Text(
-                'Vehículo',
+                'Edificio',
                 style: TextStyle(
                   fontSize: 25,
                   // Ajusta el tamaño de fuente según tus necesidades
@@ -100,8 +80,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             const SizedBox(
-              height: 10.0,
-            ),
+              height: 80.0,
+            ),/*
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -134,10 +114,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         onPressed: () {
                           // Lógica para el botón de Edificio
                           print('Edificio ha sido presionado!');
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Edificio()),
-                          );
                         },
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(160, 40),
@@ -160,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             const SizedBox(
               height: 20.0,
-            ),
+            ),*/
             Container(
               width: 320,
               height: 250,
@@ -170,12 +146,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             const SizedBox(
               height: 20.0,
-            ),
+            ),/*
             ElevatedButton(
               onPressed: () {
                 // Lógica para el botón de Edificio
                 print('Reservar ha sido presionado!');
-                _showReservarBottomSheet(context);
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(320, 40),
@@ -190,7 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
+            ),*/
           ],
         ),
       ),
