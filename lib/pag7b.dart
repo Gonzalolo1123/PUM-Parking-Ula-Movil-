@@ -71,7 +71,7 @@ class _SeleccionarVehiculoState extends State<SeleccionarVehiculo> {
                       labelText: 'Seleccionar Auto',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(15)),
-                          borderSide: BorderSide(color: Color(0xFF003DA6), width: 2.0),
+                          borderSide: BorderSide(width: 2, color: Color(0xFF003DA6)),
                           ),
                     ),
                     items: <String>['opcion1', 'opcion2', 'opcion3']

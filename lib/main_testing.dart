@@ -6,6 +6,8 @@ import 'pag7.dart'; // PARA TESTING
 import 'pag7b.dart'; // PARA TESTING
 import 'pag8.dart'; // PARA TESTING
 import 'pag12.dart'; // PARA TESTING
+import 'pag13.dart'; // PARA TESTING
+import 'pag14.dart'; // PARA TESTING
 
 class testing extends StatelessWidget {
   const testing({super.key});
@@ -122,6 +124,62 @@ ElevatedButton(
   ),
   child: const Text(
     'PAG 12',
+    style: TextStyle(
+      fontSize:
+          20, // Ajusta el tamaño de fuente según tus necesidades
+      color: Color(0xFF003DA6),
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+),
+const SizedBox(height: 10.0),
+
+// PAG 13
+ElevatedButton(
+  onPressed: () {
+    // Agrega la lógica para el botón de Crear Cuenta
+    //print('¡El botón de crear cuenta ha sido presionado!');
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ManipulacionReserva()),
+    );
+  },
+  style: ElevatedButton.styleFrom(
+    minimumSize: const Size(300, 40),
+    padding: const EdgeInsets.all(10.0),
+    backgroundColor: const Color(0xFF87CEEB),
+  ),
+  child: const Text(
+    'PAG 13',
+    style: TextStyle(
+      fontSize:
+          20, // Ajusta el tamaño de fuente según tus necesidades
+      color: Color(0xFF003DA6),
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+),
+const SizedBox(height: 10.0),
+
+// PAG 14
+ElevatedButton(
+  onPressed: () {
+    // Agrega la lógica para el botón de Crear Cuenta
+    //print('¡El botón de crear cuenta ha sido presionado!');
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ReservaCompletada()),
+    );
+  },
+  style: ElevatedButton.styleFrom(
+    minimumSize: const Size(300, 40),
+    padding: const EdgeInsets.all(10.0),
+    backgroundColor: const Color(0xFF87CEEB),
+  ),
+  child: const Text(
+    'PAG 14',
     style: TextStyle(
       fontSize:
           20, // Ajusta el tamaño de fuente según tus necesidades

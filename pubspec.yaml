@@ -66,6 +66,7 @@ flutter:
     - assets/edificio1.png
     - assets/edificio2.png
     - assets/edificio3.png
+    - assets/logoSEG.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

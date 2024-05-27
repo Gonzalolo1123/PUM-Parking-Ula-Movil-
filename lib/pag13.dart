@@ -7,17 +7,17 @@ class Index extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: RegistroVehiculo(),
+      home: ManipulacionReserva(),
     );
   }
 }
 
-class RegistroVehiculo extends StatefulWidget {
+class ManipulacionReserva extends StatefulWidget {
   @override
-  _RegistroVehiculoState createState() => _RegistroVehiculoState();
+  _ManipulacionReservaState createState() => _ManipulacionReservaState();
 }
 
-class _RegistroVehiculoState extends State<RegistroVehiculo> {
+class _ManipulacionReservaState extends State<ManipulacionReserva> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -41,7 +41,7 @@ class _RegistroVehiculoState extends State<RegistroVehiculo> {
                 print('Imagen presionada');
               },
               child: Image.asset(
-                'assets/logoGPS.png',
+                'assets/logoSEG.png',
                 height: 55,
               ),
             ),
@@ -54,125 +54,131 @@ class _RegistroVehiculoState extends State<RegistroVehiculo> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
 
-            const Text(
-              'Registro Vehículo',
+            /*const Text(
+              'Seleccionar Vehículo',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 33),
             ),
-            const SizedBox(height: 70.0),
+            const SizedBox(height: 70.0),*/
 
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                /*const Text(
-                  'Registro Vehículo',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 33),
-                ),
-                const SizedBox(height: 70.0),*/
+                //const SizedBox(height: 2.0),
+
                 SizedBox(
                   width: 300, // Ajusta el ancho según tus necesidades
                   height: 70, // Ajusta el alto según tus necesidades
                   child: TextFormField(
                     obscureText: true,
                     decoration: const InputDecoration(
-                      labelText: 'Marca',
+                      labelText: 'Edificio',
                       hintStyle: TextStyle(
                         fontSize: 20, // Ajusta el tamaño de fuente según tus necesidades
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
-                      border: OutlineInputBorder(
+                      /*border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(15)),
                           borderSide: BorderSide(width: 2, color: Color(0xFF003DA6)),
-                          ),
+                          ),*/
                     ),
                   ),
                 ),
-                const SizedBox(height: 2.0),
+
+                SizedBox(
+                  width: 300, // Ajusta el ancho según tus necesidades
+                  //height: 30, // Ajusta el alto según tus necesidades
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: const Text(
+                      'Aulas Virtuales',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                    ),
+                  ),
+                ),
+
                 SizedBox(
                   width: 300, // Ajusta el ancho según tus necesidades
                   height: 70, // Ajusta el alto según tus necesidades
                   child: TextFormField(
                     obscureText: true,
                     decoration: const InputDecoration(
-                      labelText: 'Modelo',
+                      labelText: 'Lugar',
                       hintStyle: TextStyle(
                         fontSize: 20, // Ajusta el tamaño de fuente según tus necesidades
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
-                      border: OutlineInputBorder(
+                      /*border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(15)),
                           borderSide: BorderSide(width: 2, color: Color(0xFF003DA6)),
-                          ),
+                          ),*/
                     ),
                   ),
                 ),
-                const SizedBox(height: 2.0),
+
+                SizedBox(
+                  width: 300, // Ajusta el ancho según tus necesidades
+                  //height: 30, // Ajusta el alto según tus necesidades
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: const Text(
+                      'AV001',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                    ),
+                  ),
+                ),
+
                 SizedBox(
                   width: 300, // Ajusta el ancho según tus necesidades
                   height: 70, // Ajusta el alto según tus necesidades
                   child: TextFormField(
                     obscureText: true,
                     decoration: const InputDecoration(
-                      labelText: 'Año',
+                      labelText: 'Estado',
                       hintStyle: TextStyle(
                         fontSize: 20, // Ajusta el tamaño de fuente según tus necesidades
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
-                      border: OutlineInputBorder(
+                      /*border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(15)),
                           borderSide: BorderSide(width: 2, color: Color(0xFF003DA6)),
-                          ),
+                          ),*/
                     ),
                   ),
                 ),
-                const SizedBox(height: 2.0),
+
                 SizedBox(
                   width: 300, // Ajusta el ancho según tus necesidades
-                  height: 70, // Ajusta el alto según tus necesidades
-                  child: TextFormField(
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Patente',
-                      hintStyle: TextStyle(
-                        fontSize: 20, // Ajusta el tamaño de fuente según tus necesidades
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                          borderSide: BorderSide(width: 2, color: Color(0xFF003DA6)),
-                          ),
+                  //height: 30, // Ajusta el alto según tus necesidades
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: const Text(
+                      'Libre/Ocupado/Reservado',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
                     ),
                   ),
                 ),
-                const SizedBox(height: 2.0),
-                SizedBox(
-                  width: 300, // Ajusta el ancho según tus necesidades
-                  height: 70, // Ajusta el alto según tus necesidades
-                  child: TextFormField(
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Color',
-                      hintStyle: TextStyle(
-                        fontSize: 20, // Ajusta el tamaño de fuente según tus necesidades
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                          borderSide: BorderSide(width: 2, color: Color(0xFF003DA6)),
-                          ),
-                    ),
-                  ),
+
+              ],
+            ),
+
+                const SizedBox(height: 1.0),
+                const Text(
+                  '¿Qué desea hacer?',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 27),
                 ),
-                const SizedBox(height: 20.0),
-                /*ElevatedButton(
+
+                const SizedBox(height: 5.0),
+                ElevatedButton(
                   onPressed: () {
                     // Lógica para el botón de Edificio
-                    print('Reservar ha sido presionado!');
+                    print('Ingresar ha sido presionado!');
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(320, 40),
@@ -180,7 +186,7 @@ class _RegistroVehiculoState extends State<RegistroVehiculo> {
                     side: const BorderSide(width: 2, color: Color(0xFF003DA6)),
                   ),
                   child: const Text(
-                    'Registrar Auto',
+                    'Ingresar',
                     style: TextStyle(
                       fontSize: 25,
                       color: Color(0xFF003DA6),
@@ -188,15 +194,12 @@ class _RegistroVehiculoState extends State<RegistroVehiculo> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10.0),*/
-              ],
-            ),
 
-            const SizedBox(height: 20.0),
+                const SizedBox(height: 2.0),
                 ElevatedButton(
                   onPressed: () {
                     // Lógica para el botón de Edificio
-                    print('Registrar Auto ha sido presionado!');
+                    print('Modificar ha sido presionado!');
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(320, 40),
@@ -204,7 +207,28 @@ class _RegistroVehiculoState extends State<RegistroVehiculo> {
                     side: const BorderSide(width: 2, color: Color(0xFF003DA6)),
                   ),
                   child: const Text(
-                    'Registrar Auto',
+                    'Modificar',
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Color(0xFF003DA6),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 2.0),
+                ElevatedButton(
+                  onPressed: () {
+                    // Lógica para el botón de Edificio
+                    print('Alertar ha sido presionado!');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(320, 40),
+                    padding: const EdgeInsets.all(10.0),
+                    side: const BorderSide(width: 2, color: Color(0xFF003DA6)),
+                  ),
+                  child: const Text(
+                    'Alertar',
                     style: TextStyle(
                       fontSize: 25,
                       color: Color(0xFF003DA6),
@@ -257,3 +281,4 @@ class _RegistroVehiculoState extends State<RegistroVehiculo> {
     );
   }
 }
+
