@@ -1,8 +1,10 @@
+// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, avoid_print
+
 import 'package:flutter/material.dart';
-import 'package:pum/pag7b.dart';
+
+import 'pag8.dart';
 
 class Index extends StatelessWidget {
-  // ignore: use_key_in_widget_constructors
   const Index({Key? key});
 
   @override
@@ -34,18 +36,45 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
         preferredSize: const Size.fromHeight(60.0),
         child: AppBar(
           backgroundColor: const Color(0xFF003DA6),
-          flexibleSpace: Align(
-            alignment: const Alignment(0.0, 0.8),
-            child: GestureDetector(
-              onTap: () {
-                // Lógica cuando la imagen es presionada
-                print('Imagen presionada');
-              },
-              child: Image.asset(
-                'assets/logoSEG.png',
-                height: 55,
+          flexibleSpace: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(width: 100),
+              SizedBox(
+                width: 100, // Ajusta el ancho según tus necesidades
+                //height: 30, // Ajusta el alto según tus necesidades
+                child: Align(
+                  alignment: Alignment.center,
+                  child: GestureDetector(
+                    onTap: () {
+                      // Lógica cuando la imagen es presionada
+                      print('Imagen presionada');
+                    },
+                    child: Image.asset(
+                      'assets/logoSEG.png',
+                      height: 55,
+                    ),
+                  ),
+                ),
               ),
-            ),
+              SizedBox(
+                width: 100, // Ajusta el ancho según tus necesidades
+                //height: 30, // Ajusta el alto según tus necesidades
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: GestureDetector(
+                    onTap: () {
+                      // Lógica cuando la imagen es presionada
+                      print('Imagen presionada');
+                    },
+                    child: Image.asset(
+                      'assets/logoGPS.png',
+                      height: 55,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -59,10 +88,10 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
             ElevatedButton(
               onPressed: () {
                 // Agrega la lógica para el botón de Crear Cuenta
-                print('¡Edificio ha sido presionado!');
+                print('¡Edificioseg ha sido presionado!');
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SeleccionarVehiculo()),
+                  MaterialPageRoute(builder: (context) => Edificio()),
                 );
               },
               style: ElevatedButton.styleFrom(

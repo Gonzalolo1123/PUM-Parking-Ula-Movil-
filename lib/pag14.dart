@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, avoid_print
+
 import 'package:flutter/material.dart';
 
 class Index extends StatelessWidget {
@@ -6,13 +8,15 @@ class Index extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: ReservaCompletada(),
     );
   }
 }
 
 class ReservaCompletada extends StatefulWidget {
+  const ReservaCompletada({super.key});
+
   @override
   _ReservaCompletadaState createState() => _ReservaCompletadaState();
 }
@@ -54,12 +58,12 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
 
-            SizedBox(
+            const SizedBox(
               width: 350, // Ajusta el ancho según tus necesidades
               height: 70, // Ajusta el alto según tus necesidades
               child: Align(
                     alignment: Alignment.center,
-                    child: const Text(
+                    child: Text(
                   '¡Tienes una reserva!',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 33),
                 ),
@@ -89,7 +93,7 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
                   ),
                 ),
 
-                SizedBox(
+                const SizedBox(
                   width: 300, // Ajusta el ancho según tus necesidades
                   height: 1, // Ajusta el alto según tus necesidades
                   child: Divider(
@@ -99,12 +103,12 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
 
                 const SizedBox(height: 16.0),
 
-                SizedBox(
+                const SizedBox(
                   width: 300, // Ajusta el ancho según tus necesidades
                   //height: 30, // Ajusta el alto según tus necesidades
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: const Text(
+                    child: Text(
                       'Aulas Virtuales',
                       textAlign: TextAlign.left,
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
@@ -131,7 +135,7 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
                   ),
                 ),
 
-                SizedBox(
+                const SizedBox(
                   width: 300, // Ajusta el ancho según tus necesidades
                   height: 1, // Ajusta el alto según tus necesidades
                   child: Divider(
@@ -141,12 +145,12 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
 
                 const SizedBox(height: 16.0),
 
-                SizedBox(
+                const SizedBox(
                   width: 300, // Ajusta el ancho según tus necesidades
                   //height: 30, // Ajusta el alto según tus necesidades
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: const Text(
+                    child: Text(
                       'AV001',
                       textAlign: TextAlign.left,
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
@@ -173,7 +177,7 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
                   ),
                 ),
 
-                SizedBox(
+                const SizedBox(
                   width: 300, // Ajusta el ancho según tus necesidades
                   height: 1, // Ajusta el alto según tus necesidades
                   child: Divider(
@@ -183,12 +187,12 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
 
                 const SizedBox(height: 16.0),
 
-                SizedBox(
+                const SizedBox(
                   width: 300, // Ajusta el ancho según tus necesidades
                   //height: 30, // Ajusta el alto según tus necesidades
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: const Text(
+                    child: Text(
                       '00:00 hrs',
                       textAlign: TextAlign.left,
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),

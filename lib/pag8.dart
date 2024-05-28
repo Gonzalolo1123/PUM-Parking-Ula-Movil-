@@ -1,4 +1,5 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, duplicate_ignore, avoid_print, camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart'; // Carrusel
 
@@ -8,17 +9,14 @@ class Index extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: Edificio(),
     );
   }
 }
 
 class Edificio extends StatefulWidget {
-  const Edificio({super.key});
-
   @override
-  // ignore: library_private_types_in_public_api
   _EdificioState createState() => _EdificioState();
 }
 
@@ -139,7 +137,6 @@ class _EdificioState extends State<Edificio> {
 // Cards para cada edificio (método que utilize para la pokedex -s)
 
 // Primer card con primera imágen y descripción
-// ignore: camel_case_types
 class card1 extends StatelessWidget {
   const card1({super.key});
 
@@ -147,7 +144,7 @@ class card1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Card(
-        color: Colors.grey,
+        color: Colors.white,
         // clipBehavior is necessary because, without it, the InkWell's animation
         // will extend beyond the rounded edges of the [Card] (see https://github.com/flutter/flutter/issues/109776)
         // This comes with a small performance cost, and you should not set [clipBehavior]
@@ -155,15 +152,15 @@ class card1 extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
 
         child: SizedBox(
-          width: 270,
-          height: 270,
+          width: 300,
+          height: 300,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Image.asset(
-                'edificio1.png',
-                width: 270,
-                height: 270,
+                'assets/edificio1.png',
+                width: 300,
+                height: 300,
               ), // Añade la imágen
               //),
               //const Text('edificio1')
@@ -183,7 +180,7 @@ class card2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Card(
-        color: Colors.grey,
+        color: Colors.white,
         // clipBehavior is necessary because, without it, the InkWell's animation
         // will extend beyond the rounded edges of the [Card] (see https://github.com/flutter/flutter/issues/109776)
         // This comes with a small performance cost, and you should not set [clipBehavior]
@@ -191,15 +188,15 @@ class card2 extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
 
         child: SizedBox(
-          width: 270,
-          height: 270,
+          width: 300,
+          height: 300,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Image.asset(
-                'edificio2.png',
-                width: 270,
-                height: 270,
+                'assets/edificio2.png',
+                width: 300,
+                height: 300,
               ), // Añade la imágen
               //),
               //const Text('edificio2')
@@ -219,7 +216,7 @@ class card3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Card(
-        color: Colors.grey,
+        color: Colors.white,
         // clipBehavior is necessary because, without it, the InkWell's animation
         // will extend beyond the rounded edges of the [Card] (see https://github.com/flutter/flutter/issues/109776)
         // This comes with a small performance cost, and you should not set [clipBehavior]
@@ -227,16 +224,13 @@ class card3 extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
 
         child: SizedBox(
-          width: 270,
-          height: 270,
+          width: 300,
+          height: 300,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image.asset(
-                'edificio3.png',
-                width: 270,
-                height: 270,
-              ), // Añade la imágen
+              Image.asset('assets/edificio3.png',
+                  width: 300, height: 300), // Añade la imágen
               //),
               //const Text('edificio3')
             ],

@@ -102,7 +102,7 @@ class LogInGuest extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(300, 40),
                     padding: const EdgeInsets.all(10.0),
-                    backgroundColor: Color.fromARGB(255, 170, 170, 170),
+                    backgroundColor: const Color.fromARGB(255, 170, 170, 170),
                   ),
                   child: const Text(
                     'Ingresar',
