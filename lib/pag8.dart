@@ -72,7 +72,7 @@ class _EdificioState extends State<Edificio> {
 
                   ),
 
-            const SizedBox(height: 40.0),
+            const SizedBox(height: 20.0),
                 ElevatedButton(
                   onPressed: () {
                     // Lógica para el botón de Edificio
