@@ -33,8 +33,38 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
         preferredSize: const Size.fromHeight(60.0),
         child: AppBar(
           backgroundColor: const Color(0xFF003DA6),
-          flexibleSpace: Align(
-            alignment: const Alignment(0.0, 0.8),
+          flexibleSpace: Row(
+            
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+
+            SizedBox(width: 100,),
+            
+            SizedBox(
+              width: 100, // Ajusta el ancho según tus necesidades
+               //height: 30, // Ajusta el alto según tus necesidades
+              child:
+            Align(
+            alignment: Alignment.center,
+            child: GestureDetector(
+              onTap: () {
+                // Lógica cuando la imagen es presionada
+                print('Imagen presionada');
+              },
+              child: Image.asset(
+                'assets/logoSEG.png',
+                height: 55,
+              ),
+            ),
+          ),
+          ),
+
+          SizedBox(
+            width: 100, // Ajusta el ancho según tus necesidades
+             //height: 30, // Ajusta el alto según tus necesidades
+            child:
+            Align(
+            alignment: Alignment.topRight,
             child: GestureDetector(
               onTap: () {
                 // Lógica cuando la imagen es presionada
@@ -46,6 +76,12 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
               ),
             ),
           ),
+          ),
+
+            ],
+          ),
+
+
         ),
       ),
       body: Center(
