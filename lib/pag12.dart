@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pum/pag7b.dart';
 
 class Index extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
@@ -41,7 +42,7 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
                 print('Imagen presionada');
               },
               child: Image.asset(
-                'assets/logoGPS.png',
+                'assets/logoSEG.png',
                 height: 55,
               ),
             ),
@@ -58,11 +59,11 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
             ElevatedButton(
               onPressed: () {
                 // Agrega la lógica para el botón de Crear Cuenta
-                print('¡Vehículo ha sido presionado!');
-                /*Navigator.push(
+                print('¡Edificio ha sido presionado!');
+                Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const LogUp()),
-                );*/
+                  MaterialPageRoute(builder: (context) => SeleccionarVehiculo()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(320, 40),
@@ -81,7 +82,8 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
             ),
             const SizedBox(
               height: 80.0,
-            ),/*
+            ),
+            /*
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -146,7 +148,7 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
             ),
             const SizedBox(
               height: 20.0,
-            ),/*
+            ), /*
             ElevatedButton(
               onPressed: () {
                 // Lógica para el botón de Edificio

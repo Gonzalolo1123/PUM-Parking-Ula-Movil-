@@ -1,6 +1,7 @@
 // ignore_for_file: unused_element, library_private_types_in_public_api, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:pum/pag9.dart';
 import 'pag6.dart';
 import 'pag7b.dart';
 import 'pag8.dart';
@@ -114,6 +115,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         onPressed: () {
                           // Lógica para el botón de Hora
                           print('Hora ha sido presionado!');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Hora()),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(160, 40),

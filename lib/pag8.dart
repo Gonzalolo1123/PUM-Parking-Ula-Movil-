@@ -155,8 +155,8 @@ class card1 extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
 
         child: SizedBox(
-          width: 300,
-          height: 300,
+          width: 270,
+          height: 270,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -191,8 +191,8 @@ class card2 extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
 
         child: SizedBox(
-          width: 300,
-          height: 300,
+          width: 270,
+          height: 270,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -227,8 +227,8 @@ class card3 extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
 
         child: SizedBox(
-          width: 300,
-          height: 300,
+          width: 270,
+          height: 270,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

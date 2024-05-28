@@ -9,7 +9,7 @@ class ConfirmacionReserva extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return SizedBox(
-      height: 500, // Ajusta la altura según sea necesario
+      height: 560, // Ajusta la altura según sea necesario
       width: screenWidth,
       child: Column(
         children: <Widget>[
@@ -27,15 +27,89 @@ class ConfirmacionReserva extends StatelessWidget {
             'Confirmación Reserva',
             style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 20),
-          Text(
-            'Edificio',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700,color: Colors.black54),
-          ),
-          SizedBox(height: 20),
-          Text(
-            'Aulas Virtuales',
-            style: TextStyle(fontSize: 25),
+          Padding(
+            padding: EdgeInsets.only(
+                top: 20,
+                left: 30,
+                right: 30), // Ajusta el padding según tus necesidades
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text(
+                  'Edificio',
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black54),
+                ),
+                SizedBox(height: 10),
+                Divider(
+                  color: Colors.black54,
+                  thickness: 2,
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'Aulas Virtuales',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Lugar',
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black54),
+                ),
+                SizedBox(height: 5),
+                Divider(
+                  color: Colors.black54,
+                  thickness: 2,
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'AV001',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'Hora',
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black54),
+                ),
+                SizedBox(height: 10),
+                Divider(
+                  color: Colors.black54,
+                  thickness: 2,
+                ),
+                SizedBox(height: 5),
+                Text(
+                  '00:00 hrs',
+                  style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Tipo Vehiculo',
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black54),
+                ),
+                SizedBox(height: 5),
+                Divider(
+                  color: Colors.black54,
+                  thickness: 2,
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Mediano',
+                  style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 10),
+                
+              ],
+            ),
           ),
           ElevatedButton(
             onPressed: () {
