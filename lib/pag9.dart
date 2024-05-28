@@ -1,28 +1,31 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: unused_field
+
 import 'package:flutter/material.dart';
+import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 
 class Index extends StatelessWidget {
-  // ignore: use_key_in_widget_constructors
-  const Index({Key? key});
+  const Index({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: Hora(),
     );
   }
 }
 
 class Hora extends StatefulWidget {
-  const Hora({super.key});
+  const Hora({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _EdificioState createState() => _EdificioState();
+  _HoraState createState() => _HoraState();
 }
 
-class _EdificioState extends State<Hora> {
+class _HoraState extends State<Hora> {
   int _selectedIndex = 0;
+    final GlobalKey<AnalogClockState> _analogClockKey = GlobalKey();
+  final TextEditingController _hourController = TextEditingController();
+  final TextEditingController _minuteController = TextEditingController();
 
   void _onItemTapped(int index) {
     setState(() {
@@ -58,10 +61,49 @@ class _EdificioState extends State<Hora> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Text(
-              'Edificios',
+              'Hora',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 33),
             ),
-            
+            SizedBox(
+              width: 200,
+              height: 200,
+              child: AnalogClock(
+                dateTime: DateTime.now(),
+                isKeepTime: false,
+              ),
+            ),
+            Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                  width: 100,
+                  height: 50,
+                  child: TextField(
+                    controller: _hourController,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: 'Hora',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 100,
+                  height: 50,
+                  child: TextField(
+                    controller: _minuteController,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: 'Minuto',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
             ElevatedButton(
               onPressed: () {
                 // Lógica para el botón de Edificio
@@ -116,7 +158,7 @@ class _EdificioState extends State<Hora> {
         shape: BoxShape.circle,
         color: _selectedIndex == index ? Colors.white : Colors.transparent,
       ),
-      padding: const EdgeInsets.all(5.0), // Espacio alrededor del icono
+      padding: const EdgeInsets.all(5.0),
       child: Icon(
         icon,
         size: 40.0,

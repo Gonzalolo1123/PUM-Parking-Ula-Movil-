@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 import 'package:flutter/material.dart';
+import 'package:pum/ejemplos.dart';
 import 'pag3.dart';
 import 'pag5.dart';
 
@@ -107,7 +108,29 @@ class LogIn extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 115.0),
+            const SizedBox(height: 50.0),
+            ElevatedButton(
+              onPressed: () async {
+                print('¡El botón de inicio de sesión ha sido presionado!');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ExampleSpecifyTime()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(300, 40),
+                padding: const EdgeInsets.all(10.0),
+                backgroundColor: const Color(0xFF003DA6),
+              ),
+              child: const Text(
+                'ejemplo',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ],
         ),
       ),
