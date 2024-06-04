@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, avoid_print
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, avoid_print, unused_field, unused_element
 
 import 'package:flutter/material.dart';
 
@@ -21,14 +21,6 @@ class RegistroVehiculo extends StatefulWidget {
 }
 
 class _RegistroVehiculoState extends State<RegistroVehiculo> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

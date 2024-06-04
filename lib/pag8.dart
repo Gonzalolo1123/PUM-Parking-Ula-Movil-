@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, duplicate_ignore, avoid_print, camel_case_types
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, duplicate_ignore, avoid_print, camel_case_types, unused_field, unused_element
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart'; // Carrusel
@@ -21,17 +21,28 @@ class Edificio extends StatefulWidget {
 }
 
 class _EdificioState extends State<Edificio> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60.0),
+        child: AppBar(
+          backgroundColor: const Color(0xFF003DA6),
+          flexibleSpace: Align(
+            alignment: const Alignment(0.0, 0.8),
+            child: GestureDetector(
+              onTap: () {
+                print('Imagen presionada');
+                Navigator.pushNamed(context, '/');
+              },
+              child: Image.asset(
+                'assets/logoGPS.png',
+                height: 55,
+              ),
+            ),
+          ),
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

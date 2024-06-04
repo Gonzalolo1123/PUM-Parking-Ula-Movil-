@@ -1,8 +1,19 @@
 // ignore_for_file: library_private_types_in_public_api, use_super_parameters, unused_element, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:pum/pag11.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:permission_handler/permission_handler.dart';
+
+void _showReservarBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return const CodigoManual();
+    },
+    isScrollControlled: true,
+  );
+}
 
 class QRScannerPage extends StatefulWidget {
   const QRScannerPage({Key? key}) : super(key: key);
@@ -45,9 +56,6 @@ class _QRScannerPageState extends State<QRScannerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('QR Scanner'),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -56,7 +64,7 @@ class _QRScannerPageState extends State<QRScannerPage> {
               'Resultado del escaneo: $qrValue',
               style: const TextStyle(fontSize: 20),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 200),
             ElevatedButton(
               onPressed: _scanQr,
               style: ElevatedButton.styleFrom(
@@ -74,24 +82,19 @@ class _QRScannerPageState extends State<QRScannerPage> {
               ),
             ),
             const SizedBox(height: 20),
-            TextButton(
-              onPressed: () {
-                print("Manual");
-                // Función que se ejecuta cuando se presiona el botón
-                /*Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LogInGuest()),
-              );*/
+            GestureDetector(
+              onTap: () {
+                // Agrega la lógica para el botón de Registro
+                _showReservarBottomSheet(context);
               },
-              style: TextButton.styleFrom(
-                padding: const EdgeInsets.all(15.0),
-              ),
               child: const Text(
                 'Ingresar Manualmente',
                 style: TextStyle(
+                  fontWeight: FontWeight.bold,
                   fontSize: 15,
-                  // Ajusta el tamaño de fuente según tus necesidades
-                  color: Color.fromARGB(255, 152, 152, 152), // Color del texto
+                  color: Color.fromARGB(130, 0, 0, 0),
+                  decoration: TextDecoration.underline,
+                  decorationColor: Color.fromARGB(130, 0, 0, 0),
                 ),
               ),
             ),

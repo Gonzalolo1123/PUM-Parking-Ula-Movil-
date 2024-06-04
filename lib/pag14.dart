@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, avoid_print
+// ignore_for_file: library_private_types_in_public_api, avoid_print, unused_field, unused_element
 
 import 'package:flutter/material.dart';
 
@@ -22,14 +22,6 @@ class ReservaCompletada extends StatefulWidget {
 }
 
 class _ReservaCompletadaState extends State<ReservaCompletada> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,13 +49,12 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             const SizedBox(
               width: 350, // Ajusta el ancho según tus necesidades
               height: 70, // Ajusta el alto según tus necesidades
               child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
+                alignment: Alignment.center,
+                child: Text(
                   '¡Tienes una reserva!',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 33),
                 ),
@@ -85,7 +76,8 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
                       'Edificio',
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                        fontSize: 14, // Ajusta el tamaño de fuente según tus necesidades
+                        fontSize:
+                            14, // Ajusta el tamaño de fuente según tus necesidades
                         color: Colors.grey.shade700,
                         fontWeight: FontWeight.bold,
                       ),
@@ -97,8 +89,8 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
                   width: 300, // Ajusta el ancho según tus necesidades
                   height: 1, // Ajusta el alto según tus necesidades
                   child: Divider(
-                            color: Colors.black,
-                          ),
+                    color: Colors.black,
+                  ),
                 ),
 
                 const SizedBox(height: 16.0),
@@ -111,7 +103,8 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
                     child: Text(
                       'Aulas Virtuales',
                       textAlign: TextAlign.left,
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
                     ),
                   ),
                 ),
@@ -127,7 +120,8 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
                       'Lugar',
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                        fontSize: 14, // Ajusta el tamaño de fuente según tus necesidades
+                        fontSize:
+                            14, // Ajusta el tamaño de fuente según tus necesidades
                         color: Colors.grey.shade700,
                         fontWeight: FontWeight.bold,
                       ),
@@ -139,8 +133,8 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
                   width: 300, // Ajusta el ancho según tus necesidades
                   height: 1, // Ajusta el alto según tus necesidades
                   child: Divider(
-                            color: Colors.black,
-                          ),
+                    color: Colors.black,
+                  ),
                 ),
 
                 const SizedBox(height: 16.0),
@@ -153,7 +147,8 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
                     child: Text(
                       'AV001',
                       textAlign: TextAlign.left,
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
                     ),
                   ),
                 ),
@@ -169,7 +164,8 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
                       'Hora',
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                        fontSize: 14, // Ajusta el tamaño de fuente según tus necesidades
+                        fontSize:
+                            14, // Ajusta el tamaño de fuente según tus necesidades
                         color: Colors.grey.shade700,
                         fontWeight: FontWeight.bold,
                       ),
@@ -181,8 +177,8 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
                   width: 300, // Ajusta el ancho según tus necesidades
                   height: 1, // Ajusta el alto según tus necesidades
                   child: Divider(
-                            color: Colors.black,
-                          ),
+                    color: Colors.black,
+                  ),
                 ),
 
                 const SizedBox(height: 16.0),
@@ -195,100 +191,61 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
                     child: Text(
                       '00:00 hrs',
                       textAlign: TextAlign.left,
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
                     ),
                   ),
                 ),
-
               ],
             ),
 
-                const SizedBox(height: 1.0),
-                ElevatedButton(
-                  onPressed: () {
-                    // Lógica para el botón de Edificio
-                    print('Finalizar Reserva ha sido presionado!');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(320, 40),
-                    padding: const EdgeInsets.all(10.0),
-                    side: const BorderSide(width: 2, color: Color(0xFF003DA6)),
-                  ),
-                  child: const Text(
-                    'Finalizar Reserva',
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Color(0xFF003DA6),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+            const SizedBox(height: 1.0),
+            ElevatedButton(
+              onPressed: () {
+                // Lógica para el botón de Edificio
+                print('Finalizar Reserva ha sido presionado!');
+              },
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(320, 40),
+                padding: const EdgeInsets.all(10.0),
+                side: const BorderSide(width: 2, color: Color(0xFF003DA6)),
+              ),
+              child: const Text(
+                'Finalizar Reserva',
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Color(0xFF003DA6),
+                  fontWeight: FontWeight.bold,
                 ),
+              ),
+            ),
 
-                //const SizedBox(height: 2.0),
+            //const SizedBox(height: 2.0),
 
-                ElevatedButton(
-                  onPressed: () {
-                    // Lógica para el botón de Edificio
-                    print('Aumentar Reserva ha sido presionado!');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(320, 40),
-                    padding: const EdgeInsets.all(10.0),
-                    side: const BorderSide(width: 2, color: Color(0xFF003DA6)),
-                  ),
-                  child: const Text(
-                    'Aumentar Reserva',
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Color(0xFF003DA6),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+            ElevatedButton(
+              onPressed: () {
+                // Lógica para el botón de Edificio
+                print('Aumentar Reserva ha sido presionado!');
+              },
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(320, 40),
+                padding: const EdgeInsets.all(10.0),
+                side: const BorderSide(width: 2, color: Color(0xFF003DA6)),
+              ),
+              child: const Text(
+                'Aumentar Reserva',
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Color(0xFF003DA6),
+                  fontWeight: FontWeight.bold,
                 ),
+              ),
+            ),
 
-                const SizedBox(height: 10.0),
-
+            const SizedBox(height: 10.0),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: _buildIcon(Icons.person, 0),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: _buildIcon(Icons.qr_code_outlined, 1),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: _buildIcon(Icons.directions_car, 2),
-            label: '',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: const Color(0xFF003DA6),
-        backgroundColor: const Color(0xFF003DA6),
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        onTap: _onItemTapped,
-      ),
-    );
-  }
-
-  Widget _buildIcon(IconData icon, int index) {
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: _selectedIndex == index ? Colors.white : Colors.transparent,
-      ),
-      padding: const EdgeInsets.all(5.0), // Espacio alrededor del icono
-      child: Icon(
-        icon,
-        size: 40.0,
-        color: _selectedIndex == index ? const Color(0xFF003DA6) : Colors.white,
       ),
     );
   }
 }
-

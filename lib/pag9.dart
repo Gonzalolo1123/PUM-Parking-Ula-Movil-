@@ -1,4 +1,4 @@
-// ignore_for_file: unused_field, depend_on_referenced_packages, use_super_parameters, library_private_types_in_public_api, avoid_print
+// ignore_for_file: unused_field, depend_on_referenced_packages, use_super_parameters, library_private_types_in_public_api, avoid_print, unused_element
 
 import 'package:flutter/material.dart';
 import 'package:flutter_analog_clock/flutter_analog_clock.dart';
@@ -22,20 +22,32 @@ class Hora extends StatefulWidget {
 }
 
 class _HoraState extends State<Hora> {
-  int _selectedIndex = 0;
   final GlobalKey<AnalogClockState> _analogClockKey = GlobalKey();
   final TextEditingController _hourController = TextEditingController();
   final TextEditingController _minuteController = TextEditingController();
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60.0),
+        child: AppBar(
+          backgroundColor: const Color(0xFF003DA6),
+          flexibleSpace: Align(
+            alignment: const Alignment(0.0, 0.8),
+            child: GestureDetector(
+              onTap: () {
+                print('Imagen presionada');
+                Navigator.pushNamed(context, '/');
+              },
+              child: Image.asset(
+                'assets/logoGPS.png',
+                height: 55,
+              ),
+            ),
+          ),
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
