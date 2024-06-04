@@ -32,25 +32,6 @@ class _EdificioState extends State<Edificio> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60.0),
-        child: AppBar(
-          backgroundColor: const Color(0xFF003DA6),
-          flexibleSpace: Align(
-            alignment: const Alignment(0.0, 0.8),
-            child: GestureDetector(
-              onTap: () {
-                // Lógica cuando la imagen es presionada
-                print('Imagen presionada');
-              },
-              child: Image.asset(
-                'assets/logoGPS.png',
-                height: 55,
-              ),
-            ),
-          ),
-        ),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -91,43 +72,6 @@ class _EdificioState extends State<Edificio> {
             const SizedBox(height: 10.0),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: _buildIcon(Icons.person, 0),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: _buildIcon(Icons.qr_code_outlined, 1),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: _buildIcon(Icons.directions_car, 2),
-            label: '',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: const Color(0xFF003DA6),
-        backgroundColor: const Color(0xFF003DA6),
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        onTap: _onItemTapped,
-      ),
-    );
-  }
-
-  Widget _buildIcon(IconData icon, int index) {
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: _selectedIndex == index ? Colors.white : Colors.transparent,
-      ),
-      padding: const EdgeInsets.all(5.0), // Espacio alrededor del icono
-      child: Icon(
-        icon,
-        size: 40.0,
-        color: _selectedIndex == index ? const Color(0xFF003DA6) : Colors.white,
       ),
     );
   }

@@ -23,7 +23,7 @@ class Hora extends StatefulWidget {
 
 class _HoraState extends State<Hora> {
   int _selectedIndex = 0;
-    final GlobalKey<AnalogClockState> _analogClockKey = GlobalKey();
+  final GlobalKey<AnalogClockState> _analogClockKey = GlobalKey();
   final TextEditingController _hourController = TextEditingController();
   final TextEditingController _minuteController = TextEditingController();
 
@@ -36,25 +36,6 @@ class _HoraState extends State<Hora> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60.0),
-        child: AppBar(
-          backgroundColor: const Color(0xFF003DA6),
-          flexibleSpace: Align(
-            alignment: const Alignment(0.0, 0.8),
-            child: GestureDetector(
-              onTap: () {
-                // Lógica cuando la imagen es presionada
-                print('Imagen presionada');
-              },
-              child: Image.asset(
-                'assets/logoGPS.png',
-                height: 55,
-              ),
-            ),
-          ),
-        ),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -73,37 +54,37 @@ class _HoraState extends State<Hora> {
               ),
             ),
             Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(
-                  width: 100,
-                  height: 50,
-                  child: TextField(
-                    controller: _hourController,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Hora',
-                      border: OutlineInputBorder(),
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: 100,
+                    height: 50,
+                    child: TextField(
+                      controller: _hourController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'Hora',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: 100,
-                  height: 50,
-                  child: TextField(
-                    controller: _minuteController,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Minuto',
-                      border: OutlineInputBorder(),
+                  SizedBox(
+                    width: 100,
+                    height: 50,
+                    child: TextField(
+                      controller: _minuteController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'Minuto',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
             ElevatedButton(
               onPressed: () {
                 // Lógica para el botón de Edificio
@@ -126,43 +107,6 @@ class _HoraState extends State<Hora> {
             const SizedBox(height: 10.0),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: _buildIcon(Icons.person, 0),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: _buildIcon(Icons.qr_code_outlined, 1),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: _buildIcon(Icons.directions_car, 2),
-            label: '',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: const Color(0xFF003DA6),
-        backgroundColor: const Color(0xFF003DA6),
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        onTap: _onItemTapped,
-      ),
-    );
-  }
-
-  Widget _buildIcon(IconData icon, int index) {
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: _selectedIndex == index ? Colors.white : Colors.transparent,
-      ),
-      padding: const EdgeInsets.all(5.0),
-      child: Icon(
-        icon,
-        size: 40.0,
-        color: _selectedIndex == index ? const Color(0xFF003DA6) : Colors.white,
       ),
     );
   }
