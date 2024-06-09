@@ -36,6 +36,7 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
           flexibleSpace: Row(
             
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
 
             SizedBox(width: 100,),

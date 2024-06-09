@@ -8,6 +8,7 @@ import 'pag8.dart'; // PARA TESTING
 import 'pag12.dart'; // PARA TESTING
 import 'pag13.dart'; // PARA TESTING
 import 'pag14.dart'; // PARA TESTING
+import 'testing_postgres3.dart'; // PARA TESTING
 
 class testing extends StatelessWidget {
   const testing({super.key});
@@ -180,6 +181,34 @@ ElevatedButton(
   ),
   child: const Text(
     'PAG 14',
+    style: TextStyle(
+      fontSize:
+          20, // Ajusta el tamaño de fuente según tus necesidades
+      color: Color(0xFF003DA6),
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+),
+const SizedBox(height: 10.0),
+
+// TestingPostgres3
+ElevatedButton(
+  onPressed: () {
+    // Agrega la lógica para el botón de Crear Cuenta
+    //print('¡El botón de crear cuenta ha sido presionado!');
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => TestingPostgres3()),
+    );
+  },
+  style: ElevatedButton.styleFrom(
+    minimumSize: const Size(300, 40),
+    padding: const EdgeInsets.all(10.0),
+    backgroundColor: const Color(0xFF87CEEB),
+  ),
+  child: const Text(
+    'TestingPostgres3',
     style: TextStyle(
       fontSize:
           20, // Ajusta el tamaño de fuente según tus necesidades

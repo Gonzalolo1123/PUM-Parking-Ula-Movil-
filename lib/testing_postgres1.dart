@@ -1,12 +1,43 @@
 // ignore_for_file: avoid_print
 
+// HAY QUE PONER ESTO EN PUBSPEC.YAML
+
+/*dependencies:
+  flutter:
+    sdk: flutter
+  carousel_slider: ^4.2.1
+  postgres: ^3.2.1*/
+
+
+
+// DESCOMENTAR TODO ESTE CODIGO PARA HACERLO FUNCIONAR
+/*
+
+
+library; // PARA CONEXION BASE DE DATOS
 import 'package:flutter/material.dart';
 import 'pag3.dart';
 import 'pag4.dart';
-
 import 'main_testing.dart'; // PARA TESTING
+import 'package:postgres/postgres.dart'; // PARA CONEXION BASE DE DATOS
 
-void main() {
+void main() async {
+  final conn = await Connection.open(
+    Endpoint(
+      host: 'localhost',
+      database: 'postgres',
+      username: 'postgres',
+      password: 'compuvi',
+      port: 5433,
+    ),
+    // The postgres server hosted locally doesn't have SSL by default. If you're
+    // accessing a postgres server over the Internet, the server should support
+    // SSL and you should swap out the mode with `SslMode.verifyFull`.
+    settings: ConnectionSettings(sslMode: SslMode.disable),
+  );
+  print('¡CONECTADO A BASE DE DATOS!');
+  final result0 = await conn.execute("SELECT * FROM form_test_model;");
+  print(result0[0][0]);
   runApp(const MyApp());
 }
 
@@ -177,22 +208,5 @@ class Inicio extends StatelessWidget {
   }
 }
 
-/*import 'package:flutter/material.dart';
 
-import 'package:postgres/postgres.dart';
-
-void main() async {
-  final conn = await Connection.open(
-    Endpoint(
-      host: 'BLABLABLA',
-      database: 'BLABLABLA',
-      username: 'BLABLABLA',
-      password: 'BLABLABLA',
-    ),
-    // The postgres server hosted locally doesn't have SSL by default. If you're
-    // accessing a postgres server over the Internet, the server should support
-    // SSL and you should swap out the mode with `SslMode.verifyFull`.
-    settings: ConnectionSettings(sslMode: SslMode.disable),
-  );
-  print('has connection!');
-}*/
+*/

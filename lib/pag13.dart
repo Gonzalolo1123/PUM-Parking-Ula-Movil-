@@ -106,7 +106,7 @@ class _ManipulacionReservaState extends State<ManipulacionReserva> {
                   width: 300, // Ajusta el ancho según tus necesidades
                   height: 70, // Ajusta el alto según tus necesidades
                   child: TextFormField(
-                    obscureText: true,
+                    //obscureText: true,
                     decoration: const InputDecoration(
                       labelText: 'Edificio',
                       hintStyle: TextStyle(
@@ -139,7 +139,7 @@ class _ManipulacionReservaState extends State<ManipulacionReserva> {
                   width: 300, // Ajusta el ancho según tus necesidades
                   height: 70, // Ajusta el alto según tus necesidades
                   child: TextFormField(
-                    obscureText: true,
+                    //obscureText: true,
                     decoration: const InputDecoration(
                       labelText: 'Lugar',
                       hintStyle: TextStyle(
@@ -172,7 +172,7 @@ class _ManipulacionReservaState extends State<ManipulacionReserva> {
                   width: 300, // Ajusta el ancho según tus necesidades
                   height: 70, // Ajusta el alto según tus necesidades
                   child: TextFormField(
-                    obscureText: true,
+                    //obscureText: true,
                     decoration: const InputDecoration(
                       labelText: 'Estado',
                       hintStyle: TextStyle(
