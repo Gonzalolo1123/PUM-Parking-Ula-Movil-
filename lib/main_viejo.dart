@@ -1,10 +1,8 @@
-// ignore_for_file: avoid_print 
-import 'package:pum/pag12.dart';
+// ignore_for_file: avoid_print
 
-import 'pag2.dart';
+import 'package:flutter/material.dart';
 import 'pag3.dart';
 import 'pag4.dart';
-import 'package:flutter/material.dart';
 
 import 'main_testing.dart'; // PARA TESTING
 
@@ -55,7 +53,7 @@ class Inicio extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 50),
                 child: Text(
                   'Bienvenido a Parking Ulagos',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),//esto es fontsize 40
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
                 ),
               ),
               Padding(
@@ -68,15 +66,15 @@ class Inicio extends StatelessWidget {
             ],
           ),
 
-          const SizedBox(height: 20.0), // Espacio entre la imagen y los botones
+          const SizedBox(height: 10.0), // Espacio entre la imagen y los botones
           ElevatedButton(
             onPressed: () async {
               // Agrega la lógica para el botón de Iniciar Sesión
-              //print('¡El botón de inicio de sesión ha sido presionado!');
-              Navigator.push(
+              print('¡El botón de inicio de sesión ha sido presionado!');
+              /*Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const LogIn()),
-              );
+              );*/
             },
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(300, 40),
@@ -93,10 +91,12 @@ class Inicio extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 20.0), // Espacio entre los botones
+          const SizedBox(height: 10.0), // Espacio entre los botones
           ElevatedButton(
             onPressed: () {
               // Agrega la lógica para el botón de Crear Cuenta
+              //print('¡El botón de crear cuenta ha sido presionado!');
+
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const LogUp()),
@@ -117,10 +117,12 @@ class Inicio extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 20.0), // Espacio entre los botones
+          const SizedBox(height: 10.0), // Espacio entre los botones
           TextButton(
             onPressed: () {
               // Función que se ejecuta cuando se presiona el botón
+              //print('¡El botón de invitado ha sido presionado!');
+
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const LogInGuest()),
@@ -138,31 +140,8 @@ class Inicio extends StatelessWidget {
               ),
             ),
           ),
-          //esto se borra solo es en la parte de front
-          TextButton(
-            onPressed: () {
-              // Función que se ejecuta cuando se presiona el botón
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => IndexSeguridad()),
-              );
-            },
-            style: TextButton.styleFrom(
-              padding: const EdgeInsets.all(1.0),
-            ),
-            
-            child: const Text(
-              'Seguridad Index',
-              style: TextStyle(
-                fontSize: 15,
-                // Ajusta el tamaño de fuente según tus necesidades
-                color: Colors.black, // Color del texto
-              ),
-            ),
-          ),
-           //esto se borra solo es en la parte de front
 
-           // PARA TESTING
+          // PARA TESTING
 
           ElevatedButton(
             onPressed: () {
@@ -197,3 +176,23 @@ class Inicio extends StatelessWidget {
     );
   }
 }
+
+/*import 'package:flutter/material.dart';
+
+import 'package:postgres/postgres.dart';
+
+void main() async {
+  final conn = await Connection.open(
+    Endpoint(
+      host: 'BLABLABLA',
+      database: 'BLABLABLA',
+      username: 'BLABLABLA',
+      password: 'BLABLABLA',
+    ),
+    // The postgres server hosted locally doesn't have SSL by default. If you're
+    // accessing a postgres server over the Internet, the server should support
+    // SSL and you should swap out the mode with `SslMode.verifyFull`.
+    settings: ConnectionSettings(sslMode: SslMode.disable),
+  );
+  print('has connection!');
+}*/
