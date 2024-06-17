@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, use_super_parameters, library_private_types_in_public_api, use_build_context_synchronously, prefer_interpolation_to_compose_strings
+// ignore_for_file: avoid_print, use_super_parameters, library_private_types_in_public_api, use_build_context_synchronously, prefer_interpolation_to_compose_strings, use_key_in_widget_constructors
 import 'package:flutter/material.dart';
 import 'pag2.dart';
 import 'package:http/http.dart' as http;
@@ -36,20 +36,20 @@ class LogUp extends StatelessWidget {
         'nombre': nombre,
         'apellido': apellido,
         'correo': correo,
-        'contrasena': contrasena,
-        'confirmarContrasena': confirmarContrasena,
+        'contraseña': contrasena,
+        'confirmarContraseña': confirmarContrasena,
       };
 
       try {
         final response = await http.post(
-          Uri.parse('http://10.0.2.2:3000/registro'),
+          Uri.parse('http://10.0.2.2:3000/usuarios/registro'),
           headers: {
             'Content-Type': 'application/json',
           },
           body: jsonEncode(datos),
         );
 
-        if (response.statusCode == 200) {
+        if (response.statusCode == 302) {
           // Mostrar mensaje de éxito y redirigir a la página de inicio de sesión
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Usuario registrado exitosamente')),
@@ -63,6 +63,7 @@ class LogUp extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Error al registrar el usuario')),
           );
+          print(response.statusCode);
         }
       } catch (e) {
         // Mostrar mensaje de error si hay un error de conexión

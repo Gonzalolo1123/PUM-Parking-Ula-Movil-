@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'pag2.dart';
 
 class LogInGuest extends StatelessWidget {
   const LogInGuest({super.key});
@@ -11,7 +12,6 @@ class LogInGuest extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
               'assets/logo2.png',
@@ -19,7 +19,7 @@ class LogInGuest extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 10.0),
+                const SizedBox(height: 100.0),
                 const Text(
                   'Invitados',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
@@ -38,7 +38,7 @@ class LogInGuest extends StatelessWidget {
                 ),
                 const SizedBox(height: 20.0),
                 SizedBox(
-                  width: 300, // Ajusta el ancho según tus necesidades 
+                  width: 300, // Ajusta el ancho según tus necesidades
                   height: 40, // Ajusta el alto según tus necesidades
                   child: DropdownButtonFormField<String>(
                     decoration: const InputDecoration(
@@ -59,7 +59,7 @@ class LogInGuest extends StatelessWidget {
                     },
                   ),
                 ),
-                  /*child: TextFormField(
+                /*child: TextFormField(
                     obscureText: true,
                     decoration: const InputDecoration(
                       labelText: 'Motivo',
@@ -102,7 +102,7 @@ class LogInGuest extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(300, 40),
                     padding: const EdgeInsets.all(10.0),
-                    backgroundColor: Color.fromARGB(255, 170, 170, 170),
+                    backgroundColor: const Color.fromARGB(255, 170, 170, 170),
                   ),
                   child: const Text(
                     'Ingresar',
@@ -130,12 +130,11 @@ class LogInGuest extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         //print('iniciar sesión click');
-                        /*
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const LogUp()),
+                          MaterialPageRoute(
+                              builder: (context) => const LogIn()),
                         );
-                        */
                       },
                       child: const Text(
                         'Iniciar Sesión',
@@ -147,6 +146,7 @@ class LogInGuest extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 179.0),
                   ],
                 ),
               ],

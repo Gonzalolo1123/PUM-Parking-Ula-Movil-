@@ -1,7 +1,10 @@
+// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, avoid_print
+
 import 'package:flutter/material.dart';
 
+import 'pag8.dart';
+
 class Index extends StatelessWidget {
-  // ignore: use_key_in_widget_constructors
   const Index({Key? key});
 
   @override
@@ -34,55 +37,45 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
         child: AppBar(
           backgroundColor: const Color(0xFF003DA6),
           flexibleSpace: Row(
-            
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-
-            SizedBox(width: 100,),
-            
-            SizedBox(
-              width: 100, // Ajusta el ancho según tus necesidades
-               //height: 30, // Ajusta el alto según tus necesidades
-              child:
-            Align(
-            alignment: Alignment.center,
-            child: GestureDetector(
-              onTap: () {
-                // Lógica cuando la imagen es presionada
-                print('Imagen presionada');
-              },
-              child: Image.asset(
-                'assets/logoSEG.png',
-                height: 55,
+              const SizedBox(width: 100),
+              SizedBox(
+                width: 100, // Ajusta el ancho según tus necesidades
+                //height: 30, // Ajusta el alto según tus necesidades
+                child: Align(
+                  alignment: Alignment.center,
+                  child: GestureDetector(
+                    onTap: () {
+                      // Lógica cuando la imagen es presionada
+                      print('Imagen presionada');
+                    },
+                    child: Image.asset(
+                      'assets/logoSEG.png',
+                      height: 55,
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-          ),
-
-          SizedBox(
-            width: 100, // Ajusta el ancho según tus necesidades
-             //height: 30, // Ajusta el alto según tus necesidades
-            child:
-            Align(
-            alignment: Alignment.topRight,
-            child: GestureDetector(
-              onTap: () {
-                // Lógica cuando la imagen es presionada
-                print('Imagen presionada');
-              },
-              child: Image.asset(
-                'assets/logoGPS.png',
-                height: 55,
+              SizedBox(
+                width: 100, // Ajusta el ancho según tus necesidades
+                //height: 30, // Ajusta el alto según tus necesidades
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: GestureDetector(
+                    onTap: () {
+                      // Lógica cuando la imagen es presionada
+                      print('Imagen presionada');
+                    },
+                    child: Image.asset(
+                      'assets/logoGPS.png',
+                      height: 55,
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-          ),
-
             ],
           ),
-
-
         ),
       ),
       body: Center(
@@ -95,11 +88,11 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
             ElevatedButton(
               onPressed: () {
                 // Agrega la lógica para el botón de Crear Cuenta
-                print('¡Vehículo ha sido presionado!');
-                /*Navigator.push(
+                print('¡Edificioseg ha sido presionado!');
+                Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const LogUp()),
-                );*/
+                  MaterialPageRoute(builder: (context) => Edificio()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(320, 40),
@@ -118,7 +111,8 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
             ),
             const SizedBox(
               height: 80.0,
-            ),/*
+            ),
+            /*
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -183,8 +177,8 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
             ),
             const SizedBox(
               height: 20.0,
-            ),/*
-            ElevatedButton( 
+            ), /*
+            ElevatedButton(
               onPressed: () {
                 // Lógica para el botón de Edificio
                 print('Reservar ha sido presionado!');

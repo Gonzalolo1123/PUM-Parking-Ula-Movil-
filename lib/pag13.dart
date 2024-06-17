@@ -1,7 +1,8 @@
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, avoid_print
+
 import 'package:flutter/material.dart';
 
 class Index extends StatelessWidget {
-  // ignore: use_key_in_widget_constructors 
   const Index({Key? key});
 
   @override
@@ -18,13 +19,6 @@ class ManipulacionReserva extends StatefulWidget {
 }
 
 class _ManipulacionReservaState extends State<ManipulacionReserva> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +32,7 @@ class _ManipulacionReservaState extends State<ManipulacionReserva> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
 
-            SizedBox(width: 100,),
+            const SizedBox(width: 100),
             
             SizedBox(
               width: 100, // Ajusta el ancho según tus necesidades
@@ -106,7 +100,7 @@ class _ManipulacionReservaState extends State<ManipulacionReserva> {
                   width: 300, // Ajusta el ancho según tus necesidades
                   height: 70, // Ajusta el alto según tus necesidades
                   child: TextFormField(
-                    //obscureText: true,
+                    obscureText: true,
                     decoration: const InputDecoration(
                       labelText: 'Edificio',
                       hintStyle: TextStyle(
@@ -122,12 +116,12 @@ class _ManipulacionReservaState extends State<ManipulacionReserva> {
                   ),
                 ),
 
-                SizedBox(
+                const SizedBox(
                   width: 300, // Ajusta el ancho según tus necesidades
                   //height: 30, // Ajusta el alto según tus necesidades
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: const Text(
+                    child: Text(
                       'Aulas Virtuales',
                       textAlign: TextAlign.left,
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
@@ -139,7 +133,7 @@ class _ManipulacionReservaState extends State<ManipulacionReserva> {
                   width: 300, // Ajusta el ancho según tus necesidades
                   height: 70, // Ajusta el alto según tus necesidades
                   child: TextFormField(
-                    //obscureText: true,
+                    obscureText: true,
                     decoration: const InputDecoration(
                       labelText: 'Lugar',
                       hintStyle: TextStyle(
@@ -155,12 +149,12 @@ class _ManipulacionReservaState extends State<ManipulacionReserva> {
                   ),
                 ),
 
-                SizedBox(
+                const SizedBox(
                   width: 300, // Ajusta el ancho según tus necesidades
                   //height: 30, // Ajusta el alto según tus necesidades
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: const Text(
+                    child: Text(
                       'AV001',
                       textAlign: TextAlign.left,
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
@@ -172,7 +166,7 @@ class _ManipulacionReservaState extends State<ManipulacionReserva> {
                   width: 300, // Ajusta el ancho según tus necesidades
                   height: 70, // Ajusta el alto según tus necesidades
                   child: TextFormField(
-                    //obscureText: true,
+                    obscureText: true,
                     decoration: const InputDecoration(
                       labelText: 'Estado',
                       hintStyle: TextStyle(
@@ -188,12 +182,12 @@ class _ManipulacionReservaState extends State<ManipulacionReserva> {
                   ),
                 ),
 
-                SizedBox(
+                const SizedBox(
                   width: 300, // Ajusta el ancho según tus necesidades
                   //height: 30, // Ajusta el alto según tus necesidades
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: const Text(
+                    child: Text(
                       'Libre/Ocupado/Reservado',
                       textAlign: TextAlign.left,
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
@@ -273,48 +267,9 @@ class _ManipulacionReservaState extends State<ManipulacionReserva> {
                   ),
                 ),
                 const SizedBox(height: 10.0),
-
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: _buildIcon(Icons.person, 0),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: _buildIcon(Icons.qr_code_outlined, 1),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: _buildIcon(Icons.directions_car, 2),
-            label: '',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: const Color(0xFF003DA6),
-        backgroundColor: const Color(0xFF003DA6),
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        onTap: _onItemTapped,
-      ),
-    );
-  }
-
-  Widget _buildIcon(IconData icon, int index) {
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: _selectedIndex == index ? Colors.white : Colors.transparent,
-      ),
-      padding: const EdgeInsets.all(5.0), // Espacio alrededor del icono
-      child: Icon(
-        icon,
-        size: 40.0,
-        color: _selectedIndex == index ? const Color(0xFF003DA6) : Colors.white,
       ),
     );
   }
 }
-
