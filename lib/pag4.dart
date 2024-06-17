@@ -38,7 +38,7 @@ class LogInGuest extends StatelessWidget {
                 ),
                 const SizedBox(height: 20.0),
                 SizedBox(
-                  width: 300, // Ajusta el ancho según tus necesidades
+                  width: 300, // Ajusta el ancho según tus necesidades 
                   height: 40, // Ajusta el alto según tus necesidades
                   child: DropdownButtonFormField<String>(
                     decoration: const InputDecoration(

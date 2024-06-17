@@ -37,7 +37,7 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
             alignment: const Alignment(0.0, 0.8),
             child: GestureDetector(
               onTap: () {
-                // Lógica cuando la imagen es presionada
+                // Lógica cuando la imagen es presionada 
                 print('Imagen presionada');
               },
               child: Image.asset(

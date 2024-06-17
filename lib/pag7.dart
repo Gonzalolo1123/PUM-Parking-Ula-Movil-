@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Index extends StatelessWidget {
-  // ignore: use_key_in_widget_constructors
+  // ignore: use_key_in_widget_constructors 
   const Index({Key? key});
 
   @override

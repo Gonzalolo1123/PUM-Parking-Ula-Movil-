@@ -184,7 +184,7 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
             const SizedBox(
               height: 20.0,
             ),/*
-            ElevatedButton(
+            ElevatedButton( 
               onPressed: () {
                 // Lógica para el botón de Edificio
                 print('Reservar ha sido presionado!');
