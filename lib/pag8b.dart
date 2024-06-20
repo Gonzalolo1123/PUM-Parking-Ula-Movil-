@@ -1,8 +1,67 @@
-// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, duplicate_ignore, avoid_print, camel_case_types, unused_field, unused_element
+// ignore_for_file: avoid_print, use_key_in_widget_constructors, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart'; // Carrusel
+import 'package:carousel_slider/carousel_slider.dart';
 import 'pag5.dart';
+
+// Lista de datos de los edificios
+final List<Map<String, String>> buildings = [
+  {
+    'imagePath': 'assets/edificio1.png',
+    'description': 'Chuyaca',
+  },
+  {
+    'imagePath': 'assets/edificio2.png',
+    'description': 'Meyer',
+  },
+];
+
+class BuildingCard extends StatelessWidget {
+  final String imagePath;
+  final String description;
+
+  const BuildingCard({
+    required this.imagePath,
+    required this.description,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Card(
+        color: Colors.white,
+        clipBehavior: Clip.hardEdge,
+        child: SizedBox(
+          width: 300,
+          height: 300,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.asset(
+                imagePath,
+                width: 300,
+                height: 250,
+                fit: BoxFit.cover,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  description,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class Sede extends StatefulWidget {
   @override
@@ -10,6 +69,9 @@ class Sede extends StatefulWidget {
 }
 
 class _SedeState extends State<Sede> {
+  final CarouselController _carouselController = CarouselController();
+  int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,22 +104,38 @@ class _SedeState extends State<Sede> {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 33),
             ),
             CarouselSlider(
-              // Inicia carrusel
-              options: CarouselOptions(height: 400.0),
-              items: const [
-                card1(),
-                card2(),
-                card3(),
-              ],
+              carouselController: _carouselController,
+              options: CarouselOptions(
+                height: 400.0,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+              ),
+              items: buildings.map((building) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return BuildingCard(
+                      imagePath: building['imagePath']!,
+                      description: building['description']!,
+                    );
+                  },
+                );
+              }).toList(),
             ),
             ElevatedButton(
               onPressed: () {
-                // Lógica para el botón de Edificio
-                print('Seleccionar ha sido presionado!');
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Index()),
+                final selectedSedeDescription =
+                    buildings[_currentIndex]['description']!;
+                print('Sede seleccionada: $selectedSedeDescription');
+
+                final navigationData = NavigationData(
+                  selectedSedeDescription: selectedSedeDescription,
+                  selectedEdificioDescription: '',
                 );
+
+                navigateToIndex(context, navigationData);
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(320, 40),
@@ -81,110 +159,24 @@ class _SedeState extends State<Sede> {
   }
 }
 
-// IMÁGENES
-// Cards para cada edificio (método que utilize para la pokedex -s)
+class NavigationData {
+  final String selectedSedeDescription;
+  final String selectedEdificioDescription;
 
-// Primer card con primera imágen y descripción
-class card1 extends StatelessWidget {
-  const card1({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        color: Colors.white,
-        // clipBehavior is necessary because, without it, the InkWell's animation
-        // will extend beyond the rounded edges of the [Card] (see https://github.com/flutter/flutter/issues/109776)
-        // This comes with a small performance cost, and you should not set [clipBehavior]
-        // unless you need it.
-        clipBehavior: Clip.hardEdge,
-
-        child: SizedBox(
-          width: 300,
-          height: 300,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Image.asset(
-                'assets/edificio1.png',
-                width: 300,
-                height: 300,
-              ), // Añade la imágen
-              //),
-              //const Text('edificio1')
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  NavigationData({
+    required this.selectedSedeDescription,
+    required this.selectedEdificioDescription,
+  });
 }
 
-// Segundo card con segunda imágen y descripción
-class card2 extends StatelessWidget {
-  const card2({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        color: Colors.white,
-        // clipBehavior is necessary because, without it, the InkWell's animation
-        // will extend beyond the rounded edges of the [Card] (see https://github.com/flutter/flutter/issues/109776)
-        // This comes with a small performance cost, and you should not set [clipBehavior]
-        // unless you need it.
-        clipBehavior: Clip.hardEdge,
-
-        child: SizedBox(
-          width: 300,
-          height: 300,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Image.asset(
-                'assets/edificio2.png',
-                width: 300,
-                height: 300,
-              ), // Añade la imágen
-              //),
-              //const Text('edificio2')
-            ],
-          ),
-        ),
+void navigateToIndex(BuildContext context, NavigationData navigationData) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => Index(
+        navigationData: navigationData,
+        selectedBuildingDescription: '',
       ),
-    );
-  }
-}
-
-// Tercer card con tercera imágen y descripción
-class card3 extends StatelessWidget {
-  const card3({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        color: Colors.white,
-        // clipBehavior is necessary because, without it, the InkWell's animation
-        // will extend beyond the rounded edges of the [Card] (see https://github.com/flutter/flutter/issues/109776)
-        // This comes with a small performance cost, and you should not set [clipBehavior]
-        // unless you need it.
-        clipBehavior: Clip.hardEdge,
-
-        child: SizedBox(
-          width: 300,
-          height: 300,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Image.asset('assets/edificio3.png',
-                  width: 300, height: 300), // Añade la imágen
-              //),
-              //const Text('edificio3')
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+    ),
+  );
 }
