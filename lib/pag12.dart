@@ -1,20 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, avoid_print
 
 import 'package:flutter/material.dart';
-
 import 'pag8.dart';
-
-class Index extends StatelessWidget {
-  const Index({Key? key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: IndexSeguridad(),
-    );
-  }
-}
-
 class IndexSeguridad extends StatefulWidget {
   @override
   _IndexSeguridadState createState() => _IndexSeguridadState();

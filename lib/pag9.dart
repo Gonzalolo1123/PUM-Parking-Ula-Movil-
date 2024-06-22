@@ -1,18 +1,8 @@
-// ignore_for_file: unused_field, depend_on_referenced_packages, use_super_parameters, library_private_types_in_public_api, avoid_print, unused_element
+// ignore_for_file: library_private_types_in_public_api, use_super_parameters, avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 
-class Index extends StatelessWidget {
-  const Index({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Hora(),
-    );
-  }
-}
+import 'pag5.dart';
 
 class Hora extends StatefulWidget {
   const Hora({Key? key}) : super(key: key);
@@ -21,10 +11,24 @@ class Hora extends StatefulWidget {
   _HoraState createState() => _HoraState();
 }
 
+// Clase de estado
 class _HoraState extends State<Hora> {
-  final GlobalKey<AnalogClockState> _analogClockKey = GlobalKey();
-  final TextEditingController _hourController = TextEditingController();
-  final TextEditingController _minuteController = TextEditingController();
+  int _hour = 0; // Hora por defecto
+  int _minute = 0; // Minuto por defecto
+  String _selectedTime = '00:00'; // String para mostrar la hora seleccionada
+
+  // Método para actualizar la hora y el minuto
+  void _updateTime(int hour, int minute) {
+    setState(() {
+      _hour = hour;
+      _minute = minute;
+      _selectedTime =
+          '$_hour:${_minute.toString().padLeft(2, '0')}'; // Formato HH:MM
+    });
+  }
+
+  // Getter para obtener el valor de _selectedTime
+  String get selectedTime => _selectedTime;
 
   @override
   Widget build(BuildContext context) {
@@ -49,80 +53,111 @@ class _HoraState extends State<Hora> {
         ),
       ),
       resizeToAvoidBottomInset: true,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Text(
+              'Hora',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 33),
+            ),
+            const SizedBox(height: 50),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'Hora',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 33),
-                ),
-                SizedBox(
-                  width: 200,
-                  height: 200,
-                  child: AnalogClock(
-                    dateTime: DateTime.now(),
-                    isKeepTime: false,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SizedBox(
-                        width: 100,
-                        height: 50,
-                        child: TextField(
-                          controller: _hourController,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Hora',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 100,
-                        height: 50,
-                        child: TextField(
-                          controller: _minuteController,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Minuto',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Lógica para el botón de Edificio
-                    print('Seleccionar ha sido presionado!');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(320, 40),
-                    padding: const EdgeInsets.all(10.0),
-                    side: const BorderSide(width: 2, color: Color(0xFF003DA6)),
-                  ),
-                  child: const Text(
-                    'Seleccionar',
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Color(0xFF003DA6),
-                      fontWeight: FontWeight.bold,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_drop_up, color: Colors.grey),
+                      onPressed: () {
+                        setState(() {
+                          _hour = (_hour + 1) % 24;
+                          _updateTime(_hour, _minute);
+                        });
+                      },
                     ),
-                  ),
+                    Text(
+                      _hour.toString().padLeft(2, '0'),
+                      style: const TextStyle(fontSize: 100, color: Colors.grey),
+                    ),
+                    IconButton(
+                      icon:
+                          const Icon(Icons.arrow_drop_down, color: Colors.grey),
+                      onPressed: () {
+                        setState(() {
+                          _hour = (_hour - 1 + 24) % 24;
+                          _updateTime(_hour, _minute);
+                        });
+                      },
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 10.0),
+                const SizedBox(width: 10),
+                const Text(
+                  ':',
+                  style: TextStyle(fontSize: 100, color: Colors.grey),
+                ),
+                const SizedBox(width: 10),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_drop_up, color: Colors.grey),
+                      onPressed: () {
+                        setState(() {
+                          _minute = (_minute + 1) % 60;
+                          _updateTime(_hour, _minute);
+                        });
+                      },
+                    ),
+                    Text(
+                      _minute.toString().padLeft(2, '0'),
+                      style: const TextStyle(fontSize: 100, color: Colors.grey),
+                    ),
+                    IconButton(
+                      icon:
+                          const Icon(Icons.arrow_drop_down, color: Colors.grey),
+                      onPressed: () {
+                        setState(() {
+                          _minute = (_minute - 1 + 60) % 60;
+                          _updateTime(_hour, _minute);
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ],
             ),
-          ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                print('Hora enviada: $selectedTime');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Index(
+                            horaSel: selectedTime,
+                          )),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(320, 40),
+                padding: const EdgeInsets.all(10.0),
+                side: const BorderSide(width: 2, color: Color(0xFF003DA6)),
+              ),
+              child: const Text(
+                'Seleccionar',
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Color(0xFF003DA6),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10.0),
+          ],
         ),
       ),
     );

@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, use_super_parameters, library_private_types_in_public_api, use_build_context_synchronously, prefer_interpolation_to_compose_strings, use_key_in_widget_constructors, valid_regexps
+// ignore_for_file: avoid_print, use_super_parameters, library_private_types_in_public_api, use_build_context_synchronously, prefer_interpolation_to_compose_strings, use_key_in_widget_constructors, valid_regexps, curly_braces_in_flow_control_structures
 import 'package:flutter/material.dart';
 import 'pag2.dart';
 import 'package:http/http.dart' as http;
@@ -23,7 +23,7 @@ class _LogUpState extends State<LogUp> {
   double _calculatePasswordStrength(String password) {
     int criteriaMet = 0;
 
-    if (password.length >= 8) criteriaMet++; // Longitud mínima de 8 caracteres
+    if (password.length >= 10) criteriaMet++; // Longitud mínima de 8 caracteres
     if (RegExp(r'[A-Z]').hasMatch(password))
       criteriaMet++; // Tiene al menos una letra mayúscula
     if (RegExp(r'[a-z]').hasMatch(password))

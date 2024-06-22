@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'pag8b.dart';
+import 'pag5.dart';
 
 final List<Map<String, String>> buildings = [
   {
@@ -132,13 +132,13 @@ class _EdificioState extends State<Edificio> {
                 final selectedBuildingDescription =
                     buildings[_currentIndex]['description']!;
                 print('Edificio seleccionado: $selectedBuildingDescription');
-
-                final navigationData = NavigationData(
-                  selectedSedeDescription: '',
-                  selectedEdificioDescription: selectedBuildingDescription,
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Index(
+                            ediSel: selectedBuildingDescription,
+                          )),
                 );
-
-                navigateToIndex(context, navigationData);
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(320, 40),

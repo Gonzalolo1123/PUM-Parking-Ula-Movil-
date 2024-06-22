@@ -1,17 +1,8 @@
-// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, avoid_print
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, avoid_print, prefer_const_declarations
 
 import 'package:flutter/material.dart';
 
-class Index extends StatelessWidget {
-  const Index({Key? key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: SeleccionarVehiculo(),
-    );
-  }
-}
+import 'pag5.dart';
 
 class SeleccionarVehiculo extends StatefulWidget {
   @override
@@ -84,8 +75,15 @@ class _SeleccionarVehiculoState extends State<SeleccionarVehiculo> {
             const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
+                final vehiculoSelect='morado';
                 // Lógica para el botón de Edificio
-                print('Registrar Auto ha sido presionado!');
+                print('seleccionar Vehiculo Auto ha sido presionado!');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          Index(vehSel: vehiculoSelect)),
+                );
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(320, 40),

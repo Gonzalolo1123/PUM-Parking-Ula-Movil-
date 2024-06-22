@@ -2,18 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-class Index extends StatelessWidget {
-  // ignore: use_key_in_widget_constructors
-  const Index({Key? key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: ReservaCompletada(),
-    );
-  }
-}
-
 class ReservaCompletada extends StatefulWidget {
   const ReservaCompletada({super.key});
 
@@ -190,6 +178,51 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       '00:00 hrs',
+                      textAlign: TextAlign.left,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 5.0),
+
+                // Nueva sección para Tipo Vehículo
+                SizedBox(
+                  width: 300, // Ajusta el ancho según tus necesidades
+                  //height: 30, // Ajusta el alto según tus necesidades
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Tipo Vehículo',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize:
+                            14, // Ajusta el tamaño de fuente según tus necesidades
+                        color: Colors.grey.shade700,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(
+                  width: 300, // Ajusta el ancho según tus necesidades
+                  height: 1, // Ajusta el alto según tus necesidades
+                  child: Divider(
+                    color: Colors.black,
+                  ),
+                ),
+
+                const SizedBox(height: 16.0),
+
+                const SizedBox(
+                  width: 300, // Ajusta el ancho según tus necesidades
+                  //height: 30, // Ajusta el alto según tus necesidades
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Mediano',
                       textAlign: TextAlign.left,
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 23),

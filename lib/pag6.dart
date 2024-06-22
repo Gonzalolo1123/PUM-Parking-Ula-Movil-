@@ -1,13 +1,25 @@
-// ignore_for_file: prefer_const_constructors, avoid_print, use_super_parameters
+// ignore_for_file: prefer_const_constructors, avoid_print, use_super_parameters, prefer_const_constructors_in_immutables, non_constant_identifier_names, unnecessary_this
 
 import 'package:flutter/material.dart';
 
 class ConfirmacionReserva extends StatelessWidget {
-  const ConfirmacionReserva({Key? key}) : super(key: key);
+  final String HoraSel;
+  final String EdiSel;
+  final String VehSel;
+  final String SedeSel;
+
+  const ConfirmacionReserva({
+    required this.HoraSel,
+    required this.EdiSel,
+    required this.VehSel,
+    required this.SedeSel,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+
     return SizedBox(
       height: 560, // Ajusta la altura según sea necesario
       width: screenWidth,
@@ -29,18 +41,20 @@ class ConfirmacionReserva extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(
-                top: 20,
-                left: 30,
-                right: 30), // Ajusta el padding según tus necesidades
+              top: 20,
+              left: 30,
+              right: 30,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
                   'Edificio',
                   style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black54),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black54,
+                  ),
                 ),
                 SizedBox(height: 10),
                 Divider(
@@ -49,16 +63,17 @@ class ConfirmacionReserva extends StatelessWidget {
                 ),
                 SizedBox(height: 5),
                 Text(
-                  'Aulas Virtuales',
+                  EdiSel,
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 10),
                 Text(
                   'Lugar',
                   style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black54),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black54,
+                  ),
                 ),
                 SizedBox(height: 5),
                 Divider(
@@ -67,16 +82,17 @@ class ConfirmacionReserva extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'AV001',
+                  SedeSel, // Usando SedeSel en lugar de un valor fijo 'AV001'
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 5),
+                SizedBox(height: 10),
                 Text(
                   'Hora',
                   style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black54),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black54,
+                  ),
                 ),
                 SizedBox(height: 10),
                 Divider(
@@ -85,16 +101,17 @@ class ConfirmacionReserva extends StatelessWidget {
                 ),
                 SizedBox(height: 5),
                 Text(
-                  '00:00 hrs',
-                  style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),
+                  HoraSel, // Usando HoraSel en lugar de un valor fijo '00:00 hrs'
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 10),
                 Text(
                   'Tipo Vehiculo',
                   style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black54),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black54,
+                  ),
                 ),
                 SizedBox(height: 5),
                 Divider(
@@ -103,19 +120,18 @@ class ConfirmacionReserva extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'Mediano',
-                  style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),
+                  VehSel, // Usando VehSel en lugar de un valor fijo 'Mediano'
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 10),
-                
               ],
             ),
           ),
           ElevatedButton(
             onPressed: () {
-              // Lógica para el botón de Edificio
+              // Lógica para el botón de Reservar
               print('Reservar ha sido presionado!');
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(); // Cierra el diálogo de confirmación
             },
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(320, 40),

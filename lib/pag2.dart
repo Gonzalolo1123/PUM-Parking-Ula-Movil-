@@ -1,7 +1,8 @@
+// ignore_for_file: use_build_context_synchronously, avoid_print
+
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import 'pag3.dart';
 import 'pag8b.dart';
 
@@ -35,7 +36,8 @@ class _LogInState extends State<LogIn> {
 
     try {
       final response = await http.post(
-        Uri.parse('https://website-parking-ulagos.onrender.com/usuarios/iniciosesion'),
+        Uri.parse(
+            'https://website-parking-ulagos.onrender.com/usuarios/iniciosesion'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -151,7 +153,8 @@ class _LogInState extends State<LogIn> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const LogUp()),
+                          MaterialPageRoute(
+                              builder: (context) => const LogUp()),
                         );
                       },
                       child: const Text(
@@ -165,7 +168,24 @@ class _LogInState extends State<LogIn> {
                       ),
                     ),
                   ],
-                ),
+                ), /*
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const LogUp()),
+                    );
+                  },
+                  child: const Text(
+                    '¿Olvidaste tu Contraseña?',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(130, 0, 0, 0),
+                      decoration: TextDecoration.underline,
+                      decorationColor: Color.fromARGB(130, 0, 0, 0),
+                    ),
+                  ),
+                ),*/ //completar este campo si se cree necesario agregar la recuperacion de contraseña
               ],
             ),
           ),

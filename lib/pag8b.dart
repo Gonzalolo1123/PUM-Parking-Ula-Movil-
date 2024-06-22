@@ -129,13 +129,12 @@ class _SedeState extends State<Sede> {
                 final selectedSedeDescription =
                     buildings[_currentIndex]['description']!;
                 print('Sede seleccionada: $selectedSedeDescription');
-
-                final navigationData = NavigationData(
-                  selectedSedeDescription: selectedSedeDescription,
-                  selectedEdificioDescription: '',
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          Index(sedeSel: selectedSedeDescription)),
                 );
-
-                navigateToIndex(context, navigationData);
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(320, 40),
@@ -157,26 +156,4 @@ class _SedeState extends State<Sede> {
       ),
     );
   }
-}
-
-class NavigationData {
-  final String selectedSedeDescription;
-  final String selectedEdificioDescription;
-
-  NavigationData({
-    required this.selectedSedeDescription,
-    required this.selectedEdificioDescription,
-  });
-}
-
-void navigateToIndex(BuildContext context, NavigationData navigationData) {
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => Index(
-        navigationData: navigationData,
-        selectedBuildingDescription: '',
-      ),
-    ),
-  );
 }

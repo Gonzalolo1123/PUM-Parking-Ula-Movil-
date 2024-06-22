@@ -2,19 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-class Index extends StatelessWidget {
-  // ignore: duplicate_ignore
-  // ignore: use_key_in_widget_constructors
-  const Index({Key? key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: RegistroVehiculo(),
-    );
-  }
-}
-
 class RegistroVehiculo extends StatefulWidget {
   @override
   _RegistroVehiculoState createState() => _RegistroVehiculoState();

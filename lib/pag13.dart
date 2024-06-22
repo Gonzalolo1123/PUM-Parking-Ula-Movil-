@@ -2,17 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-class Index extends StatelessWidget {
-  const Index({Key? key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: ManipulacionReserva(),
-    );
-  }
-}
-
 class ManipulacionReserva extends StatefulWidget {
   @override
   _ManipulacionReservaState createState() => _ManipulacionReservaState();
