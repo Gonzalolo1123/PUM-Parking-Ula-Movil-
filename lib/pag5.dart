@@ -1,6 +1,7 @@
-// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, avoid_print
+// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, avoid_print, use_super_parameters
 import 'package:flutter/material.dart';
 import 'package:pum/pag12.dart';
+import 'package:pum/pag8b.dart';
 import 'package:pum/pag9.dart';
 import 'pag6.dart';
 import 'pag7b.dart';
@@ -20,7 +21,14 @@ void _showReservarBottomSheet(BuildContext context) {
 }
 
 class Index extends StatelessWidget {
-  const Index({Key? key});
+  final String selectedBuildingDescription; 
+  final NavigationData navigationData;
+
+  const Index({
+    required this.selectedBuildingDescription,
+    required this.navigationData,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

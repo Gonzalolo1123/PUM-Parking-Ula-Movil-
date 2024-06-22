@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'pag2.dart';
+import 'pag8b.dart';
 
 class LogInGuest extends StatelessWidget {
   const LogInGuest({super.key});
@@ -98,6 +99,12 @@ class LogInGuest extends StatelessWidget {
                   onPressed: () async {
                     // Agrega la lógica para el botón de Crear Cuenta
                     //print('¡El botón de crear cuenta ha sido presionado!');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              Sede()), // Asegúrate de definir este widget
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(300, 40),
