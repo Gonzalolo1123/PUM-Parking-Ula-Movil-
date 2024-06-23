@@ -334,8 +334,12 @@ class MyHomePageContent extends StatelessWidget {
                   sedeSel != null) {
                 _showReservarBottomSheet(
                     context, horaSel!, ediSel!, vehSel!, sedeSel!);
+                    
               } else {
                 print('Faltan datos para la reserva');
+                ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Faltan datos para la reserva')),
+        );
               }
             },
             style: ElevatedButton.styleFrom(
