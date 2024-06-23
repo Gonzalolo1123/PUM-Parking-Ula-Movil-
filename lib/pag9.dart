@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'pag5.dart';
 
 class Hora extends StatefulWidget {
   const Hora({Key? key}) : super(key: key);
@@ -15,20 +14,20 @@ class Hora extends StatefulWidget {
 class _HoraState extends State<Hora> {
   int _hour = 0; // Hora por defecto
   int _minute = 0; // Minuto por defecto
-  String _selectedTime = '00:00'; // String para mostrar la hora seleccionada
+  String _horaSeleccionada = '00:00'; // String para mostrar la hora seleccionada
 
   // Método para actualizar la hora y el minuto
   void _updateTime(int hour, int minute) {
     setState(() {
       _hour = hour;
       _minute = minute;
-      _selectedTime =
+      _horaSeleccionada =
           '$_hour:${_minute.toString().padLeft(2, '0')}'; // Formato HH:MM
     });
   }
 
-  // Getter para obtener el valor de _selectedTime
-  String get selectedTime => _selectedTime;
+  // Getter para obtener el valor de _horaSeleccionada
+  String get horaSeleccionada => _horaSeleccionada;
 
   @override
   Widget build(BuildContext context) {
@@ -133,14 +132,8 @@ class _HoraState extends State<Hora> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                print('Hora enviada: $selectedTime');
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Index(
-                            horaSel: selectedTime,
-                          )),
-                );
+                print('Hora enviada: $horaSeleccionada');
+                Navigator.pop(context, horaSeleccionada);
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(320, 40),

@@ -126,14 +126,14 @@ class _SedeState extends State<Sede> {
             ),
             ElevatedButton(
               onPressed: () {
-                final selectedSedeDescription =
+                final sedeSeleccionada =
                     buildings[_currentIndex]['description']!;
-                print('Sede seleccionada: $selectedSedeDescription');
+                print('Sede seleccionada: $sedeSeleccionada');
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          Index(sedeSel: selectedSedeDescription)),
+                          MyHomePage(sedeSel: sedeSeleccionada)),
                 );
               },
               style: ElevatedButton.styleFrom(

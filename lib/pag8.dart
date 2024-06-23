@@ -2,20 +2,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'pag5.dart';
 
 final List<Map<String, String>> buildings = [
   {
     'imagePath': 'assets/edificio1.png',
-    'description': 'edificio 1',
+    'description': 'Edificio 1',
   },
   {
     'imagePath': 'assets/edificio2.png',
-    'description': 'edificio 2',
+    'description': 'Edificio 2',
   },
   {
     'imagePath': 'assets/edificio3.png',
-    'description': 'edificio 3',
+    'description': 'Edificio 3',
   },
 ];
 
@@ -129,16 +128,10 @@ class _EdificioState extends State<Edificio> {
             ),
             ElevatedButton(
               onPressed: () {
-                final selectedBuildingDescription =
+                final edificioSeleccionado =
                     buildings[_currentIndex]['description']!;
-                print('Edificio seleccionado: $selectedBuildingDescription');
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Index(
-                            ediSel: selectedBuildingDescription,
-                          )),
-                );
+                print('Edificio seleccionado: $edificioSeleccionado');
+                Navigator.pop(context, edificioSeleccionado);
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(320, 40),

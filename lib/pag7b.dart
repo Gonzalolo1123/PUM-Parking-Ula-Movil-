@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'pag5.dart';
 
 class SeleccionarVehiculo extends StatefulWidget {
   @override
@@ -75,15 +74,10 @@ class _SeleccionarVehiculoState extends State<SeleccionarVehiculo> {
             const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
-                final vehiculoSelect='morado';
+                String  vehiculoSeleccionado = 'Toyota Yaris';
                 // Lógica para el botón de Edificio
                 print('seleccionar Vehiculo Auto ha sido presionado!');
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          Index(vehSel: vehiculoSelect)),
-                );
+                Navigator.pop(context, vehiculoSeleccionado);
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(320, 40),

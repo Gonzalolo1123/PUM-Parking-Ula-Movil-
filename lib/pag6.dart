@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, use_super_parameters, prefer_const_constructors_in_immutables, non_constant_identifier_names, unnecessary_this
 
 import 'package:flutter/material.dart';
+import 'package:pum/pag14.dart';
 
 class ConfirmacionReserva extends StatelessWidget {
   final String HoraSel;
@@ -131,7 +132,10 @@ class ConfirmacionReserva extends StatelessWidget {
             onPressed: () {
               // Lógica para el botón de Reservar
               print('Reservar ha sido presionado!');
-              Navigator.of(context).pop(); // Cierra el diálogo de confirmación
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ReservaCompletada()),
+              );
             },
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(320, 40),
