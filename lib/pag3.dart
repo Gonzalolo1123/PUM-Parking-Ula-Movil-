@@ -80,6 +80,7 @@ class _LogUpState extends State<LogUp> {
         );
       } else {
         // Mostrar mensaje de error si la respuesta no es 200
+        
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Error al registrar el usuario')),
         );

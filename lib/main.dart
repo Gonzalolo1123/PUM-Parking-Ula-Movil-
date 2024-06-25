@@ -1,6 +1,4 @@
 // ignore_for_file: avoid_print
-import 'package:pum/pag12.dart';
-
 import 'pag2.dart';
 import 'pag3.dart';
 import 'pag4.dart';
@@ -53,7 +51,9 @@ class Inicio extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 50),
                 child: Text(
                   'Bienvenido a Parking Ulagos',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),//esto es fontsize 40
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 40), 
                 ),
               ),
               Padding(
@@ -136,29 +136,6 @@ class Inicio extends StatelessWidget {
               ),
             ),
           ),
-          //esto se borra solo es en la parte de front
-          TextButton(
-            onPressed: () {
-              // Función que se ejecuta cuando se presiona el botón
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => IndexSeguridad()),
-              );
-            },
-            style: TextButton.styleFrom(
-              padding: const EdgeInsets.all(1.0),
-            ),
-            
-            child: const Text(
-              'Seguridad Index',
-              style: TextStyle(
-                fontSize: 15,
-                // Ajusta el tamaño de fuente según tus necesidades
-                color: Colors.black, // Color del texto
-              ),
-            ),
-          ),
-           //esto se borra solo es en la parte de front
         ],
       ),
     );

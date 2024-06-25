@@ -1,7 +1,8 @@
-// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, avoid_print, prefer_const_declarations
+// ignore_for_file: prefer_const_constructors, avoid_print, use_key_in_widget_constructors, library_private_types_in_public_api, use_build_context_synchronously
 
+import 'dart:convert';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 
 class SeleccionarVehiculo extends StatefulWidget {
   @override
@@ -9,6 +10,39 @@ class SeleccionarVehiculo extends StatefulWidget {
 }
 
 class _SeleccionarVehiculoState extends State<SeleccionarVehiculo> {
+  List<Map<String, dynamic>> vehiculos = [];
+
+  @override
+  void initState() {
+    super.initState();
+    recibirDatos();
+  }
+
+  Future<void> recibirDatos() async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'https://website-parking-ulagos.onrender.com/usuarios/vehiculos'),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body) as List;
+        setState(() {
+          vehiculos = data.map((item) {
+            return {
+              'patente': item['patente'],
+              'modelo': item['modelo'],
+            };
+          }).toList();
+        });
+      } else {
+        print('Error al recibir los datos');
+      }
+    } catch (e) {
+      print('Error de conexión: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,11 +91,11 @@ class _SeleccionarVehiculoState extends State<SeleccionarVehiculo> {
                             BorderSide(color: Color(0xFF003DA6), width: 2.0),
                       ),
                     ),
-                    items: <String>['opcion1', 'opcion2', 'opcion3']
-                        .map((String value) {
+                    items: vehiculos.map((vehiculo) {
                       return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
+                        value: vehiculo['patente'],
+                        child: Text(
+                            '${vehiculo['patente']} - ${vehiculo['modelo']}'),
                       );
                     }).toList(),
                     onChanged: (String? value) {
@@ -74,7 +108,7 @@ class _SeleccionarVehiculoState extends State<SeleccionarVehiculo> {
             const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
-                String  vehiculoSeleccionado = 'Toyota Yaris';
+                String vehiculoSeleccionado = 'Toyota Yaris';
                 // Lógica para el botón de Edificio
                 print('seleccionar Vehiculo Auto ha sido presionado!');
                 Navigator.pop(context, vehiculoSeleccionado);

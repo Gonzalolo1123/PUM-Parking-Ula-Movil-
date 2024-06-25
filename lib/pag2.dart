@@ -1,9 +1,11 @@
-// ignore_for_file: use_build_context_synchronously, avoid_print
+// ignore_for_file: use_build_context_synchronously, avoid_print, library_private_types_in_public_api, prefer_const_constructors, unused_import
 
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'pag12.dart';
 import 'pag3.dart';
+import 'pag5.dart';
 import 'pag8b.dart';
 
 class LogIn extends StatefulWidget {
@@ -12,7 +14,6 @@ class LogIn extends StatefulWidget {
   @override
   _LogInState createState() => _LogInState();
 }
-
 class _LogInState extends State<LogIn> {
   final TextEditingController _correoController = TextEditingController();
   final TextEditingController _contrasenaController = TextEditingController();
@@ -36,30 +37,41 @@ class _LogInState extends State<LogIn> {
 
     try {
       final response = await http.post(
-        Uri.parse(
-            'https://website-parking-ulagos.onrender.com/usuarios/iniciosesion'),
+        Uri.parse('https://website-parking-ulagos.onrender.com/usuarios/iniciosesion'),
         headers: {
           'Content-Type': 'application/json',
         },
         body: jsonEncode(datos),
       );
 
-      if (response.statusCode == 302) {
-        // Navega a la página de sedes
-        print("Datos obtenidos exitosamente");
+      if (response.statusCode == 200) {
+        // Parsear la respuesta JSON
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        final String tipoUsuario = responseData['tipo_usuario'];
+
+        // Mostrar mensaje de éxito
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Inicio de Sesión exitoso')),
         );
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Sede()),
-        );
+
+        // Navegar a diferentes páginas según el tipo de usuario
+        if (tipoUsuario == 'guardia') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => IndexSeguridad()),
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Sede()),
+          );
+        }
       } else {
         // Mostrar mensaje de error
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Correo o contraseña incorrectos')),
         );
-        print('error de status: $response.statusCode');
+        print('Error de estado: ${response.statusCode}');
       }
     } catch (e) {
       print('Error de conexión: $e');

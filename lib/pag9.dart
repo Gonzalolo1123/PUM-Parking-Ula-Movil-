@@ -12,7 +12,7 @@ class Hora extends StatefulWidget {
 
 // Clase de estado
 class _HoraState extends State<Hora> {
-  int _hour = 0; // Hora por defecto
+  int _hour = 8; // Hora por defecto
   int _minute = 0; // Minuto por defecto
   String _horaSeleccionada = '00:00'; // String para mostrar la hora seleccionada
 

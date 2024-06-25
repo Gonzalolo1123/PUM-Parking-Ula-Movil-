@@ -30,7 +30,6 @@ class Index extends StatelessWidget {
     return MaterialApp(
       home: MyHomePage(),
       routes: {
-        '/': (context) => MyHomePage(),
         '/pag12': (context) => IndexSeguridad(),
         '/pag10': (context) => const QRScannerPage(),
         '/pag7': (context) => RegistroVehiculo(),
@@ -190,7 +189,7 @@ class MyHomePageContent extends StatelessWidget {
   final ValueChanged<String>? onSedeSelected;
 
   const MyHomePageContent({
-    Key? key,
+    super.key,
     this.horaSel,
     this.ediSel,
     this.vehSel,
@@ -199,7 +198,7 @@ class MyHomePageContent extends StatelessWidget {
     this.onHoraSelected,
     this.onEdificioSelected,
     this.onSedeSelected,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
