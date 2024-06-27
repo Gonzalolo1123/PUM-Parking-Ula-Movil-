@@ -6,15 +6,15 @@ import 'package:carousel_slider/carousel_slider.dart';
 final List<Map<String, String>> buildings = [
   {
     'imagePath': 'assets/edificio1.png',
-    'description': 'Edificio 1',
+    'description': 'Central',
   },
   {
     'imagePath': 'assets/edificio2.png',
-    'description': 'Edificio 2',
+    'description': 'Aulas Virtuales',
   },
   {
     'imagePath': 'assets/edificio3.png',
-    'description': 'Edificio 3',
+    'description': 'ITR',
   },
 ];
 

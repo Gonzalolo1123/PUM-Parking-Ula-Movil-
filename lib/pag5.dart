@@ -11,7 +11,7 @@ import 'pag8.dart';
 import 'pag9.dart';
 
 void _showReservarBottomSheet(BuildContext context, String horaentradaSel,
-    String horasalidaSel, String ediSel, String vehSel, String sedeSel) {
+    String horasalidaSel, String ediSel, String vehSel, String idEspacioSel) {
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
@@ -19,7 +19,7 @@ void _showReservarBottomSheet(BuildContext context, String horaentradaSel,
         HoraEntradaSel: horaentradaSel,
         EdiSel: ediSel,
         VehSel: vehSel,
-        SedeSel: sedeSel,
+        idEspacioSel: idEspacioSel,
         HoraSalidaSel: horasalidaSel,
       );
     },
@@ -51,14 +51,14 @@ class MyHomePage extends StatefulWidget {
   final String? horasalidaSel;
   final String? ediSel;
   final String? vehSel;
-  final String? sedeSel;
+  final String? idEspacioSel;
 
   MyHomePage({
     this.horaentradaSel,
     this.horasalidaSel,
     this.ediSel,
     this.vehSel,
-    this.sedeSel,
+    this.idEspacioSel,
     super.key,
   });
 
@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String? _horasalidaSel;
   String? _ediSel;
   String? _vehSel;
-  String? _sedeSel;
+  String? _idEspacioSel;
 
   @override
   void initState() {
@@ -80,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _horasalidaSel = widget.horasalidaSel;
     _ediSel = widget.ediSel;
     _vehSel = widget.vehSel;
-    _sedeSel = widget.sedeSel;
+    _idEspacioSel = widget.idEspacioSel;
     _selectedIndex = 0;
   }
 
@@ -122,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
             horasalidaSel: _horasalidaSel,
             ediSel: _ediSel,
             vehSel: _vehSel,
-            sedeSel: _sedeSel,
+            idEspacioSel: _idEspacioSel,
             onVehiculoSelected: (nuevoVehiculo) {
               setState(() {
                 _vehSel = nuevoVehiculo;
@@ -143,9 +143,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 _ediSel = nuevoEdificio;
               });
             },
-            onSedeSelected: (nuevaSede) {
+            onIdEspacioSelected: (nuevaIdEspacio) {
               setState(() {
-                _sedeSel = nuevaSede;
+                _idEspacioSel = nuevaIdEspacio;
               });
             },
           ),
@@ -199,12 +199,12 @@ class MyHomePageContent extends StatelessWidget {
   final String? horasalidaSel;
   final String? ediSel;
   final String? vehSel;
-  final String? sedeSel;
+  final String? idEspacioSel;
   final ValueChanged<String>? onVehiculoSelected;
   final ValueChanged<String>? onHoraentradaSelected;
   final ValueChanged<String>? onHorasalidaSelected;
   final ValueChanged<String>? onEdificioSelected;
-  final ValueChanged<String>? onSedeSelected;
+  final ValueChanged<String>? onIdEspacioSelected;
 
   const MyHomePageContent({
     super.key,
@@ -212,12 +212,12 @@ class MyHomePageContent extends StatelessWidget {
     this.horasalidaSel,
     this.ediSel,
     this.vehSel,
-    this.sedeSel,
+    this.idEspacioSel,
     this.onVehiculoSelected,
     this.onHoraentradaSelected,
     this.onHorasalidaSelected,
     this.onEdificioSelected,
-    this.onSedeSelected,
+    this.onIdEspacioSelected,
   });
 
   @override
@@ -330,8 +330,21 @@ class MyHomePageContent extends StatelessWidget {
           Container(
             width: 320,
             height: 250,
-            decoration: const BoxDecoration(
-              color: Color(0xFFD9D9D9), // Color de fondo
+            decoration: BoxDecoration(
+              color: const Color(0xFFD9D9D9), // Color de fondo
+            ),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Ingrese el ID de espacio',
+                contentPadding: const EdgeInsets.all(20),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onChanged: (value) {
+                // Actualiza el idEspacioSel cuando cambia el valor del TextField
+                onIdEspacioSelected?.call(value);
+              },
             ),
           ),
           const SizedBox(
@@ -344,7 +357,7 @@ class MyHomePageContent extends StatelessWidget {
               print(horasalidaSel);
               print(ediSel);
               print(vehSel);
-              print(sedeSel);
+              print(idEspacioSel);
 
               print('---------------------Cierre Muestra------------------');
               print('Reservar presionado');
@@ -352,9 +365,9 @@ class MyHomePageContent extends StatelessWidget {
                   horasalidaSel != null &&
                   ediSel != null &&
                   vehSel != null &&
-                  sedeSel != null) {
-                _showReservarBottomSheet(context, horaentradaSel!, horasalidaSel!,
-                    ediSel!, vehSel!, sedeSel!);
+                  idEspacioSel != null) {
+                _showReservarBottomSheet(context, horaentradaSel!,
+                    horasalidaSel!, ediSel!, vehSel!, idEspacioSel!);
               } else {
                 print('Faltan datos para la reserva');
                 ScaffoldMessenger.of(context).showSnackBar(
