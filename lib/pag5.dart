@@ -10,13 +10,18 @@ import 'pag7b.dart';
 import 'pag8.dart';
 import 'pag9.dart';
 
-void _showReservarBottomSheet(BuildContext context, String horaSel,
-    String ediSel, String vehSel, String sedeSel) {
+void _showReservarBottomSheet(BuildContext context, String horaentradaSel,
+    String horasalidaSel, String ediSel, String vehSel, String sedeSel) {
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
       return ConfirmacionReserva(
-          HoraSel: horaSel, EdiSel: ediSel, VehSel: vehSel, SedeSel: sedeSel);
+        HoraEntradaSel: horaentradaSel,
+        EdiSel: ediSel,
+        VehSel: vehSel,
+        SedeSel: sedeSel,
+        HoraSalidaSel: horasalidaSel,
+      );
     },
     isScrollControlled: true,
   );
@@ -42,13 +47,15 @@ class Index extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  final String? horaSel;
+  final String? horaentradaSel;
+  final String? horasalidaSel;
   final String? ediSel;
   final String? vehSel;
   final String? sedeSel;
 
   MyHomePage({
-    this.horaSel,
+    this.horaentradaSel,
+    this.horasalidaSel,
     this.ediSel,
     this.vehSel,
     this.sedeSel,
@@ -60,7 +67,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String? _horaSel;
+  String? _horaentradaSel;
+  String? _horasalidaSel;
   String? _ediSel;
   String? _vehSel;
   String? _sedeSel;
@@ -68,14 +76,15 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _horaSel = widget.horaSel;
+    _horaentradaSel = widget.horaentradaSel;
+    _horasalidaSel = widget.horasalidaSel;
     _ediSel = widget.ediSel;
     _vehSel = widget.vehSel;
     _sedeSel = widget.sedeSel;
     _selectedIndex = 0;
   }
-  int _selectedIndex = 0;
 
+  int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -109,7 +118,8 @@ class _MyHomePageState extends State<MyHomePage> {
         index: _selectedIndex,
         children: [
           MyHomePageContent(
-            horaSel: _horaSel,
+            horaentradaSel: _horaentradaSel,
+            horasalidaSel: _horasalidaSel,
             ediSel: _ediSel,
             vehSel: _vehSel,
             sedeSel: _sedeSel,
@@ -118,9 +128,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 _vehSel = nuevoVehiculo;
               });
             },
-            onHoraSelected: (nuevaHora) {
+            onHoraentradaSelected: (nuevaHora) {
               setState(() {
-                _horaSel = nuevaHora;
+                _horaentradaSel = nuevaHora;
+              });
+            },
+            onHorasalidaSelected: (nuevaHora) {
+              setState(() {
+                _horasalidaSel = nuevaHora;
               });
             },
             onEdificioSelected: (nuevoEdificio) {
@@ -178,24 +193,29 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
 class MyHomePageContent extends StatelessWidget {
-  final String? horaSel;
+  final String? horaentradaSel;
+  final String? horasalidaSel;
   final String? ediSel;
   final String? vehSel;
   final String? sedeSel;
   final ValueChanged<String>? onVehiculoSelected;
-  final ValueChanged<String>? onHoraSelected;
+  final ValueChanged<String>? onHoraentradaSelected;
+  final ValueChanged<String>? onHorasalidaSelected;
   final ValueChanged<String>? onEdificioSelected;
   final ValueChanged<String>? onSedeSelected;
 
   const MyHomePageContent({
     super.key,
-    this.horaSel,
+    this.horaentradaSel,
+    this.horasalidaSel,
     this.ediSel,
     this.vehSel,
     this.sedeSel,
     this.onVehiculoSelected,
-    this.onHoraSelected,
+    this.onHoraentradaSelected,
+    this.onHorasalidaSelected,
     this.onEdificioSelected,
     this.onSedeSelected,
   });
@@ -251,9 +271,10 @@ class MyHomePageContent extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => const Hora()),
-                        ).then((nuevaHora) {
-                          if (nuevaHora != null) {
-                            onHoraSelected?.call(nuevaHora);
+                        ).then((hora) {
+                          if (hora != null) {
+                            onHoraentradaSelected?.call(hora['entrada']);
+                            onHorasalidaSelected?.call(hora['salida']);
                           }
                         });
                       },
@@ -318,27 +339,27 @@ class MyHomePageContent extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              
               print('---------------------Inicio Muestra------------------');
-              print(horaSel);
+              print(horaentradaSel);
+              print(horasalidaSel);
               print(ediSel);
               print(vehSel);
               print(sedeSel);
 
               print('---------------------Cierre Muestra------------------');
               print('Reservar presionado');
-              if (horaSel != null &&
+              if (horaentradaSel != null &&
+                  horasalidaSel != null &&
                   ediSel != null &&
                   vehSel != null &&
                   sedeSel != null) {
-                _showReservarBottomSheet(
-                    context, horaSel!, ediSel!, vehSel!, sedeSel!);
-                    
+                _showReservarBottomSheet(context, horaentradaSel!, horasalidaSel!,
+                    ediSel!, vehSel!, sedeSel!);
               } else {
                 print('Faltan datos para la reserva');
                 ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Faltan datos para la reserva')),
-        );
+                  const SnackBar(content: Text('Faltan datos para la reserva')),
+                );
               }
             },
             style: ElevatedButton.styleFrom(

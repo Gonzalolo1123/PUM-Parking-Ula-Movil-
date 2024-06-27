@@ -1,8 +1,8 @@
-// ignore_for_file: prefer_const_constructors, avoid_print, use_key_in_widget_constructors, library_private_types_in_public_api, use_build_context_synchronously
-
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, avoid_print, prefer_const_constructors
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
 
 class SeleccionarVehiculo extends StatefulWidget {
   @override
@@ -11,6 +11,7 @@ class SeleccionarVehiculo extends StatefulWidget {
 
 class _SeleccionarVehiculoState extends State<SeleccionarVehiculo> {
   List<Map<String, dynamic>> vehiculos = [];
+  String vehiculoSeleccionado = '';
 
   @override
   void initState() {
@@ -21,8 +22,7 @@ class _SeleccionarVehiculoState extends State<SeleccionarVehiculo> {
   Future<void> recibirDatos() async {
     try {
       final response = await http.get(
-        Uri.parse(
-            'https://website-parking-ulagos.onrender.com/usuarios/vehiculos'),
+        Uri.parse('http://10.0.2.2:3000/usuarios/vehiculos'),
       );
 
       if (response.statusCode == 200) {
@@ -37,6 +37,7 @@ class _SeleccionarVehiculoState extends State<SeleccionarVehiculo> {
         });
       } else {
         print('Error al recibir los datos');
+        print(response.statusCode);
       }
     } catch (e) {
       print('Error de conexión: $e');
@@ -66,69 +67,70 @@ class _SeleccionarVehiculoState extends State<SeleccionarVehiculo> {
         ),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text(
-              'Seleccionar Vehículo',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 33),
-            ),
-            const SizedBox(height: 70.0),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 300, // Ajusta el ancho según tus necesidades
-                  height: 40, // Ajusta el alto según tus necesidades
-                  child: DropdownButtonFormField<String>(
-                    decoration: const InputDecoration(
-                      labelText: 'Seleccionar Auto',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        borderSide:
-                            BorderSide(color: Color(0xFF003DA6), width: 2.0),
-                      ),
-                    ),
-                    items: vehiculos.map((vehiculo) {
-                      return DropdownMenuItem<String>(
-                        value: vehiculo['patente'],
-                        child: Text(
-                            '${vehiculo['patente']} - ${vehiculo['modelo']}'),
-                      );
-                    }).toList(),
-                    onChanged: (String? value) {
-                      if (value != null) {}
-                    },
+        child: Container(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text(
+                'Seleccionar Vehículo',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 33),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20.0),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: vehiculos.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        RadioListTile<String>(
+                          title: Text('${vehiculos[index]['patente']} - ${vehiculos[index]['modelo']}'),
+                          value: vehiculos[index]['patente'],
+                          groupValue: vehiculoSeleccionado,
+                          onChanged: (String? value) {
+                            setState(() {
+                              vehiculoSeleccionado = value!;
+                            });
+                          },
+                        ),
+                        Divider(
+                          color: Colors.black54,
+                          thickness: 1,
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 20.0),
+              ElevatedButton(
+                onPressed: () {
+                  if (vehiculoSeleccionado.isNotEmpty) {
+                    print('Registrar Auto presionado con vehículo seleccionado: $vehiculoSeleccionado');
+                    Navigator.pop(context, vehiculoSeleccionado);
+                  } else {
+                    print('No se ha seleccionado ningún vehículo');
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(320, 40),
+                  padding: const EdgeInsets.all(10.0),
+                  side: const BorderSide(width: 2, color: Color(0xFF003DA6)),
+                ),
+                child: const Text(
+                  'Seleccionar Auto',
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: Color(0xFF003DA6),
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: () {
-                String vehiculoSeleccionado = 'Toyota Yaris';
-                // Lógica para el botón de Edificio
-                print('seleccionar Vehiculo Auto ha sido presionado!');
-                Navigator.pop(context, vehiculoSeleccionado);
-              },
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(320, 40),
-                padding: const EdgeInsets.all(10.0),
-                side: const BorderSide(width: 2, color: Color(0xFF003DA6)),
               ),
-              child: const Text(
-                'Registrar Auto',
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Color(0xFF003DA6),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10.0),
-          ],
+              const SizedBox(height: 10.0),
+            ],
+          ),
         ),
       ),
     );

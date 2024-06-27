@@ -62,7 +62,7 @@ class _LogUpState extends State<LogUp> {
 
     try {
       final response = await http.post(
-        Uri.parse('https://website-parking-ulagos.onrender.com/usuarios/registro'),
+        Uri.parse('http://10.0.2.2:3000/usuarios/registro'),
         headers: {
           'Content-Type': 'application/json',
         },

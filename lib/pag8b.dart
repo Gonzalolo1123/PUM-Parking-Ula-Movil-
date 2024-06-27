@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, use_key_in_widget_constructors, library_private_types_in_public_api
+// ignore_for_file: avoid_print, use_key_in_widget_constructors, library_private_types_in_public_api, prefer_const_declarations
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -126,8 +126,7 @@ class _SedeState extends State<Sede> {
             ),
             ElevatedButton(
               onPressed: () {
-                final sedeSeleccionada =
-                    buildings[_currentIndex]['description']!;
+                final sedeSeleccionada ='AV001';
                 print('Sede seleccionada: $sedeSeleccionada');
                 Navigator.push(
                   context,

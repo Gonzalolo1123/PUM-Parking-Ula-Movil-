@@ -4,17 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:pum/pag14.dart';
 
 class ConfirmacionReserva extends StatelessWidget {
-  final String HoraSel;
+  final String HoraEntradaSel;
+  final String HoraSalidaSel;
   final String EdiSel;
   final String VehSel;
   final String SedeSel;
 
   const ConfirmacionReserva({
-    required this.HoraSel,
     required this.EdiSel,
     required this.VehSel,
     required this.SedeSel,
     Key? key,
+    required this.HoraEntradaSel,
+    required this.HoraSalidaSel,
   }) : super(key: key);
 
   @override
@@ -69,7 +71,7 @@ class ConfirmacionReserva extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'Lugar',
+                  'Estacionamiento',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
@@ -102,12 +104,12 @@ class ConfirmacionReserva extends StatelessWidget {
                 ),
                 SizedBox(height: 5),
                 Text(
-                  HoraSel, // Usando HoraSel en lugar de un valor fijo '00:00 hrs'
+                  '$HoraEntradaSel - $HoraSalidaSel' , // Usando HoraSel en lugar de un valor fijo '00:00 hrs'
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'Tipo Vehiculo',
+                  'Patente',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
@@ -134,7 +136,8 @@ class ConfirmacionReserva extends StatelessWidget {
               print('Reservar ha sido presionado!');
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const ReservaCompletada()),
+                MaterialPageRoute(
+                    builder: (context) => const ReservaCompletada()),
               );
             },
             style: ElevatedButton.styleFrom(
