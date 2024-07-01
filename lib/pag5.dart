@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print, prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
+import 'package:pum/estacionamiento.dart';
 
 import 'pag10.dart'; // Importa tus páginas aquí
 import 'pag12.dart';
@@ -325,30 +326,33 @@ class MyHomePageContent extends StatelessWidget {
             ],
           ),
           const SizedBox(
-            height: 20.0,
+            height: 100.0,
           ),
-          Container(
-            width: 320,
-            height: 250,
-            decoration: BoxDecoration(
-              color: const Color(0xFFD9D9D9), // Color de fondo
-            ),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Ingrese el ID de espacio',
-                contentPadding: const EdgeInsets.all(20),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
+          FloatingActionButton.extended(
+            onPressed: () {
+              print('Estacionamiento ha sido presionado!');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Estacionamiento()),
+              ).then((nuevaIdEspacio) {
+                if (nuevaIdEspacio != null) {
+                  onIdEspacioSelected?.call(nuevaIdEspacio);
+                }
+              });
+            },
+            backgroundColor: Color(0xFF003DA6),
+            icon: Icon(Icons.directions_car),
+            label: Text(
+              'Estacionamientos',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
               ),
-              onChanged: (value) {
-                // Actualiza el idEspacioSel cuando cambia el valor del TextField
-                onIdEspacioSelected?.call(value);
-              },
             ),
           ),
           const SizedBox(
-            height: 20.0,
+            height: 100.0,
           ),
           ElevatedButton(
             onPressed: () {
