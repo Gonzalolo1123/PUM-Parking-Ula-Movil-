@@ -1,7 +1,9 @@
-// ignore_for_file: avoid_print, prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
+// ignore_for_file: avoid_print, prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:pum/estacionamiento.dart';
+import 'package:pum/estacionamientoAV.dart';
+import 'package:pum/estacionamientoCentral.dart';
+import 'package:pum/estacionamientoMeyer.dart';
 
 import 'pag10.dart'; // Importa tus páginas aquí
 import 'pag12.dart';
@@ -11,18 +13,24 @@ import 'pag7b.dart';
 import 'pag8.dart';
 import 'pag9.dart';
 
-void _showReservarBottomSheet(BuildContext context, String horaentradaSel,
-    String horasalidaSel, String ediSel, String vehSel, String idEspacioSel) {
+void _showReservarBottomSheet(
+    BuildContext context,
+    String horaentradaSel,
+    String horasalidaSel,
+    String ediSel,
+    String vehSel,
+    String idEspacioSel,
+    String sedeSel) {
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
       return ConfirmacionReserva(
-        HoraEntradaSel: horaentradaSel,
-        EdiSel: ediSel,
-        VehSel: vehSel,
-        idEspacioSel: idEspacioSel,
-        HoraSalidaSel: horasalidaSel,
-      );
+          HoraEntradaSel: horaentradaSel,
+          EdiSel: ediSel,
+          VehSel: vehSel,
+          idEspacioSel: idEspacioSel,
+          HoraSalidaSel: horasalidaSel,
+          SedeSel: sedeSel);
     },
     isScrollControlled: true,
   );
@@ -53,6 +61,7 @@ class MyHomePage extends StatefulWidget {
   final String? ediSel;
   final String? vehSel;
   final String? idEspacioSel;
+  final String? sedesel;
 
   MyHomePage({
     this.horaentradaSel,
@@ -60,6 +69,7 @@ class MyHomePage extends StatefulWidget {
     this.ediSel,
     this.vehSel,
     this.idEspacioSel,
+    this.sedesel,
     super.key,
   });
 
@@ -73,6 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String? _ediSel;
   String? _vehSel;
   String? _idEspacioSel;
+  String? _sedesel;
 
   @override
   void initState() {
@@ -82,6 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _ediSel = widget.ediSel;
     _vehSel = widget.vehSel;
     _idEspacioSel = widget.idEspacioSel;
+    _sedesel = widget.sedesel;
     _selectedIndex = 0;
   }
 
@@ -124,6 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ediSel: _ediSel,
             vehSel: _vehSel,
             idEspacioSel: _idEspacioSel,
+            sedesel: _sedesel,
             onVehiculoSelected: (nuevoVehiculo) {
               setState(() {
                 _vehSel = nuevoVehiculo;
@@ -147,6 +160,11 @@ class _MyHomePageState extends State<MyHomePage> {
             onIdEspacioSelected: (nuevaIdEspacio) {
               setState(() {
                 _idEspacioSel = nuevaIdEspacio;
+              });
+            },
+            onSedeSelected: (nuevaSede) {
+              setState(() {
+                _sedesel = nuevaSede;
               });
             },
           ),
@@ -201,11 +219,13 @@ class MyHomePageContent extends StatelessWidget {
   final String? ediSel;
   final String? vehSel;
   final String? idEspacioSel;
+  final String? sedesel;
   final ValueChanged<String>? onVehiculoSelected;
   final ValueChanged<String>? onHoraentradaSelected;
   final ValueChanged<String>? onHorasalidaSelected;
   final ValueChanged<String>? onEdificioSelected;
   final ValueChanged<String>? onIdEspacioSelected;
+  final ValueChanged<String>? onSedeSelected;
 
   const MyHomePageContent({
     super.key,
@@ -214,11 +234,13 @@ class MyHomePageContent extends StatelessWidget {
     this.ediSel,
     this.vehSel,
     this.idEspacioSel,
+    this.sedesel,
     this.onVehiculoSelected,
     this.onHoraentradaSelected,
     this.onHorasalidaSelected,
     this.onEdificioSelected,
     this.onIdEspacioSelected,
+    this.onSedeSelected,
   });
 
   @override
@@ -297,9 +319,11 @@ class MyHomePageContent extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         print('Edificio ha sido presionado!');
+                        print(sedesel);
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Edificio()),
+                          MaterialPageRoute(
+                              builder: (context) => Edificio(sede: sedesel!)),
                         ).then((nuevoEdificio) {
                           if (nuevoEdificio != null) {
                             onEdificioSelected?.call(nuevoEdificio);
@@ -331,9 +355,28 @@ class MyHomePageContent extends StatelessWidget {
           FloatingActionButton.extended(
             onPressed: () {
               print('Estacionamiento ha sido presionado!');
+              Widget destino =
+                  Container(); // Valor predeterminado, puede ser cualquier Widget vacío o de carga inicial
+
+              if (ediSel == 'Principal') {
+                destino = EstacionamientoMeyer();
+              } else if (ediSel == 'Central') {
+                destino = EstacionamientoCentral();
+              } else if (ediSel == 'Pedagogia' ||
+                  ediSel == 'Aulas Virtuales' ||
+                  ediSel == 'ITR') {
+                destino = EstacionamientoAV();
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text(
+                          'La sede no pudo ser identificada, por favor seleccione una')),
+                );
+                return; // Asegura que en todos los caminos de ejecución destino sea asignado
+              }
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Estacionamiento()),
+                MaterialPageRoute(builder: (context) => destino),
               ).then((nuevaIdEspacio) {
                 if (nuevaIdEspacio != null) {
                   onIdEspacioSelected?.call(nuevaIdEspacio);
@@ -356,14 +399,11 @@ class MyHomePageContent extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              print('---------------------Inicio Muestra------------------');
               print(horaentradaSel);
               print(horasalidaSel);
               print(ediSel);
               print(vehSel);
               print(idEspacioSel);
-
-              print('---------------------Cierre Muestra------------------');
               print('Reservar presionado');
               if (horaentradaSel != null &&
                   horasalidaSel != null &&
@@ -371,7 +411,7 @@ class MyHomePageContent extends StatelessWidget {
                   vehSel != null &&
                   idEspacioSel != null) {
                 _showReservarBottomSheet(context, horaentradaSel!,
-                    horasalidaSel!, ediSel!, vehSel!, idEspacioSel!);
+                    horasalidaSel!, ediSel!, vehSel!, idEspacioSel!, sedesel!);
               } else {
                 print('Faltan datos para la reserva');
                 ScaffoldMessenger.of(context).showSnackBar(

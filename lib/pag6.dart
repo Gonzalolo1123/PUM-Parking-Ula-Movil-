@@ -19,7 +19,7 @@ class ConfirmacionReserva extends StatelessWidget {
     required this.idEspacioSel,
     Key? key,
     required this.HoraEntradaSel,
-    required this.HoraSalidaSel,
+    required this.HoraSalidaSel, required String SedeSel,
   }) : super(key: key);
 
   Future<void> registrarReserva(BuildContext context) async {

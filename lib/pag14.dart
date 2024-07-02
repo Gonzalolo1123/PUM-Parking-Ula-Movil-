@@ -96,6 +96,8 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
 
         // Navegar de regreso a la pantalla anterior
         Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.pop(context);
       } else {
         // Mostrar mensaje de error si falla la eliminación
         print('Error al eliminar la reserva ${response.statusCode}');
@@ -137,6 +139,11 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Reserva aumentada correctamente')),
         );
+
+        // Navegar de regreso a la pantalla anterior
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.pop(context);
       } else {
         // Mostrar mensaje de error si no se encontró 'reserva' en la respuesta
         ScaffoldMessenger.of(context).showSnackBar(
@@ -371,7 +378,7 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
                           child: Text('Sí'),
                           onPressed: () {
                             // Llamar al método para aumentar la reserva
-                            _aumentarReserva(patente,idEspacio);
+                            _aumentarReserva(patente, idEspacio);
                             Navigator.of(context)
                                 .pop(); // Cerrar el diálogo de confirmación
                           },

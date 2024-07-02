@@ -3,7 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-final List<Map<String, String>> buildings = [
+final List<Map<String, String>> buildingsMeyer = [
+  {
+    'imagePath': 'assets/edificio1.png',
+    'description': 'Principal',
+  },
+];
+
+final List<Map<String, String>> buildingsChuyaca = [
   {
     'imagePath': 'assets/edificio1.png',
     'description': 'Central',
@@ -66,6 +73,10 @@ class BuildingCard extends StatelessWidget {
 }
 
 class Edificio extends StatefulWidget {
+  final String? sede;
+
+  const Edificio({this.sede, Key? key}) : super(key: key);
+
   @override
   _EdificioState createState() => _EdificioState();
 }
@@ -73,6 +84,10 @@ class Edificio extends StatefulWidget {
 class _EdificioState extends State<Edificio> {
   final CarouselController _carouselController = CarouselController();
   int _currentIndex = 0;
+
+  List<Map<String, String>> get buildings {
+    return widget.sede == 'Meyer' ? buildingsMeyer : buildingsChuyaca;
+  }
 
   @override
   Widget build(BuildContext context) {

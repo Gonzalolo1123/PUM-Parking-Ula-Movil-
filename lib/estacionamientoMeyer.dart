@@ -2,13 +2,13 @@
 
 import 'package:flutter/material.dart';
 
-class Estacionamiento extends StatelessWidget {
+class EstacionamientoMeyer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Reservar Estacionamiento'),
+          title: Text('Reservar EstacionamientoMeyer'),
           backgroundColor: Color(0xFF003DA6),
         ),
         body: SingleChildScrollView(
@@ -24,7 +24,7 @@ class ParkingLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 1400, // Ajusta según la cantidad de espacios de estacionamiento
+      width: 1400, // Ajusta según la cantidad de espacios de estacionamientoMeyer
       height: 500,
       color: Color(0xFFE0E0E0),
       child: Stack(
@@ -138,8 +138,8 @@ class ParkingSpot extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Reservar estacionamiento'),
-          content: Text('¿Deseas reservar el estacionamiento $id?'),
+          title: Text('Reservar estacionamientoMeyer'),
+          content: Text('¿Deseas reservar el estacionamientoMeyer $id?'),
           actions: <Widget>[
             TextButton(
               child: Text('Cancelar'),
@@ -207,8 +207,4 @@ class DisabledSpot extends StatelessWidget {
       ),
     );
   }
-}
-
-void main() {
-  runApp(Estacionamiento());
 }
