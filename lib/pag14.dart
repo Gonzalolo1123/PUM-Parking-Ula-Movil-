@@ -30,7 +30,7 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://10.0.2.2:3000/usuarios/selectReserva'), // Endpoint correcto para selectReserva
+            'https://website-parking-ulagos.onrender.com/usuarios/selectReserva'), // Endpoint correcto para selectReserva
         headers: {
           'Content-Type': 'application/json',
         },

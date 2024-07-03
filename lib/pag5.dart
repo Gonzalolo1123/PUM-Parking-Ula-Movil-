@@ -350,9 +350,9 @@ class MyHomePageContent extends StatelessWidget {
             ],
           ),
           const SizedBox(
-            height: 100.0,
+            height: 70.0,
           ),
-          FloatingActionButton.extended(
+          ElevatedButton(
             onPressed: () {
               print('Estacionamiento ha sido presionado!');
               Widget destino =
@@ -370,7 +370,7 @@ class MyHomePageContent extends StatelessWidget {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                       content: Text(
-                          'La sede no pudo ser identificada, por favor seleccione una')),
+                          'El edificio no fue seleccionado, por favor seleccione una')),
                 );
                 return; // Asegura que en todos los caminos de ejecución destino sea asignado
               }
@@ -383,13 +383,43 @@ class MyHomePageContent extends StatelessWidget {
                 }
               });
             },
-            backgroundColor: Color(0xFF003DA6),
-            icon: Icon(Icons.directions_car),
-            label: Text(
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(320, 40),
+              padding: const EdgeInsets.all(10.0),
+              backgroundColor: const Color(0xFF87CEEB),
+            ),
+            child: const Text(
               'Estacionamientos',
               style: TextStyle(
-                fontSize: 16,
-                color: Colors.white,
+                fontSize: 25,
+                color: Color(0xFF003DA6),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 20.0,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              print('Reportes ha sido presionado!');
+             /* Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Reportes(),
+                ),
+              );*/
+            },
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(320, 40),
+              padding: const EdgeInsets.all(10.0),
+              backgroundColor: const Color(0xFF87CEEB),
+            ),
+            child: const Text(
+              'Reportes',
+              style: TextStyle(
+                fontSize: 25,
+                color: Color(0xFF003DA6),
                 fontWeight: FontWeight.bold,
               ),
             ),

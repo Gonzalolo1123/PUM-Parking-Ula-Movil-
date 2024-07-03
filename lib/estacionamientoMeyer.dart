@@ -24,47 +24,48 @@ class ParkingLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 1400, // Ajusta según la cantidad de espacios de estacionamientoMeyer
+      width:
+          1400, // Ajusta según la cantidad de espacios de estacionamientoMeyer
       height: 500,
       color: Color(0xFFE0E0E0),
       child: Stack(
         children: [
           ParkingSpot(
-            id: 'spot1',
+            id: 'spot108',
             top: 430,
             left: 40,
           ),
-          ParkingSpot(id: 'spot2', top: 430, left: 100),
-          ParkingSpot(id: 'spot3', top: 430, left: 160),
-          ParkingSpot(id: 'spot4', top: 430, left: 220),
-          ParkingSpot(id: 'spot5', top: 430, left: 280),
-          ParkingSpot(id: 'spot6', top: 430, left: 340),
-          ParkingSpot(id: 'spot7', top: 430, left: 400),
-          ParkingSpot(id: 'spot8', top: 430, left: 460),
-          ParkingSpot(id: 'spot9', top: 290, left: 40),
-          ParkingSpot(id: 'spot10', top: 290, left: 100),
-          ParkingSpot(id: 'spot11', top: 290, left: 160),
-          ParkingSpot(id: 'spot12', top: 290, left: 220),
-          ParkingSpot(id: 'spot13', top: 290, left: 280),
-          ParkingSpot(id: 'spot14', top: 290, left: 340),
-          ParkingSpot(id: 'spot15', top: 290, left: 400),
-          ParkingSpot(id: 'spot16', top: 290, left: 460),
-          ParkingSpot(id: 'spot17', top: 430, left: 860),
-          ParkingSpot(id: 'spot18', top: 430, left: 920),
-          ParkingSpot(id: 'spot19', top: 430, left: 980),
-          ParkingSpot(id: 'spot20', top: 430, left: 1040),
-          ParkingSpot(id: 'spot21', top: 430, left: 1100),
-          ParkingSpot(id: 'spot22', top: 430, left: 1160),
-          ParkingSpot(id: 'spot23', top: 430, left: 1220),
-          ParkingSpot(id: 'spot24', top: 430, left: 1280),
-          ParkingSpot(id: 'spot25', top: 290, left: 860),
-          ParkingSpot(id: 'spot26', top: 290, left: 920),
-          ParkingSpot(id: 'spot27', top: 290, left: 980),
-          ParkingSpot(id: 'spot28', top: 290, left: 1040),
-          ParkingSpot(id: 'spot29', top: 290, left: 1100),
-          ParkingSpot(id: 'spot30', top: 290, left: 1160),
-          ParkingSpot(id: 'spot31', top: 290, left: 1220),
-          ParkingSpot(id: 'spot32', top: 290, left: 1280),
+          ParkingSpot(id: 'spot109', top: 430, left: 100),
+          ParkingSpot(id: 'spot110', top: 430, left: 160),
+          ParkingSpot(id: 'spot111', top: 430, left: 220),
+          ParkingSpot(id: 'spot112', top: 430, left: 280),
+          ParkingSpot(id: 'spot113', top: 430, left: 340),
+          ParkingSpot(id: 'spot114', top: 430, left: 400),
+          ParkingSpot(id: 'spot115', top: 430, left: 460),
+          ParkingSpot(id: 'spot116', top: 290, left: 40),
+          ParkingSpot(id: 'spot117', top: 290, left: 100),
+          ParkingSpot(id: 'spot118', top: 290, left: 160),
+          ParkingSpot(id: 'spot119', top: 290, left: 220),
+          ParkingSpot(id: 'spot120', top: 290, left: 280),
+          ParkingSpot(id: 'spot121', top: 290, left: 340),
+          ParkingSpot(id: 'spot122', top: 290, left: 400),
+          ParkingSpot(id: 'spot123', top: 290, left: 460),
+          ParkingSpot(id: 'spot124', top: 430, left: 860),
+          ParkingSpot(id: 'spot125', top: 430, left: 920),
+          ParkingSpot(id: 'spot126', top: 430, left: 980),
+          ParkingSpot(id: 'spot127', top: 430, left: 1040),
+          ParkingSpot(id: 'spot128', top: 430, left: 1100),
+          ParkingSpot(id: 'spot129', top: 430, left: 1160),
+          ParkingSpot(id: 'spot130', top: 430, left: 1220),
+          ParkingSpot(id: 'spot131', top: 430, left: 1280),
+          ParkingSpot(id: 'spot132', top: 290, left: 860),
+          ParkingSpot(id: 'spot133', top: 290, left: 920),
+          ParkingSpot(id: 'spot134', top: 290, left: 980),
+          ParkingSpot(id: 'spot135', top: 290, left: 1040),
+          ParkingSpot(id: 'spot136', top: 290, left: 1100),
+          ParkingSpot(id: 'spot137', top: 290, left: 1160),
+          ParkingSpot(id: 'spot138', top: 290, left: 1220),
+          ParkingSpot(id: 'spot139', top: 290, left: 1280),
           DisabledSpot(
               id: 'disabled1', top: 70, left: 120, width: 180, height: 170),
           DisabledSpot(
@@ -154,7 +155,7 @@ class ParkingSpot extends StatelessWidget {
                     id; // Aquí el id ya es el espacio seleccionado
                 print('Espacio seleccionado: $espacioSeleccionado');
                 Navigator.pop(context); // Cerrar el AlertDialog
-                Navigator.pop(context,espacioSeleccionado);
+                Navigator.pop(context, espacioSeleccionado);
               },
             ),
           ],

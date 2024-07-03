@@ -37,7 +37,7 @@ class _RegistroVehiculoState extends State<RegistroVehiculo> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://10.0.2.2:3000/usuarios/principal'),
+        Uri.parse('https://website-parking-ulagos.onrender.com/usuarios/principal'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(datos),
       );

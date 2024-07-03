@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
+import 'package:pum/reporteGuardia.dart';
 
 class EstacionamientoMeyerGuardia extends StatelessWidget {
   @override
@@ -72,42 +73,42 @@ class ParkingLayout extends StatelessWidget {
       color: Color(0xFFE0E0E0),
       child: Stack(
         children: [
-          ParkingSpot(
-            id: 'spot1',
+                  ParkingSpot(
+            id: 'spot108',
             top: 430,
             left: 40,
           ),
-          ParkingSpot(id: 'spot2', top: 430, left: 100),
-          ParkingSpot(id: 'spot3', top: 430, left: 160),
-          ParkingSpot(id: 'spot4', top: 430, left: 220),
-          ParkingSpot(id: 'spot5', top: 430, left: 280),
-          ParkingSpot(id: 'spot6', top: 430, left: 340),
-          ParkingSpot(id: 'spot7', top: 430, left: 400),
-          ParkingSpot(id: 'spot8', top: 430, left: 460),
-          ParkingSpot(id: 'spot9', top: 290, left: 40),
-          ParkingSpot(id: 'spot10', top: 290, left: 100),
-          ParkingSpot(id: 'spot11', top: 290, left: 160),
-          ParkingSpot(id: 'spot12', top: 290, left: 220),
-          ParkingSpot(id: 'spot13', top: 290, left: 280),
-          ParkingSpot(id: 'spot14', top: 290, left: 340),
-          ParkingSpot(id: 'spot15', top: 290, left: 400),
-          ParkingSpot(id: 'spot16', top: 290, left: 460),
-          ParkingSpot(id: 'spot17', top: 430, left: 860),
-          ParkingSpot(id: 'spot18', top: 430, left: 920),
-          ParkingSpot(id: 'spot19', top: 430, left: 980),
-          ParkingSpot(id: 'spot20', top: 430, left: 1040),
-          ParkingSpot(id: 'spot21', top: 430, left: 1100),
-          ParkingSpot(id: 'spot22', top: 430, left: 1160),
-          ParkingSpot(id: 'spot23', top: 430, left: 1220),
-          ParkingSpot(id: 'spot24', top: 430, left: 1280),
-          ParkingSpot(id: 'spot25', top: 290, left: 860),
-          ParkingSpot(id: 'spot26', top: 290, left: 920),
-          ParkingSpot(id: 'spot27', top: 290, left: 980),
-          ParkingSpot(id: 'spot28', top: 290, left: 1040),
-          ParkingSpot(id: 'spot29', top: 290, left: 1100),
-          ParkingSpot(id: 'spot30', top: 290, left: 1160),
-          ParkingSpot(id: 'spot31', top: 290, left: 1220),
-          ParkingSpot(id: 'spot32', top: 290, left: 1280),
+          ParkingSpot(id: 'spot109', top: 430, left: 100),
+          ParkingSpot(id: 'spot110', top: 430, left: 160),
+          ParkingSpot(id: 'spot111', top: 430, left: 220),
+          ParkingSpot(id: 'spot112', top: 430, left: 280),
+          ParkingSpot(id: 'spot113', top: 430, left: 340),
+          ParkingSpot(id: 'spot114', top: 430, left: 400),
+          ParkingSpot(id: 'spot115', top: 430, left: 460),
+          ParkingSpot(id: 'spot116', top: 290, left: 40),
+          ParkingSpot(id: 'spot117', top: 290, left: 100),
+          ParkingSpot(id: 'spot118', top: 290, left: 160),
+          ParkingSpot(id: 'spot119', top: 290, left: 220),
+          ParkingSpot(id: 'spot120', top: 290, left: 280),
+          ParkingSpot(id: 'spot121', top: 290, left: 340),
+          ParkingSpot(id: 'spot122', top: 290, left: 400),
+          ParkingSpot(id: 'spot123', top: 290, left: 460),
+          ParkingSpot(id: 'spot124', top: 430, left: 860),
+          ParkingSpot(id: 'spot125', top: 430, left: 920),
+          ParkingSpot(id: 'spot126', top: 430, left: 980),
+          ParkingSpot(id: 'spot127', top: 430, left: 1040),
+          ParkingSpot(id: 'spot128', top: 430, left: 1100),
+          ParkingSpot(id: 'spot129', top: 430, left: 1160),
+          ParkingSpot(id: 'spot130', top: 430, left: 1220),
+          ParkingSpot(id: 'spot131', top: 430, left: 1280),
+          ParkingSpot(id: 'spot132', top: 290, left: 860),
+          ParkingSpot(id: 'spot133', top: 290, left: 920),
+          ParkingSpot(id: 'spot134', top: 290, left: 980),
+          ParkingSpot(id: 'spot135', top: 290, left: 1040),
+          ParkingSpot(id: 'spot136', top: 290, left: 1100),
+          ParkingSpot(id: 'spot137', top: 290, left: 1160),
+          ParkingSpot(id: 'spot138', top: 290, left: 1220),
+          ParkingSpot(id: 'spot139', top: 290, left: 1280),
           DisabledSpot(
               id: 'disabled1', top: 70, left: 120, width: 180, height: 170),
           DisabledSpot(
@@ -181,23 +182,139 @@ class ParkingSpot extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Reservar estacionamientoMeyerGuardia'),
-          content: Text('¿Deseas reservar el estacionamientoMeyerGuardia $id?'),
+          title: Text('Reporte Estacionamiento'),
+          contentPadding: EdgeInsets.symmetric(
+              horizontal: 30,
+              vertical: 20), // Ajustar el padding de todo el contenido
+          content: Column(
+            mainAxisSize: MainAxisSize.min, // Ajustar tamaño según contenido
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const SizedBox(height: 1.0),
+              const Text(
+                '¿Qué desea hacer?',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 27),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Estacionamiento $id',
+                style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
+              ),
+              const SizedBox(height: 20.0),
+              TextButton.icon(
+                onPressed: () {
+                  // Lógica para el botón
+                  print('Ingresar presionado!');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => IngresarReservaGuardia(
+                            idEspacio: id, Edificio: 'Central')),
+                  );
+                },
+                style: TextButton.styleFrom(
+                  minimumSize: const Size(320, 40), // Tamaño mínimo del botón
+                  padding:
+                      const EdgeInsets.all(10.0), // Padding interno del botón
+                  backgroundColor: Colors.white, // Color de fondo del botón
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(100), // Bordes redondeados
+                    side: const BorderSide(
+                        width: 2, color: Color(0xFF003DA6)), // Borde opcional
+                  ),
+                ),
+                icon: Icon(Icons.directions_car,
+                    color: Color(0xFF003DA6)), // Icono de entrada
+                label: const Text(
+                  'Ingresar',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF003DA6), // Color del texto del botón
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10.0),
+              TextButton.icon(
+                onPressed: () {
+                  // Lógica para el botón
+                  print('Eliminar presionado!');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => EliminarReservaGuardia(
+                            idEspacio: id, Edificio: 'Central')),
+                  );
+                },
+                style: TextButton.styleFrom(
+                  minimumSize: const Size(320, 40), // Tamaño mínimo del botón
+                  padding:
+                      const EdgeInsets.all(10.0), // Padding interno del botón
+                  backgroundColor: Colors.white, // Color de fondo del botón
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(100), // Bordes redondeados
+                    side: const BorderSide(
+                        width: 2, color: Color(0xFF003DA6)), // Borde opcional
+                  ),
+                ),
+                icon: Icon(Icons.cancel_rounded,
+                    color: Color(0xFF003DA6)), // Icono de modificar
+                label: const Text(
+                  'Eliminar',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF003DA6), // Color del texto del botón
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10.0),
+              TextButton.icon(
+                onPressed: () {
+                  // Lógica para el botón
+                  print('Reporte presionado!');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ReportesGuardia(
+                            idEspacio: id, Edificio: 'Central')),
+                  );
+                },
+                style: TextButton.styleFrom(
+                  minimumSize: const Size(320, 40), // Tamaño mínimo del botón
+                  padding:
+                      const EdgeInsets.all(10.0), // Padding interno del botón
+                  backgroundColor: Colors.white, // Color de fondo del botón
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(100), // Bordes redondeados
+                    side: const BorderSide(
+                        width: 2, color: Color(0xFF003DA6)), // Borde opcional
+                  ),
+                ),
+                icon: Icon(Icons.assignment,
+                    color: Color(0xFF003DA6)), // Icono de alerta
+                label: const Text(
+                  'Reportar',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF003DA6), // Color del texto del botón
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10.0),
+            ],
+          ),
+
           actions: <Widget>[
             TextButton(
               child: Text('Cancelar'),
               onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: Text('Confirmar'),
-              onPressed: () {
-                final espacioSeleccionado =
-                    id; // Aquí el id ya es el espacio seleccionado
-                print('Espacio seleccionado: $espacioSeleccionado');
-                Navigator.pop(context); // Cerrar el AlertDialog
-                Navigator.pop(context, espacioSeleccionado);
+                Navigator.of(context)
+                    .pop(); // Cerrar el AlertDialog sin resultados
               },
             ),
           ],

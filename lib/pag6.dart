@@ -34,7 +34,7 @@ class ConfirmacionReserva extends StatelessWidget {
 
     try {
       final response = await http.post(
-        Uri.parse('http://10.0.2.2:3000/usuarios/reserva'),
+        Uri.parse('https://website-parking-ulagos.onrender.com/usuarios/reserva'),
         headers: {
           'Content-Type': 'application/json',
         },

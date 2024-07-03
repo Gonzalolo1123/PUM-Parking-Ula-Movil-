@@ -21,14 +21,14 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
   Future<void> _selectGuardia() async {
     try {
       // Hacer la solicitud GET para obtener los datos del guardia
-      final Uri url = Uri.parse('http://10.0.2.2:3000/usuarios/selectGuardia');
+      final Uri url = Uri.parse('https://website-parking-ulagos.onrender.com/usuarios/selectGuardia');
       final response =
           await http.get(url); // Cambiado a GET según tu comentario
 
       if (response.statusCode == 200) {
         // Parsear la respuesta JSON
         final Map<String, dynamic> responseData = jsonDecode(response.body);
-        final Map<String, dynamic> guardiaData = responseData['guardia'];
+        final Map<String, dynamic> guardiaData = responseData['guardiaReporte'];
 
         final String nombreEdificio = guardiaData['nombre_edificio'];
         final String nombreSede = guardiaData['nombre_sede'];
@@ -38,7 +38,7 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
           const SnackBar(content: Text('Inicio de Sesión exitoso')),
         );
 
-        // Navegar a diferentes páginas según el tipo de usuario
+// Navegar a diferentes páginas según el tipo de usuario
         if (nombreSede == 'Chuyaca') {
           switch (nombreEdificio) {
             case 'Central':
@@ -63,7 +63,39 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => EstacionamientoAVGuardia(),
+                  builder: (context) =>
+                      EstacionamientoAVGuardia(), // Asegúrate de tener esta clase
+                ),
+              );
+              break;
+
+            case 'SEMDA':
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      EstacionamientoAVGuardia(), // Asegúrate de tener esta clase
+                ),
+              );
+              break;
+
+            case 'Gimnasio 1':
+              print('Gimnasio 1');
+              /*Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      EstacionamientoGimnasio1Guardia(), // Asegúrate de tener esta clase
+                ),
+              );*/
+              break;
+
+            case 'docentes':
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      EstacionamientoAVGuardia(), // Asegúrate de tener esta clase
                 ),
               );
               break;

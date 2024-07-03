@@ -22,7 +22,7 @@ class _SeleccionarVehiculoState extends State<SeleccionarVehiculo> {
   Future<void> recibirDatos() async {
     try {
       final response = await http.get(
-        Uri.parse('http://10.0.2.2:3000/usuarios/vehiculos'),
+        Uri.parse('https://website-parking-ulagos.onrender.com/usuarios/vehiculos'),
       );
 
       if (response.statusCode == 200) {

@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'reporteGuardia.dart';
+
 class EstacionamientoAVGuardia extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -237,22 +239,139 @@ class ParkingSpot extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Reservar estacionamiento'),
-          content: Text('¿Deseas reservar el estacionamiento $id?'),
+          title: Text('Reporte Estacionamiento'),
+          contentPadding: EdgeInsets.symmetric(
+              horizontal: 30,
+              vertical: 20), // Ajustar el padding de todo el contenido
+          content: Column(
+            mainAxisSize: MainAxisSize.min, // Ajustar tamaño según contenido
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const SizedBox(height: 1.0),
+              const Text(
+                '¿Qué desea hacer?',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 27),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Estacionamiento $id',
+                style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
+              ),
+              const SizedBox(height: 20.0),
+              TextButton.icon(
+                onPressed: () {
+                  // Lógica para el botón
+                  print('Ingresar presionado!');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => IngresarReservaGuardia(
+                            idEspacio: id, Edificio: 'Central')),
+                  );
+                },
+                style: TextButton.styleFrom(
+                  minimumSize: const Size(320, 40), // Tamaño mínimo del botón
+                  padding:
+                      const EdgeInsets.all(10.0), // Padding interno del botón
+                  backgroundColor: Colors.white, // Color de fondo del botón
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(100), // Bordes redondeados
+                    side: const BorderSide(
+                        width: 2, color: Color(0xFF003DA6)), // Borde opcional
+                  ),
+                ),
+                icon: Icon(Icons.directions_car,
+                    color: Color(0xFF003DA6)), // Icono de entrada
+                label: const Text(
+                  'Ingresar',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF003DA6), // Color del texto del botón
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10.0),
+              TextButton.icon(
+                onPressed: () {
+                  // Lógica para el botón
+                  print('Eliminar presionado!');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => EliminarReservaGuardia(
+                            idEspacio: id, Edificio: 'Central')),
+                  );
+                },
+                style: TextButton.styleFrom(
+                  minimumSize: const Size(320, 40), // Tamaño mínimo del botón
+                  padding:
+                      const EdgeInsets.all(10.0), // Padding interno del botón
+                  backgroundColor: Colors.white, // Color de fondo del botón
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(100), // Bordes redondeados
+                    side: const BorderSide(
+                        width: 2, color: Color(0xFF003DA6)), // Borde opcional
+                  ),
+                ),
+                icon: Icon(Icons.cancel_rounded,
+                    color: Color(0xFF003DA6)), // Icono de modificar
+                label: const Text(
+                  'Eliminar',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF003DA6), // Color del texto del botón
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10.0),
+              TextButton.icon(
+                onPressed: () {
+                  // Lógica para el botón
+                  print('Reporte presionado!');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ReportesGuardia(
+                            idEspacio: id, Edificio: 'Central')),
+                  );
+                },
+                style: TextButton.styleFrom(
+                  minimumSize: const Size(320, 40), // Tamaño mínimo del botón
+                  padding:
+                      const EdgeInsets.all(10.0), // Padding interno del botón
+                  backgroundColor: Colors.white, // Color de fondo del botón
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(100), // Bordes redondeados
+                    side: const BorderSide(
+                        width: 2, color: Color(0xFF003DA6)), // Borde opcional
+                  ),
+                ),
+                icon: Icon(Icons.assignment,
+                    color: Color(0xFF003DA6)), // Icono de alerta
+                label: const Text(
+                  'Reportar',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF003DA6), // Color del texto del botón
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10.0),
+            ],
+          ),
+
           actions: <Widget>[
             TextButton(
               child: Text('Cancelar'),
               onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: Text('Confirmar'),
-              onPressed: () {
-                final espacioSeleccionado = id;
-                print('Espacio seleccionado: $espacioSeleccionado');
-                Navigator.pop(context); // Cerrar el AlertDialog
-                Navigator.pop(context, espacioSeleccionado);
+                Navigator.of(context)
+                    .pop(); // Cerrar el AlertDialog sin resultados
               },
             ),
           ],
