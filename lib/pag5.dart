@@ -1,9 +1,10 @@
-// ignore_for_file: avoid_print, prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, non_constant_identifier_names
+// ignore_for_file: avoid_print, prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, non_constant_identifier_names, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:pum/estacionamientoAV.dart';
 import 'package:pum/estacionamientoCentral.dart';
 import 'package:pum/estacionamientoMeyer.dart';
+import 'package:pum/main.dart';
 
 import 'pag10.dart'; // Importa tus páginas aquí
 import 'pag12.dart';
@@ -175,7 +176,7 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: _buildIcon(Icons.person, 0),
+            icon: _buildIcon(Icons.home, 0),
             label: '',
           ),
           BottomNavigationBarItem(
@@ -242,10 +243,37 @@ class MyHomePageContent extends StatelessWidget {
     this.onIdEspacioSelected,
     this.onSedeSelected,
   });
+  Future<bool> _onWillPop(BuildContext context) async {
+    return await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Cerrar sesión'),
+            content: Text('¿Estás seguro de que quieres cerrar sesión?'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text('No'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                  // Aquí puedes agregar la lógica para cerrar sesión
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => Inicio(),
+                  ));
+                },
+                child: Text('Sí'),
+              ),
+            ],
+          ),
+        ) ??
+        false;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return WillPopScope(
+      onWillPop: () => _onWillPop(context),
       child: Column(
         children: [
           const SizedBox(
@@ -403,7 +431,7 @@ class MyHomePageContent extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               print('Reportes ha sido presionado!');
-             /* Navigator.push(
+              /* Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => Reportes(),

@@ -19,7 +19,8 @@ class ConfirmacionReserva extends StatelessWidget {
     required this.idEspacioSel,
     Key? key,
     required this.HoraEntradaSel,
-    required this.HoraSalidaSel, required String SedeSel,
+    required this.HoraSalidaSel,
+    required String SedeSel,
   }) : super(key: key);
 
   Future<void> registrarReserva(BuildContext context) async {
@@ -34,15 +35,16 @@ class ConfirmacionReserva extends StatelessWidget {
 
     try {
       final response = await http.post(
-        Uri.parse('https://website-parking-ulagos.onrender.com/usuarios/reserva'),
+        Uri.parse(
+            'https://website-parking-ulagos.onrender.com/usuarios/reserva'),
         headers: {
           'Content-Type': 'application/json',
         },
         body: jsonEncode(datos),
       );
-
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
       if (response.statusCode == 201) {
-        // Mostrar mensaje de éxito y redirigir a la página de inicio de sesión
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Reserva registrada exitosamente')),
         );
@@ -51,8 +53,6 @@ class ConfirmacionReserva extends StatelessWidget {
           MaterialPageRoute(builder: (context) => const ReservaCompletada()),
         );
       } else if (response.statusCode == 121) {
-        // Mostrar mensaje de error si la respuesta no es 200
-
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Ya tienes una reserva')),
         );
@@ -60,7 +60,12 @@ class ConfirmacionReserva extends StatelessWidget {
           context,
           MaterialPageRoute(builder: (context) => const ReservaCompletada()),
         );
-        print(response.statusCode);
+      } else {
+        // Manejo de otros posibles estados de respuesta
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text('Error al registrar la reserva: ${response.body}')),
+        );
       }
     } catch (e) {
       // Mostrar mensaje de error si hay un error de conexión
