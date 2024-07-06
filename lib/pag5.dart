@@ -1,17 +1,22 @@
-// ignore_for_file: avoid_print, prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, non_constant_identifier_names
+// ignore_for_file: avoid_print, prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, non_constant_identifier_names, deprecated_member_use, prefer_const_literals_to_create_immutables, use_build_context_synchronously, unused_element, unused_field
+
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:pum/estacionamientoAV.dart';
 import 'package:pum/estacionamientoCentral.dart';
 import 'package:pum/estacionamientoMeyer.dart';
+import 'package:pum/pag14.dart';
+
+import 'package:http/http.dart' as http;
 
 import 'pag10.dart'; // Importa tus páginas aquí
-import 'pag12.dart';
 import 'pag6.dart';
 import 'pag7.dart';
 import 'pag7b.dart';
 import 'pag8.dart';
 import 'pag9.dart';
+import 'reporteGuardia.dart';
 
 void _showReservarBottomSheet(
     BuildContext context,
@@ -20,7 +25,8 @@ void _showReservarBottomSheet(
     String ediSel,
     String vehSel,
     String idEspacioSel,
-    String sedeSel) {
+    String sedeSel,
+    String usuarioId) {
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
@@ -30,7 +36,8 @@ void _showReservarBottomSheet(
           VehSel: vehSel,
           idEspacioSel: idEspacioSel,
           HoraSalidaSel: horasalidaSel,
-          SedeSel: sedeSel);
+          SedeSel: sedeSel,
+          UsuarioId: usuarioId);
     },
     isScrollControlled: true,
   );
@@ -43,14 +50,6 @@ class Index extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: MyHomePage(),
-      routes: {
-        '/pag12': (context) => IndexSeguridad(),
-        '/pag10': (context) => const QRScannerPage(),
-        '/pag7': (context) => RegistroVehiculo(),
-        '/seleccionarVehiculo': (context) => SeleccionarVehiculo(),
-        '/hora': (context) => const Hora(),
-        '/edificio': (context) => Edificio(),
-      },
     );
   }
 }
@@ -62,6 +61,7 @@ class MyHomePage extends StatefulWidget {
   final String? vehSel;
   final String? idEspacioSel;
   final String? sedesel;
+  final String? usuarioId;
 
   MyHomePage({
     this.horaentradaSel,
@@ -71,6 +71,7 @@ class MyHomePage extends StatefulWidget {
     this.idEspacioSel,
     this.sedesel,
     super.key,
+    this.usuarioId,
   });
 
   @override
@@ -84,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String? _vehSel;
   String? _idEspacioSel;
   String? _sedesel;
-
+  String? _usuarioId;
   @override
   void initState() {
     super.initState();
@@ -95,6 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _idEspacioSel = widget.idEspacioSel;
     _sedesel = widget.sedesel;
     _selectedIndex = 0;
+    _usuarioId = widget.usuarioId;
   }
 
   int _selectedIndex = 0;
@@ -137,6 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
             vehSel: _vehSel,
             idEspacioSel: _idEspacioSel,
             sedesel: _sedesel,
+            usuarioId: _usuarioId,
             onVehiculoSelected: (nuevoVehiculo) {
               setState(() {
                 _vehSel = nuevoVehiculo;
@@ -175,7 +178,7 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: _buildIcon(Icons.person, 0),
+            icon: _buildIcon(Icons.home, 0),
             label: '',
           ),
           BottomNavigationBarItem(
@@ -214,12 +217,62 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class MyHomePageContent extends StatelessWidget {
+  Future<void> _selectReserva(BuildContext context) async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'https://website-parking-ulagos.onrender.com/usuarios/selectReserva?usuarioId=${usuarioId!}'), // Endpoint correcto para selectReserva
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // Parsear la respuesta JSON
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        if (responseData.containsKey('reserva')) {
+          // Mostrar mensaje o realizar acciones según la respuesta
+          print('Reserva encontrada');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ReservaCompletada(usuarioId!)),
+          );
+          return;
+        } else {
+          // Mostrar mensaje de error si no se encontró 'reserva' en la respuesta
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('No se encontró reserva')),
+          );
+        }
+      } else if (response.statusCode == 404) {
+        // Mostrar mensaje de error si no se encontró 'reserva' en la respuesta
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('No se encontró reserva')),
+        );
+      } else {
+        // Mostrar mensaje de error si la solicitud falla
+        print('Error al obtener la reserva: ${response.statusCode}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al obtener la reserva')),
+        );
+      }
+    } catch (e) {
+      // Mostrar mensaje de error si hay un problema de conexión
+      print('Error de conexión: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error de conexión')),
+      );
+    }
+  }
+
   final String? horaentradaSel;
   final String? horasalidaSel;
   final String? ediSel;
   final String? vehSel;
   final String? idEspacioSel;
   final String? sedesel;
+  final String? usuarioId;
   final ValueChanged<String>? onVehiculoSelected;
   final ValueChanged<String>? onHoraentradaSelected;
   final ValueChanged<String>? onHorasalidaSelected;
@@ -241,230 +294,316 @@ class MyHomePageContent extends StatelessWidget {
     this.onEdificioSelected,
     this.onIdEspacioSelected,
     this.onSedeSelected,
+    this.usuarioId,
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 20.0,
-          ),
-          ElevatedButton(
-            onPressed: () {
-              print('¡Vehículo ha sido presionado!');
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SeleccionarVehiculo()),
-              ).then((nuevoVehiculo) {
-                if (nuevoVehiculo != null) {
-                  onVehiculoSelected?.call(nuevoVehiculo);
-                }
-              });
-            },
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size(320, 40),
-              padding: const EdgeInsets.all(10.0),
-              backgroundColor: const Color(0xFF87CEEB),
-            ),
-            child: const Text(
-              'Vehículo',
-              style: TextStyle(
-                fontSize: 25,
-                color: Color(0xFF003DA6),
-                fontWeight: FontWeight.bold,
-              ),
+  Widget build(context) {
+    return Column(
+      children: [
+        SizedBox(height: 10), // Espacio entre el ícono y el texto
+        Center(
+          child: Text(
+            'Completa los campos para la reserva',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 25, // Tamaño del texto aumentado
+              color: Color(0xFF003DA6),
+              fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 330,
-                height: 50,
-                child: Row(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        print('Hora ha sido presionado!');
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const Hora()),
-                        ).then((hora) {
-                          if (hora != null) {
-                            onHoraentradaSelected?.call(hora['entrada']);
-                            onHorasalidaSelected?.call(hora['salida']);
-                          }
-                        });
-                      },
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(160, 40),
-                        padding: const EdgeInsets.all(10.0),
-                        backgroundColor: const Color(0xFF87CEEB),
-                      ),
-                      child: const Text(
-                        'Hora',
-                        style: TextStyle(
-                          fontSize: 25,
-                          color: Color(0xFF003DA6),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10.0), // Espacio entre los botones
-                    ElevatedButton(
-                      onPressed: () {
-                        print('Edificio ha sido presionado!');
-                        print(sedesel);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Edificio(sede: sedesel!)),
-                        ).then((nuevoEdificio) {
-                          if (nuevoEdificio != null) {
-                            onEdificioSelected?.call(nuevoEdificio);
-                          }
-                        });
-                      },
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(160, 40),
-                        padding: const EdgeInsets.all(10.0),
-                        backgroundColor: const Color(0xFF87CEEB),
-                      ),
-                      child: const Text(
-                        'Edificio',
-                        style: TextStyle(
-                          fontSize: 25,
-                          color: Color(0xFF003DA6),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 70.0,
-          ),
-          ElevatedButton(
-            onPressed: () {
-              print('Estacionamiento ha sido presionado!');
-              Widget destino =
-                  Container(); // Valor predeterminado, puede ser cualquier Widget vacío o de carga inicial
+        ),
 
-              if (ediSel == 'Principal') {
-                destino = EstacionamientoMeyer();
-              } else if (ediSel == 'Central') {
-                destino = EstacionamientoCentral();
-              } else if (ediSel == 'Pedagogia' ||
-                  ediSel == 'Aulas Virtuales' ||
-                  ediSel == 'ITR') {
-                destino = EstacionamientoAV();
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                      content: Text(
-                          'El edificio no fue seleccionado, por favor seleccione una')),
-                );
-                return; // Asegura que en todos los caminos de ejecución destino sea asignado
-              }
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => destino),
-              ).then((nuevaIdEspacio) {
-                if (nuevaIdEspacio != null) {
-                  onIdEspacioSelected?.call(nuevaIdEspacio);
-                }
-              });
-            },
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size(320, 40),
-              padding: const EdgeInsets.all(10.0),
-              backgroundColor: const Color(0xFF87CEEB),
+        const SizedBox(height: 20.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Column(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    print('¡Vehículo ha sido presionado!');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SeleccionarVehiculo(usuarioId)),
+                    ).then((nuevoVehiculo) {
+                      if (nuevoVehiculo != null) {
+                        onVehiculoSelected?.call(nuevoVehiculo);
+                      }
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(100, 40), // Tamaño mínimo del botón
+                    padding: EdgeInsets.all(10.0),
+                    backgroundColor: Color(0xFF87CEEB),
+                  ),
+                  child: Icon(
+                    Icons.directions_car,
+                    color: Color(0xFF003DA6),
+                    size: 30,
+                  ),
+                ),
+
+                SizedBox(height: 10), // Espacio entre el ícono y el texto
+                Text(
+                  'Vehículo',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF003DA6),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
-            child: const Text(
+            Column(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    print('Edificio ha sido presionado!');
+                    print(sedesel);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Edificio(sede: sedesel!)),
+                    ).then((nuevoEdificio) {
+                      if (nuevoEdificio != null) {
+                        onEdificioSelected?.call(nuevoEdificio);
+                      }
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(100, 40), // Tamaño mínimo del botón
+                    padding: EdgeInsets.all(10.0),
+                    backgroundColor: Color(0xFF87CEEB),
+                  ),
+                  child: Icon(
+                    Icons.business,
+                    color: Color(0xFF003DA6),
+                    size: 30,
+                  ),
+                ),
+
+                SizedBox(height: 10), // Espacio entre el ícono y el texto
+                Text(
+                  'Edificio',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF003DA6),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    print('Hora ha sido presionado!');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Hora()),
+                    ).then((hora) {
+                      if (hora != null) {
+                        onHoraentradaSelected?.call(hora['entrada']);
+                        onHorasalidaSelected?.call(hora['salida']);
+                      }
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(100, 40), // Tamaño mínimo del botón
+                    padding: EdgeInsets.all(10.0),
+                    backgroundColor: Color(0xFF87CEEB),
+                  ),
+                  child: Icon(
+                    Icons.access_time,
+                    color: Color(0xFF003DA6),
+                    size: 30,
+                  ),
+                ),
+                SizedBox(height: 10), // Espacio entre el ícono y el texto
+                Text(
+                  'Hora',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF003DA6),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(height: 10.0),
+        Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                print('Estacionamiento ha sido presionado!');
+                Widget destino = Container(); // Valor predeterminado
+
+                if (ediSel == 'Principal') {
+                  destino = EstacionamientoMeyer();
+                } else if (ediSel == 'Central') {
+                  destino = EstacionamientoCentral();
+                } else if (ediSel == 'Pedagogia' ||
+                    ediSel == 'Aulas Virtuales' ||
+                    ediSel == 'ITR') {
+                  destino = EstacionamientoAV();
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text(
+                            'El edificio no fue seleccionado, por favor seleccione uno')),
+                  );
+                  return;
+                }
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => destino),
+                ).then((nuevaIdEspacio) {
+                  if (nuevaIdEspacio != null) {
+                    onIdEspacioSelected?.call(nuevaIdEspacio);
+                  }
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.all(10.0),
+                backgroundColor: Color(0xFF87CEEB),
+              ),
+              child: Icon(
+                Icons.local_parking_rounded,
+                color: Color(0xFF003DA6),
+                size: 30,
+              ),
+            ),
+
+            SizedBox(height: 10), // Espacio entre el ícono y el texto
+            Text(
               'Estacionamientos',
               style: TextStyle(
-                fontSize: 25,
+                fontSize: 20,
                 color: Color(0xFF003DA6),
                 fontWeight: FontWeight.bold,
               ),
             ),
+          ],
+        ),
+        const SizedBox(height: 20.0),
+        ElevatedButton(
+          onPressed: () {
+            print('Reservar presionado');
+            if (horaentradaSel != null &&
+                horasalidaSel != null &&
+                ediSel != null &&
+                vehSel != null &&
+                idEspacioSel != null) {
+              _showReservarBottomSheet(context, horaentradaSel!, horasalidaSel!,
+                  ediSel!, vehSel!, idEspacioSel!, sedesel!, usuarioId!);
+            } else {
+              print('Faltan datos para la reserva');
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Faltan datos para la reserva')),
+              );
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            minimumSize: Size(320, 40),
+            padding: EdgeInsets.all(10.0),
+            side: BorderSide(width: 2, color: Color(0xFF003DA6)),
           ),
-          const SizedBox(
-            height: 20.0,
+          child: Text(
+            'Reservar',
+            style: TextStyle(
+              fontSize: 25,
+              color: Color(0xFF003DA6),
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              print('Reportes ha sido presionado!');
-             /* Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Reportes(),
+        ),
+
+        const SizedBox(height: 10.0),
+        //////////////////////////////////////////////////
+        Text(
+          'Datos de mi reserva',
+          style: TextStyle(
+            fontSize: 25,
+            color: Color(0xFF003DA6),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Column(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    print('Reportes ha sido presionado!');
+                    // Aquí puedes navegar a la pantalla de reportes cuando esté lista
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ReportesUsuario(usuarioId!)));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.all(10.0),
+                    backgroundColor: Color(0xFF87CEEB),
+                  ),
+                  child: Icon(
+                    Icons.description,
+                    color: Color(0xFF003DA6),
+                    size: 30,
+                  ),
                 ),
-              );*/
-            },
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size(320, 40),
-              padding: const EdgeInsets.all(10.0),
-              backgroundColor: const Color(0xFF87CEEB),
+                SizedBox(height: 10), // Espacio entre el ícono y el texto
+                Text(
+                  'Reportes',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF003DA6),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
-            child: const Text(
-              'Reportes',
-              style: TextStyle(
-                fontSize: 25,
-                color: Color(0xFF003DA6),
-                fontWeight: FontWeight.bold,
-              ),
+            Column(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    print('Reserva de Estacionamiento ha sido presionado!');
+                    // Aquí puedes navegar a la pantalla de mi reserva
+                    _selectReserva(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.all(10.0),
+                    backgroundColor: Color(0xFF87CEEB),
+                  ),
+                  child: Icon(
+                    Icons.directions_bus,
+                    color: Color(0xFF003DA6),
+                    size: 30,
+                  ),
+                ),
+                SizedBox(height: 10), // Espacio entre el ícono y el texto
+                Text(
+                  'Mi reserva',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF003DA6),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
-          ),
-          const SizedBox(
-            height: 100.0,
-          ),
-          ElevatedButton(
-            onPressed: () {
-              print(horaentradaSel);
-              print(horasalidaSel);
-              print(ediSel);
-              print(vehSel);
-              print(idEspacioSel);
-              print('Reservar presionado');
-              if (horaentradaSel != null &&
-                  horasalidaSel != null &&
-                  ediSel != null &&
-                  vehSel != null &&
-                  idEspacioSel != null) {
-                _showReservarBottomSheet(context, horaentradaSel!,
-                    horasalidaSel!, ediSel!, vehSel!, idEspacioSel!, sedesel!);
-              } else {
-                print('Faltan datos para la reserva');
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Faltan datos para la reserva')),
-                );
-              }
-            },
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size(320, 40),
-              padding: const EdgeInsets.all(10.0),
-              side: const BorderSide(width: 2, color: Color(0xFF003DA6)),
-            ),
-            child: const Text(
-              'Reservar',
-              style: TextStyle(
-                fontSize: 25,
-                color: Color(0xFF003DA6),
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -12,6 +12,7 @@ class ConfirmacionReserva extends StatelessWidget {
   final String EdiSel;
   final String VehSel;
   final String idEspacioSel;
+  final String UsuarioId;
 
   const ConfirmacionReserva({
     required this.EdiSel,
@@ -19,7 +20,9 @@ class ConfirmacionReserva extends StatelessWidget {
     required this.idEspacioSel,
     Key? key,
     required this.HoraEntradaSel,
-    required this.HoraSalidaSel, required String SedeSel,
+    required this.HoraSalidaSel,
+    required this.UsuarioId,
+    required String SedeSel,
   }) : super(key: key);
 
   Future<void> registrarReserva(BuildContext context) async {
@@ -30,11 +33,13 @@ class ConfirmacionReserva extends StatelessWidget {
       'id_espacio': idEspacioSel,
       'hora_entrada': HoraEntradaSel,
       'hora_salida': HoraSalidaSel,
+      'usuarioId': UsuarioId,
     };
 
     try {
       final response = await http.post(
-        Uri.parse('https://website-parking-ulagos.onrender.com/usuarios/reserva'),
+        Uri.parse(
+            'https://website-parking-ulagos.onrender.com/usuarios/reserva'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -48,7 +53,7 @@ class ConfirmacionReserva extends StatelessWidget {
         );
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ReservaCompletada()),
+          MaterialPageRoute(builder: (context) => ReservaCompletada(UsuarioId)),
         );
       } else if (response.statusCode == 121) {
         // Mostrar mensaje de error si la respuesta no es 200
@@ -58,7 +63,7 @@ class ConfirmacionReserva extends StatelessWidget {
         );
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ReservaCompletada()),
+          MaterialPageRoute(builder: (context) => ReservaCompletada(UsuarioId)),
         );
         print(response.statusCode);
       }

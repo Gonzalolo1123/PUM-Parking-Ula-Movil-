@@ -14,6 +14,7 @@ class LogIn extends StatefulWidget {
   @override
   _LogInState createState() => _LogInState();
 }
+
 class _LogInState extends State<LogIn> {
   final TextEditingController _correoController = TextEditingController();
   final TextEditingController _contrasenaController = TextEditingController();
@@ -37,7 +38,8 @@ class _LogInState extends State<LogIn> {
 
     try {
       final response = await http.post(
-        Uri.parse('https://website-parking-ulagos.onrender.com/usuarios/iniciosesion'),
+        Uri.parse(
+            'https://website-parking-ulagos.onrender.com/usuarios/iniciosesion'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -48,22 +50,24 @@ class _LogInState extends State<LogIn> {
         // Parsear la respuesta JSON
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         final String tipoUsuario = responseData['tipo_usuario'];
+        final int usuario = responseData['usuarioId'];
+
+        final usuarioId = usuario.toString();
 
         // Mostrar mensaje de éxito
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Inicio de Sesión exitoso')),
         );
-
         // Navegar a diferentes páginas según el tipo de usuario
         if (tipoUsuario == 'guardia') {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => IndexSeguridad()),
+            MaterialPageRoute(builder: (context) => IndexSeguridad(usuarioId)),
           );
         } else {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Sede()),
+            MaterialPageRoute(builder: (context) => Sede(usuarioId)),
           );
         }
       } else {

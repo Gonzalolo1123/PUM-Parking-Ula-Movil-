@@ -1,6 +1,5 @@
 // Importaciones necesarias
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, avoid_print, use_key_in_widget_constructors
-
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, avoid_print, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -11,6 +10,9 @@ import 'estacionamientoCentralGuardia.dart';
 import 'estacionamientoMeyerGuardia.dart';
 
 class IndexSeguridad extends StatefulWidget {
+  final String? usuarioId;
+  IndexSeguridad(this.usuarioId);
+
   @override
   // ignore: library_private_types_in_public_api
   _IndexSeguridadState createState() => _IndexSeguridadState();
@@ -21,7 +23,8 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
   Future<void> _selectGuardia() async {
     try {
       // Hacer la solicitud GET para obtener los datos del guardia
-      final Uri url = Uri.parse('https://website-parking-ulagos.onrender.com/usuarios/selectGuardia');
+      final Uri url = Uri.parse(
+          'https://website-parking-ulagos.onrender.com/usuarios/selectGuardia');
       final response =
           await http.get(url); // Cambiado a GET según tu comentario
 
