@@ -6,6 +6,9 @@ import 'pag2.dart';
 import 'pag3.dart';
 import 'pag4.dart';
 
+
+import 'estacionamientoAV.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -155,6 +158,32 @@ class Inicio extends StatelessWidget {
                     ),
                   ),
                 ),
+
+
+                const SizedBox(height: 20.0), // Espacio entre los botones
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => EstacionamientoAV()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(300, 40),
+                    padding: const EdgeInsets.all(10.0),
+                    backgroundColor: const Color(0xFF87CEEB),
+                  ),
+                  child: const Text(
+                    'TESTING EstacionamientoAV',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Color(0xFF003DA6),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+
+
               ],
             ),
           ),
