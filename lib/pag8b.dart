@@ -126,7 +126,6 @@ class _SedeState extends State<Sede> {
               child: GestureDetector(
                 onTap: () {
                   print('Imagen presionada');
-                  Navigator.pushNamed(context, '/');
                 },
                 child: Image.asset(
                   'assets/logoGPS.png',

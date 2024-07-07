@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, prefer_const_constructors, use_build_context_synchronously, use_key_in_widget_constructors, library_private_types_in_public_api
+// ignore_for_file: avoid_print, prefer_const_constructors, use_build_context_synchronously, use_key_in_widget_constructors, library_private_types_in_public_api, prefer_const_constructors_in_immutables
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -7,6 +7,9 @@ import 'package:http/http.dart' as http;
 import 'package:pum/pag5.dart';
 
 class RegistroVehiculo extends StatefulWidget {
+  final String? usuarioId;
+  RegistroVehiculo(this.usuarioId);
+
   @override
   _RegistroVehiculoState createState() => _RegistroVehiculoState();
 }
@@ -15,17 +18,31 @@ class _RegistroVehiculoState extends State<RegistroVehiculo> {
   final TextEditingController modeloController = TextEditingController();
   final TextEditingController patenteController = TextEditingController();
   final TextEditingController colorController = TextEditingController();
+  String? _usuarioId;
 
   String tipoVehiculoSeleccionado = 'Auto';
   String tamanoSeleccionado = 'Mediano';
 
   List<String> tiposVehiculo = ['Auto', 'Camioneta', 'Moto'];
   List<String> tamanos = ['Pequeño', 'Mediano', 'Grande'];
+  @override
+  void initState() {
+    super.initState();
+    _usuarioId = widget.usuarioId;
+  }
 
   Future<void> registrarUsuario() async {
     final String modelo = modeloController.text;
     final String patente = patenteController.text;
     final String color = colorController.text;
+
+    // Ensure _usuarioId is not null
+    if (_usuarioId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Usuario ID no disponible')),
+      );
+      return; // Exit the method early if _usuarioId is null
+    }
 
     Map<String, String> datos = {
       'patente': patente,
@@ -33,11 +50,14 @@ class _RegistroVehiculoState extends State<RegistroVehiculo> {
       'color': color,
       'tamaño': tamanoSeleccionado,
       'modelo': modelo,
+      'usuarioId':
+          _usuarioId!, // Safe to use _usuarioId with ! operator due to null check
     };
 
     try {
       final response = await http.post(
-        Uri.parse('https://website-parking-ulagos.onrender.com/usuarios/principal'),
+        Uri.parse(
+            'https://website-parking-ulagos.onrender.com/usuarios/principal'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(datos),
       );
@@ -194,7 +214,6 @@ class _RegistroVehiculoState extends State<RegistroVehiculo> {
                         ),
                       ),
                     ),
-                    
                     const SizedBox(height: 10.0),
                     SizedBox(
                       width: 300,
@@ -204,7 +223,8 @@ class _RegistroVehiculoState extends State<RegistroVehiculo> {
                         maxLength: 6, // Permite hasta 7 caracteres con guiones
                         inputFormatters: [
                           UpperCaseTextFormatter(), // Convierte a mayúsculas
-                          FilteringTextInputFormatter.deny(RegExp(r'[^A-Z0-9-]')), // Acepta solo letras mayúsculas, números y guiones
+                          FilteringTextInputFormatter.deny(RegExp(
+                              r'[^A-Z0-9-]')), // Acepta solo letras mayúsculas, números y guiones
                         ],
                         decoration: const InputDecoration(
                           labelText: 'Patente (Ej. XH6640)',

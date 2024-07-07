@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, prefer_const_constructors, use_build_context_synchronously, use_key_in_widget_constructors, library_private_types_in_public_api, prefer_const_constructors_in_immutables, non_constant_identifier_names, prefer_final_fields, unused_field, unused_element, must_be_immutable
+// ignore_for_file: avoid_print, prefer_const_constructors, use_build_context_synchronously, use_key_in_widget_constructors, library_private_types_in_public_api, prefer_const_constructors_in_immutables, non_constant_identifier_names, prefer_final_fields, unused_field, unused_element, must_be_immutable, avoid_unnecessary_containers
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -7,16 +7,24 @@ import 'package:http/http.dart' as http;
 class ReportesGuardia extends StatefulWidget {
   final String idEspacio;
   final String Edificio;
+  final String? usuarioId;
 
-  ReportesGuardia({required this.idEspacio, required this.Edificio});
+  ReportesGuardia(
+      {required this.idEspacio, required this.Edificio, this.usuarioId});
 
   @override
   _ReportesGuardiaState createState() => _ReportesGuardiaState();
 }
 
 class _ReportesGuardiaState extends State<ReportesGuardia> {
+  String? _usuarioId;
   final TextEditingController patenteController = TextEditingController();
   final TextEditingController reporteController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    _usuarioId = widget.usuarioId;
+  }
 
   Future<void> submitReport() async {
     final String patente = patenteController.text;
@@ -33,19 +41,26 @@ class _ReportesGuardiaState extends State<ReportesGuardia> {
         'id_espacio': widget.idEspacio,
         'patente': patente,
         'reporte': reporte,
+        'usuarioId': _usuarioId
       }),
     );
 
     if (response.statusCode == 201) {
       print('Report submitted successfully');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Report submitted successfully')),
-      );
+      if (mounted) {
+        // Check if the widget is still mounted
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Report submitted successfully')),
+        );
+      }
     } else {
       print('Failed to submit report');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to submit report')),
-      );
+      if (mounted) {
+        // Check if the widget is still mounted
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to submit report')),
+        );
+      }
     }
   }
 
@@ -418,17 +433,20 @@ class _IngresarReservaGuardiaState extends State<IngresarReservaGuardia> {
       }),
     );
 
-    if (response.statusCode == 201) {
-      print('Reserva ingresada exitosamente');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Reserva ingresada exitosamente')),
-      );
-    } else {
-      print('Error al ingresar la reserva');
-      print(response.statusCode);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error al ingresar la reserva')),
-      );
+    if (mounted) {
+      // Verifica si el widget está montado
+      if (response.statusCode == 201) {
+        print('Reserva ingresada exitosamente');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Reserva ingresada exitosamente')),
+        );
+      } else {
+        print('Error al ingresar la reserva');
+        print(response.statusCode);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al ingresar la reserva')),
+        );
+      }
     }
   }
 
@@ -656,6 +674,7 @@ class _IngresarReservaGuardiaState extends State<IngresarReservaGuardia> {
     );
   }
 }
+
 class ReportesUsuario extends StatefulWidget {
   final String usuarioId;
   ReportesUsuario(this.usuarioId);
@@ -672,23 +691,29 @@ class _ReportesUsuarioState extends State<ReportesUsuario> {
   void initState() {
     super.initState();
     _usuarioId = widget.usuarioId;
-    _fetchReportes();
+    _reportesUsuarios();
   }
 
-  Future<void> _fetchReportes() async {
+  Future<void> _reportesUsuarios() async {
+    // Datos a enviar
+    Map<String, String> dato = {
+      'usuarioId': _usuarioId!,
+    };
+
     try {
-      final response = await http.get(
-        Uri.parse('https://sitio-web-parking-ulagos.onrender.com/usuarios/reporteGuardiaSelect?usuarioId=${_usuarioId!}'),
+      final response = await http.post(
+        Uri.parse(
+            'https://website-parking-ulagos.onrender.com/usuarios/selectReportes'),
         headers: {
           'Content-Type': 'application/json',
         },
+        body: jsonEncode(dato),
       );
-      print('Response: ${response.statusCode}');
       if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        if (responseData.containsKey('reportes') && responseData['reportes'] != null) {
+        final responseData = json.decode(response.body);
+        if (responseData is List) {
           setState(() {
-            reportes = responseData['reportes'];
+            reportes = responseData;
           });
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -696,38 +721,81 @@ class _ReportesUsuarioState extends State<ReportesUsuario> {
           );
         }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error al obtener los reportes: ${response.statusCode}')),
-        );
+        print('Error al obtener los reportes: ${response.statusCode}');
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error de conexión: $e')),
-      );
+      print('Error de conexion $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Reportes del Usuario'),
-      ),
-      body: reportes.isEmpty
-          ? Center(child: Text('No hay reportes disponibles.'))
-          : ListView.builder(
-              itemCount: reportes.length,
-              itemBuilder: (context, index) {
-                final reporte = reportes[index];
-                return ListTile(
-                  title: Text('Reporte de Estacionamiento'),
-                  subtitle: Text(reporte['reporte']),
-                  onTap: () {
-                    // Aquí puedes manejar el evento de toque del reporte si es necesario
-                  },
-                );
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60.0),
+        child: AppBar(
+          backgroundColor: const Color(0xFF003DA6),
+          flexibleSpace: Align(
+            alignment: const Alignment(0.0, 0.8),
+            child: GestureDetector(
+              onTap: () {
+                // Lógica cuando la imagen es presionada
+                print('Imagen presionada');
               },
+              child: Image.asset(
+                'assets/logoGPS.png',
+                height: 55,
+              ),
             ),
+          ),
+        ),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              'Reporte de Estacionamiento',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            ),
+          ),
+          Expanded(
+            child: reportes.isEmpty
+                ? Center(
+                    child: Text(
+                      'Sin reportes',
+                      style: TextStyle(fontSize: 18, color: Colors.grey),
+                    ),
+                  ) // Si no hay reportes, muestra un contenedor vacío
+                : ListView.builder(
+                    itemCount: reportes.length,
+                    itemBuilder: (context, index) {
+                      final reporte = reportes[index];
+                      return Card(
+                        margin:
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                        child: ListTile(
+                          title: Text(
+                            'Reporte de Estacionamiento',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Reporte: ${reporte['reporte']}'),
+                              Text('Espacio: ${reporte['id_espacio']}'),
+                            ],
+                          ),
+                          onTap: () {
+                            // Aquí puedes manejar el evento de toque del reporte si es necesario
+                          },
+                        ),
+                      );
+                    },
+                  ),
+          ),
+        ],
+      ),
     );
   }
 }

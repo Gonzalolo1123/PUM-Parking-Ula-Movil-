@@ -1,6 +1,9 @@
+// ignore_for_file: avoid_print, prefer_const_constructors
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:pum/pag5.dart';
 
 class SeleccionarVehiculo extends StatefulWidget {
   final String? usuarioId;
@@ -49,16 +52,22 @@ class _SeleccionarVehiculoState extends State<SeleccionarVehiculo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF003DA6),
-        title: GestureDetector(
-          onTap: () {
-            print('Imagen presionada');
-            Navigator.pushNamed(context, '/');
-          },
-          child: Image.asset(
-            'assets/logoGPS.png',
-            height: 55,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60.0),
+        child: AppBar(
+          backgroundColor: const Color(0xFF003DA6),
+          flexibleSpace: Align(
+            alignment: const Alignment(0.0, 0.8),
+            child: GestureDetector(
+              onTap: () {
+                // Lógica cuando la imagen es presionada
+                print('Imagen presionada');
+              },
+              child: Image.asset(
+                'assets/logoGPS.png',
+                height: 55,
+              ),
+            ),
           ),
         ),
       ),

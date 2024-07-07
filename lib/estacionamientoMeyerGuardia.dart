@@ -1,9 +1,12 @@
-// ignore_for_file: prefer_const_constructors, avoid_print, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
+// ignore_for_file: prefer_const_constructors, avoid_print, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:pum/reporteGuardia.dart';
 
 class EstacionamientoMeyerGuardia extends StatelessWidget {
+  String? usuarioId;
+  EstacionamientoMeyerGuardia(this.usuarioId);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -56,7 +59,7 @@ class EstacionamientoMeyerGuardia extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: ParkingLayout(),
+          child: ParkingLayout(usuarioId),
         ),
       ),
     );
@@ -64,6 +67,9 @@ class EstacionamientoMeyerGuardia extends StatelessWidget {
 }
 
 class ParkingLayout extends StatelessWidget {
+  String? usuarioId;
+
+  ParkingLayout(this.usuarioId);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -73,42 +79,42 @@ class ParkingLayout extends StatelessWidget {
       color: Color(0xFFE0E0E0),
       child: Stack(
         children: [
-                  ParkingSpot(
+          ParkingSpot(
             id: 'spot108',
             top: 430,
             left: 40,
           ),
-          ParkingSpot(id: 'spot109', top: 430, left: 100),
-          ParkingSpot(id: 'spot110', top: 430, left: 160),
-          ParkingSpot(id: 'spot111', top: 430, left: 220),
-          ParkingSpot(id: 'spot112', top: 430, left: 280),
-          ParkingSpot(id: 'spot113', top: 430, left: 340),
-          ParkingSpot(id: 'spot114', top: 430, left: 400),
-          ParkingSpot(id: 'spot115', top: 430, left: 460),
-          ParkingSpot(id: 'spot116', top: 290, left: 40),
-          ParkingSpot(id: 'spot117', top: 290, left: 100),
-          ParkingSpot(id: 'spot118', top: 290, left: 160),
-          ParkingSpot(id: 'spot119', top: 290, left: 220),
-          ParkingSpot(id: 'spot120', top: 290, left: 280),
-          ParkingSpot(id: 'spot121', top: 290, left: 340),
-          ParkingSpot(id: 'spot122', top: 290, left: 400),
-          ParkingSpot(id: 'spot123', top: 290, left: 460),
-          ParkingSpot(id: 'spot124', top: 430, left: 860),
-          ParkingSpot(id: 'spot125', top: 430, left: 920),
-          ParkingSpot(id: 'spot126', top: 430, left: 980),
-          ParkingSpot(id: 'spot127', top: 430, left: 1040),
-          ParkingSpot(id: 'spot128', top: 430, left: 1100),
-          ParkingSpot(id: 'spot129', top: 430, left: 1160),
-          ParkingSpot(id: 'spot130', top: 430, left: 1220),
-          ParkingSpot(id: 'spot131', top: 430, left: 1280),
-          ParkingSpot(id: 'spot132', top: 290, left: 860),
-          ParkingSpot(id: 'spot133', top: 290, left: 920),
-          ParkingSpot(id: 'spot134', top: 290, left: 980),
-          ParkingSpot(id: 'spot135', top: 290, left: 1040),
-          ParkingSpot(id: 'spot136', top: 290, left: 1100),
-          ParkingSpot(id: 'spot137', top: 290, left: 1160),
-          ParkingSpot(id: 'spot138', top: 290, left: 1220),
-          ParkingSpot(id: 'spot139', top: 290, left: 1280),
+          ParkingSpot(id: 'spot109', top: 430, left: 100, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot110', top: 430, left: 160, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot111', top: 430, left: 220, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot112', top: 430, left: 280, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot113', top: 430, left: 340, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot114', top: 430, left: 400, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot115', top: 430, left: 460, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot116', top: 290, left: 40, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot117', top: 290, left: 100, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot118', top: 290, left: 160, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot119', top: 290, left: 220, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot120', top: 290, left: 280, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot121', top: 290, left: 340, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot122', top: 290, left: 400, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot123', top: 290, left: 460, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot124', top: 430, left: 860, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot125', top: 430, left: 920, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot126', top: 430, left: 980, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot127', top: 430, left: 1040, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot128', top: 430, left: 1100, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot129', top: 430, left: 1160, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot130', top: 430, left: 1220, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot131', top: 430, left: 1280, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot132', top: 290, left: 860, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot133', top: 290, left: 920, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot134', top: 290, left: 980, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot135', top: 290, left: 1040, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot136', top: 290, left: 1100, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot137', top: 290, left: 1160, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot138', top: 290, left: 1220, usuarioId: usuarioId),
+          ParkingSpot(id: 'spot139', top: 290, left: 1280, usuarioId: usuarioId),
           DisabledSpot(
               id: 'disabled1', top: 70, left: 120, width: 180, height: 170),
           DisabledSpot(
@@ -142,8 +148,9 @@ class ParkingSpot extends StatelessWidget {
   final String id;
   final double top;
   final double left;
+  final String? usuarioId;
 
-  ParkingSpot({required this.id, required this.top, required this.left});
+  ParkingSpot({required this.id, required this.top, required this.left,this.usuarioId});
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +158,7 @@ class ParkingSpot extends StatelessWidget {
       top: top,
       left: left,
       child: GestureDetector(
-        onTap: () => mostrarDialogo(context, id.substring(4)),
+        onTap: () => mostrarDialogo(context, id.substring(4),usuarioId),
         child: Stack(
           children: [
             Container(
@@ -177,7 +184,7 @@ class ParkingSpot extends StatelessWidget {
     );
   }
 
-  void mostrarDialogo(BuildContext context, String id) {
+  void mostrarDialogo(BuildContext context, String id, [String? usuarioId]) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -279,7 +286,7 @@ class ParkingSpot extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => ReportesGuardia(
-                            idEspacio: id, Edificio: 'Central')),
+                            idEspacio: id, Edificio: 'Central',usuarioId: usuarioId,)),
                   );
                 },
                 style: TextButton.styleFrom(

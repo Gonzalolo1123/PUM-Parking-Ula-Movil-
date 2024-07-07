@@ -1,5 +1,5 @@
 // Importaciones necesarias
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, avoid_print, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, avoid_print, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, unnecessary_brace_in_string_interps
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -19,15 +19,31 @@ class IndexSeguridad extends StatefulWidget {
 }
 
 class _IndexSeguridadState extends State<IndexSeguridad> {
+  String? _usuarioId;
+
+  @override
+  void initState() {
+    super.initState();
+    _usuarioId = widget.usuarioId;
+  }
+
   // Método para seleccionar el guardia y dirigir a la pantalla correspondiente
   Future<void> _selectGuardia() async {
-    try {
-      // Hacer la solicitud GET para obtener los datos del guardia
-      final Uri url = Uri.parse(
-          'https://website-parking-ulagos.onrender.com/usuarios/selectGuardia');
-      final response =
-          await http.get(url); // Cambiado a GET según tu comentario
+    if (_usuarioId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('ID de usuario no disponible')),
+      );
+      return;
+    }
 
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'https://website-parking-ulagos.onrender.com/usuarios/selectGuardia?usuarioId=$_usuarioId'), // Endpoint correcto para selectReserva
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
       if (response.statusCode == 200) {
         // Parsear la respuesta JSON
         final Map<String, dynamic> responseData = jsonDecode(response.body);
@@ -48,7 +64,7 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => EstacionamientoCentralGuardia(),
+                  builder: (context) => EstacionamientoCentralGuardia(_usuarioId),
                 ),
               );
               break;
@@ -57,7 +73,7 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => EstacionamientoAVGuardia(),
+                  builder: (context) => EstacionamientoAVGuardia(_usuarioId),
                 ),
               );
               break;
@@ -67,7 +83,7 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      EstacionamientoAVGuardia(), // Asegúrate de tener esta clase
+                      EstacionamientoAVGuardia(_usuarioId), // Asegúrate de tener esta clase
                 ),
               );
               break;
@@ -77,7 +93,7 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      EstacionamientoAVGuardia(), // Asegúrate de tener esta clase
+                      EstacionamientoAVGuardia(_usuarioId), // Asegúrate de tener esta clase
                 ),
               );
               break;
@@ -85,12 +101,12 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
             case 'Gimnasio 1':
               print('Gimnasio 1');
               /*Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      EstacionamientoGimnasio1Guardia(), // Asegúrate de tener esta clase
-                ),
-              );*/
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    EstacionamientoGimnasio1Guardia(), // Asegúrate de tener esta clase
+              ),
+            );*/
               break;
 
             case 'docentes':
@@ -98,7 +114,7 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      EstacionamientoAVGuardia(), // Asegúrate de tener esta clase
+                      EstacionamientoAVGuardia(_usuarioId), // Asegúrate de tener esta clase
                 ),
               );
               break;
@@ -113,7 +129,7 @@ class _IndexSeguridadState extends State<IndexSeguridad> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => EstacionamientoMeyerGuardia(),
+              builder: (context) => EstacionamientoMeyerGuardia(_usuarioId),
             ),
           );
         }
