@@ -2,20 +2,26 @@
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'pag8b.dart';
 
-final List<Map<String, String>> buildings = [
+final List<Map<String, String>> buildingsMeyer = [
   {
     'imagePath': 'assets/edificio1.png',
-    'description': 'edificio 1',
+    'description': 'Principal',
+  },
+];
+
+final List<Map<String, String>> buildingsChuyaca = [
+  {
+    'imagePath': 'assets/edificio1.png',
+    'description': 'Central',
   },
   {
     'imagePath': 'assets/edificio2.png',
-    'description': 'edificio 2',
+    'description': 'Aulas Virtuales',
   },
   {
     'imagePath': 'assets/edificio3.png',
-    'description': 'edificio 3',
+    'description': 'ITR',
   },
 ];
 
@@ -67,6 +73,10 @@ class BuildingCard extends StatelessWidget {
 }
 
 class Edificio extends StatefulWidget {
+  final String? sede;
+
+  const Edificio({this.sede, Key? key}) : super(key: key);
+
   @override
   _EdificioState createState() => _EdificioState();
 }
@@ -74,6 +84,10 @@ class Edificio extends StatefulWidget {
 class _EdificioState extends State<Edificio> {
   final CarouselController _carouselController = CarouselController();
   int _currentIndex = 0;
+
+  List<Map<String, String>> get buildings {
+    return widget.sede == 'Meyer' ? buildingsMeyer : buildingsChuyaca;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,16 +143,10 @@ class _EdificioState extends State<Edificio> {
             ),
             ElevatedButton(
               onPressed: () {
-                final selectedBuildingDescription =
+                final edificioSeleccionado =
                     buildings[_currentIndex]['description']!;
-                print('Edificio seleccionado: $selectedBuildingDescription');
-
-                final navigationData = NavigationData(
-                  selectedSedeDescription: '',
-                  selectedEdificioDescription: selectedBuildingDescription,
-                );
-
-                navigateToIndex(context, navigationData);
+                print('Edificio seleccionado: $edificioSeleccionado');
+                Navigator.pop(context, edificioSeleccionado);
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(320, 40),

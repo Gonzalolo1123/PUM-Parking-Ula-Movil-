@@ -1,18 +1,6 @@
-// ignore_for_file: unused_field, depend_on_referenced_packages, use_super_parameters, library_private_types_in_public_api, avoid_print, unused_element
+// ignore_for_file: library_private_types_in_public_api, use_super_parameters, avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:flutter_analog_clock/flutter_analog_clock.dart';
-
-class Index extends StatelessWidget {
-  const Index({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Hora(),
-    );
-  }
-}
 
 class Hora extends StatefulWidget {
   const Hora({Key? key}) : super(key: key);
@@ -21,10 +9,41 @@ class Hora extends StatefulWidget {
   _HoraState createState() => _HoraState();
 }
 
+// Clase de estado
 class _HoraState extends State<Hora> {
-  final GlobalKey<AnalogClockState> _analogClockKey = GlobalKey();
-  final TextEditingController _hourController = TextEditingController();
-  final TextEditingController _minuteController = TextEditingController();
+  int _hourEntrada = 8; // Hora de entrada por defecto
+  int _minuteEntrada = 0; // Minuto de entrada por defecto
+  String _horaEntradaSeleccionada = '08:00'; // String para mostrar la hora de entrada seleccionada
+
+  int _hourSalida = 17; // Hora de salida por defecto
+  int _minuteSalida = 0; // Minuto de salida por defecto
+  String _horaSalidaSeleccionada = '17:00'; // String para mostrar la hora de salida seleccionada
+
+  // Método para actualizar la hora y el minuto de entrada
+  void _updateTimeEntrada(int hour, int minute) {
+    setState(() {
+      _hourEntrada = hour;
+      _minuteEntrada = minute;
+      _horaEntradaSeleccionada =
+          '$_hourEntrada:${_minuteEntrada.toString().padLeft(2, '0')}'; // Formato HH:MM
+    });
+  }
+
+  // Método para actualizar la hora y el minuto de salida
+  void _updateTimeSalida(int hour, int minute) {
+    setState(() {
+      _hourSalida = hour;
+      _minuteSalida = minute;
+      _horaSalidaSeleccionada =
+          '$_hourSalida:${_minuteSalida.toString().padLeft(2, '0')}'; // Formato HH:MM
+    });
+  }
+
+  // Getter para obtener el valor de _horaEntradaSeleccionada
+  String get horaEntradaSeleccionada => _horaEntradaSeleccionada;
+
+  // Getter para obtener el valor de _horaSalidaSeleccionada
+  String get horaSalidaSeleccionada => _horaSalidaSeleccionada;
 
   @override
   Widget build(BuildContext context) {
@@ -49,61 +68,38 @@ class _HoraState extends State<Hora> {
         ),
       ),
       resizeToAvoidBottomInset: true,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Text(
-                  'Hora',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 33),
+                  'Seleccionar Horas',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                 ),
-                SizedBox(
-                  width: 200,
-                  height: 200,
-                  child: AnalogClock(
-                    dateTime: DateTime.now(),
-                    isKeepTime: false,
-                  ),
+                const SizedBox(height: 30),
+                _buildTimePicker(
+                  'Hora de Entrada',
+                  _hourEntrada,
+                  _minuteEntrada,
+                  _updateTimeEntrada,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SizedBox(
-                        width: 100,
-                        height: 50,
-                        child: TextField(
-                          controller: _hourController,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Hora',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 100,
-                        height: 50,
-                        child: TextField(
-                          controller: _minuteController,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Minuto',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                const SizedBox(height: 30),
+                _buildTimePicker(
+                  'Hora de Salida',
+                  _hourSalida,
+                  _minuteSalida,
+                  _updateTimeSalida,
                 ),
+                const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
-                    // Lógica para el botón de Edificio
-                    print('Seleccionar ha sido presionado!');
+                    print('Hora de entrada enviada: $horaEntradaSeleccionada');
+                    print('Hora de salida enviada: $horaSalidaSeleccionada');
+                    Navigator.pop(context, {'entrada': horaEntradaSeleccionada, 'salida': horaSalidaSeleccionada});
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(320, 40),
@@ -113,18 +109,96 @@ class _HoraState extends State<Hora> {
                   child: const Text(
                     'Seleccionar',
                     style: TextStyle(
-                      fontSize: 25,
+                      fontSize: 20,
                       color: Color(0xFF003DA6),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                const SizedBox(height: 10.0),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTimePicker(
+      String label, int hour, int minute, Function(int, int) onUpdate) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
+        const SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.arrow_drop_up, color: Colors.grey),
+                  onPressed: () {
+                    setState(() {
+                      hour = (hour + 1) % 24;
+                      onUpdate(hour, minute);
+                    });
+                  },
+                ),
+                Text(
+                  hour.toString().padLeft(2, '0'),
+                  style: const TextStyle(fontSize: 50, color: Colors.grey),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.arrow_drop_down, color: Colors.grey),
+                  onPressed: () {
+                    setState(() {
+                      hour = (hour - 1 + 24) % 24;
+                      onUpdate(hour, minute);
+                    });
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(width: 10),
+            const Text(
+              ':',
+              style: TextStyle(fontSize: 50, color: Colors.grey),
+            ),
+            const SizedBox(width: 10),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.arrow_drop_up, color: Colors.grey),
+                  onPressed: () {
+                    setState(() {
+                      minute = (minute + 1) % 60;
+                      onUpdate(hour, minute);
+                    });
+                  },
+                ),
+                Text(
+                  minute.toString().padLeft(2, '0'),
+                  style: const TextStyle(fontSize: 50, color: Colors.grey),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.arrow_drop_down, color: Colors.grey),
+                  onPressed: () {
+                    setState(() {
+                      minute = (minute - 1 + 60) % 60;
+                      onUpdate(hour, minute);
+                    });
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

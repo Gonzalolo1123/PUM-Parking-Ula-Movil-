@@ -1,7 +1,10 @@
-// ignore_for_file: avoid_print, use_key_in_widget_constructors, library_private_types_in_public_api
+// ignore_for_file: avoid_print, use_key_in_widget_constructors, library_private_types_in_public_api, prefer_const_declarations, unused_field, deprecated_member_use, prefer_const_constructors, unnecessary_import, prefer_const_constructors_in_immutables
 
-import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
+
+import 'main.dart';
 import 'pag5.dart';
 
 // Lista de datos de los edificios
@@ -63,7 +66,37 @@ class BuildingCard extends StatelessWidget {
   }
 }
 
+Future<bool> _onWillPop(BuildContext context) async {
+  return await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Cerrar sesión'),
+          content: Text('¿Estás seguro de que quieres cerrar sesión?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+                // Aquí puedes agregar la lógica para cerrar sesión
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => Inicio(),
+                ));
+              },
+              child: Text('Sí'),
+            ),
+          ],
+        ),
+      ) ??
+      false;
+}
+
 class Sede extends StatefulWidget {
+  final String usuarioId;
+  Sede(this.usuarioId);
+
   @override
   _SedeState createState() => _SedeState();
 }
@@ -71,112 +104,99 @@ class Sede extends StatefulWidget {
 class _SedeState extends State<Sede> {
   final CarouselController _carouselController = CarouselController();
   int _currentIndex = 0;
+  String? _usuarioId;
+
+  @override
+  void initState() {
+    super.initState();
+    _usuarioId = widget.usuarioId;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60.0),
-        child: AppBar(
-          backgroundColor: const Color(0xFF003DA6),
-          flexibleSpace: Align(
-            alignment: const Alignment(0.0, 0.8),
-            child: GestureDetector(
-              onTap: () {
-                print('Imagen presionada');
-                Navigator.pushNamed(context, '/');
-              },
-              child: Image.asset(
-                'assets/logoGPS.png',
-                height: 55,
+    return WillPopScope(
+      onWillPop: () => _onWillPop(context),
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(60.0),
+          child: AppBar(
+            backgroundColor: const Color(0xFF003DA6),
+            flexibleSpace: Align(
+              alignment: const Alignment(0.0, 0.8),
+              child: GestureDetector(
+                onTap: () {
+                  print('Imagen presionada');
+                  Navigator.pushNamed(context, '/');
+                },
+                child: Image.asset(
+                  'assets/logoGPS.png',
+                  height: 55,
+                ),
               ),
             ),
           ),
         ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text(
-              'Sedes',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 33),
-            ),
-            CarouselSlider(
-              carouselController: _carouselController,
-              options: CarouselOptions(
-                height: 400.0,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                },
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                'Sedes',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 33),
               ),
-              items: buildings.map((building) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return BuildingCard(
-                      imagePath: building['imagePath']!,
-                      description: building['description']!,
-                    );
+              CarouselSlider(
+                carouselController: _carouselController,
+                options: CarouselOptions(
+                  height: 400.0,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
                   },
-                );
-              }).toList(),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                final selectedSedeDescription =
-                    buildings[_currentIndex]['description']!;
-                print('Sede seleccionada: $selectedSedeDescription');
-
-                final navigationData = NavigationData(
-                  selectedSedeDescription: selectedSedeDescription,
-                  selectedEdificioDescription: '',
-                );
-
-                navigateToIndex(context, navigationData);
-              },
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(320, 40),
-                padding: const EdgeInsets.all(10.0),
-                side: const BorderSide(width: 2, color: Color(0xFF003DA6)),
+                ),
+                items: buildings.map((building) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return BuildingCard(
+                        imagePath: building['imagePath']!,
+                        description: building['description']!,
+                      );
+                    },
+                  );
+                }).toList(),
               ),
-              child: const Text(
-                'Seleccionar',
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Color(0xFF003DA6),
-                  fontWeight: FontWeight.bold,
+              ElevatedButton(
+                onPressed: () {
+                  final sedeSeleccionada =
+                      buildings[_currentIndex]['description']!;
+                  print('Sede seleccionado: $sedeSeleccionada');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MyHomePage(
+                            sedesel: sedeSeleccionada, usuarioId: _usuarioId)),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(320, 40),
+                  padding: const EdgeInsets.all(10.0),
+                  side: const BorderSide(width: 2, color: Color(0xFF003DA6)),
+                ),
+                child: const Text(
+                  'Seleccionar',
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: Color(0xFF003DA6),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 10.0),
-          ],
+              const SizedBox(height: 10.0),
+            ],
+          ),
         ),
       ),
     );
   }
-}
-
-class NavigationData {
-  final String selectedSedeDescription;
-  final String selectedEdificioDescription;
-
-  NavigationData({
-    required this.selectedSedeDescription,
-    required this.selectedEdificioDescription,
-  });
-}
-
-void navigateToIndex(BuildContext context, NavigationData navigationData) {
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => Index(
-        navigationData: navigationData,
-        selectedBuildingDescription: '',
-      ),
-    ),
-  );
 }

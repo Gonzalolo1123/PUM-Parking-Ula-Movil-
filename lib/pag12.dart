@@ -1,241 +1,194 @@
-// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, avoid_print
-
+// Importaciones necesarias
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, avoid_print, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-import 'pag8.dart';
-
-class Index extends StatelessWidget {
-  const Index({Key? key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: IndexSeguridad(),
-    );
-  }
-}
+// Importaciones de pantallas específicas de edificios
+import 'estacionamientoAVGuardia.dart';
+import 'estacionamientoCentralGuardia.dart';
+import 'estacionamientoMeyerGuardia.dart';
 
 class IndexSeguridad extends StatefulWidget {
+  final String? usuarioId;
+  IndexSeguridad(this.usuarioId);
+
   @override
+  // ignore: library_private_types_in_public_api
   _IndexSeguridadState createState() => _IndexSeguridadState();
 }
 
 class _IndexSeguridadState extends State<IndexSeguridad> {
-  int _selectedIndex = 0;
+  // Método para seleccionar el guardia y dirigir a la pantalla correspondiente
+  Future<void> _selectGuardia() async {
+    try {
+      // Hacer la solicitud GET para obtener los datos del guardia
+      final Uri url = Uri.parse(
+          'https://website-parking-ulagos.onrender.com/usuarios/selectGuardia');
+      final response =
+          await http.get(url); // Cambiado a GET según tu comentario
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+      if (response.statusCode == 200) {
+        // Parsear la respuesta JSON
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        final Map<String, dynamic> guardiaData = responseData['guardiaReporte'];
+
+        final String nombreEdificio = guardiaData['nombre_edificio'];
+        final String nombreSede = guardiaData['nombre_sede'];
+
+        // Mostrar mensaje de éxito
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Inicio de Sesión exitoso')),
+        );
+
+// Navegar a diferentes páginas según el tipo de usuario
+        if (nombreSede == 'Chuyaca') {
+          switch (nombreEdificio) {
+            case 'Central':
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EstacionamientoCentralGuardia(),
+                ),
+              );
+              break;
+
+            case 'Aulas Virtuales':
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EstacionamientoAVGuardia(),
+                ),
+              );
+              break;
+
+            case 'ITR':
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      EstacionamientoAVGuardia(), // Asegúrate de tener esta clase
+                ),
+              );
+              break;
+
+            case 'SEMDA':
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      EstacionamientoAVGuardia(), // Asegúrate de tener esta clase
+                ),
+              );
+              break;
+
+            case 'Gimnasio 1':
+              print('Gimnasio 1');
+              /*Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      EstacionamientoGimnasio1Guardia(), // Asegúrate de tener esta clase
+                ),
+              );*/
+              break;
+
+            case 'docentes':
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      EstacionamientoAVGuardia(), // Asegúrate de tener esta clase
+                ),
+              );
+              break;
+
+            default:
+              // Si el edificio no está reconocido, puedes manejarlo como desees
+              print('Edificio no reconocido: $nombreEdificio');
+              break;
+          }
+        } else {
+          // Si la sede no es 'Chuyaca', navegar a la pantalla de Meyer Guardia
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EstacionamientoMeyerGuardia(),
+            ),
+          );
+        }
+      } else {
+        // Mostrar mensaje de error si no se pudo obtener los datos del guardia
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Error al obtener datos del guardia')),
+        );
+        print('Error de estado: ${response.statusCode}');
+      }
+    } catch (e) {
+      // Capturar errores de conexión u otros
+      print('Error de conexión: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Error de conexión')),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60.0),
-        child: AppBar(
-          backgroundColor: const Color(0xFF003DA6),
-          flexibleSpace: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(width: 100),
-              SizedBox(
-                width: 100, // Ajusta el ancho según tus necesidades
-                //height: 30, // Ajusta el alto según tus necesidades
-                child: Align(
-                  alignment: Alignment.center,
-                  child: GestureDetector(
-                    onTap: () {
-                      // Lógica cuando la imagen es presionada
-                      print('Imagen presionada');
-                    },
-                    child: Image.asset(
-                      'assets/logoSEG.png',
-                      height: 55,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 100, // Ajusta el ancho según tus necesidades
-                //height: 30, // Ajusta el alto según tus necesidades
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: GestureDetector(
-                    onTap: () {
-                      // Lógica cuando la imagen es presionada
-                      print('Imagen presionada');
-                    },
-                    child: Image.asset(
-                      'assets/logoGPS.png',
-                      height: 55,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 20.0,
-            ),
-            // Aquí va el contenido del cuerpo de la pantalla
-            ElevatedButton(
-              onPressed: () {
-                // Agrega la lógica para el botón de Crear Cuenta
-                print('¡Edificioseg ha sido presionado!');
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Edificio()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(320, 40),
-                padding: const EdgeInsets.all(10.0),
-                backgroundColor: const Color(0xFF87CEEB),
-              ),
-              child: const Text(
-                'Edificio',
-                style: TextStyle(
-                  fontSize: 25,
-                  // Ajusta el tamaño de fuente según tus necesidades
-                  color: Color(0xFF003DA6),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 80.0,
-            ),
-            /*
-            Row(
+    return MaterialApp(
+      home: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(60.0),
+          child: AppBar(
+            backgroundColor: const Color(0xFF003DA6),
+            flexibleSpace: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const SizedBox(width: 100),
                 SizedBox(
-                  width: 330,
-                  height: 50,
-                  child: Row(
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          // Lógica para el botón de Hora
-                          print('Hora ha sido presionado!');
-                        },
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(160, 40),
-                          padding: const EdgeInsets.all(10.0),
-                          backgroundColor: const Color(0xFF87CEEB),
-                        ),
-                        child: const Text(
-                          'Hora',
-                          style: TextStyle(
-                            fontSize: 25,
-                            color: Color(0xFF003DA6),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                  width: 100, // Ajusta el ancho según tus necesidades
+                  //height: 30, // Ajusta el alto según tus necesidades
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: GestureDetector(
+                      onTap: () {
+                        // Lógica cuando la imagen es presionada
+                        print('Imagen presionada');
+                      },
+                      child: Image.asset(
+                        'assets/logoSEG.png',
+                        height: 55,
                       ),
-                      const SizedBox(width: 10.0), // Espacio entre los botones
-                      ElevatedButton(
-                        onPressed: () {
-                          // Lógica para el botón de Edificio
-                          print('Edificio ha sido presionado!');
-                        },
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(160, 40),
-                          padding: const EdgeInsets.all(10.0),
-                          backgroundColor: const Color(0xFF87CEEB),
-                        ),
-                        child: const Text(
-                          'Edificio',
-                          style: TextStyle(
-                            fontSize: 25,
-                            color: Color(0xFF003DA6),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 100, // Ajusta el ancho según tus necesidades
+                  //height: 30, // Ajusta el alto según tus necesidades
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: GestureDetector(
+                      onTap: () {
+                        // Lógica cuando la imagen es presionada
+                        print('Imagen presionada');
+                      },
+                      child: Image.asset(
+                        'assets/logoGPS.png',
+                        height: 55,
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(
-              height: 20.0,
-            ),*/
-            Container(
-              width: 320,
-              height: 250,
-              decoration: const BoxDecoration(
-                color: Color(0xFFD9D9D9), // Color de fondo
-              ),
-            ),
-            const SizedBox(
-              height: 20.0,
-            ), /*
-            ElevatedButton(
-              onPressed: () {
-                // Lógica para el botón de Edificio
-                print('Reservar ha sido presionado!');
-              },
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(320, 40),
-                padding: const EdgeInsets.all(10.0),
-                side: const BorderSide(width: 2, color: Color(0xFF003DA6)),
-              ),
-              child: const Text(
-                'Reservar',
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Color(0xFF003DA6),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),*/
-          ],
+          ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: _buildIcon(Icons.person, 0),
-            label: '',
+        body: Center(
+          child: ElevatedButton(
+            onPressed: _selectGuardia,
+            child: Text('Seleccionar Guardia'),
           ),
-          BottomNavigationBarItem(
-            icon: _buildIcon(Icons.qr_code_outlined, 1),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: _buildIcon(Icons.directions_car, 2),
-            label: '',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: const Color(0xFF003DA6),
-        backgroundColor: const Color(0xFF003DA6),
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        onTap: _onItemTapped,
-      ),
-    );
-  }
-
-  Widget _buildIcon(IconData icon, int index) {
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: _selectedIndex == index ? Colors.white : Colors.transparent,
-      ),
-      padding: const EdgeInsets.all(5.0), // Espacio alrededor del icono
-      child: Icon(
-        icon,
-        size: 40.0,
-        color: _selectedIndex == index ? const Color(0xFF003DA6) : Colors.white,
+        ),
       ),
     );
   }
