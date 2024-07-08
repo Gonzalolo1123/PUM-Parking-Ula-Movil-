@@ -1,127 +1,469 @@
-// ignore_for_file: use_key_in_widget_constructors, file_names, prefer_const_constructors, prefer_const_constructors_in_immutables, avoid_print
+// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, use_build_context_synchronously, avoid_print, prefer_const_constructors, prefer_const_constructors_in_immutables, must_be_immutable, unnecessary_to_list_in_spreads
 
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class EstacionamientoCentral extends StatelessWidget {
+class EspacioEstacionamientoCentral {
+  final String idEspacio;
+  final double top;
+  final double left;
+  final String estado;
+
+  EspacioEstacionamientoCentral({
+    required this.idEspacio,
+    required this.top,
+    required this.left,
+    required this.estado,
+  });
+
+  factory EspacioEstacionamientoCentral.fromJson(Map<String, dynamic> json) {
+    return EspacioEstacionamientoCentral(
+      idEspacio: json['id_espacio'].toString(),
+      top: json['top']?.toDouble() ?? 0.0,
+      left: json['left']?.toDouble() ?? 0.0,
+      estado: json['estado'].toString(),
+    );
+  }
+}
+
+class EstacionamientoCentral extends StatefulWidget {
+  @override
+  _EstacionamientoAVState createState() => _EstacionamientoAVState();
+}
+
+class _EstacionamientoAVState extends State<EstacionamientoCentral> {
+  List<EspacioEstacionamientoCentral> estacionamientos = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _cargarEstacionamientos();
+  }
+
+  Future<void> _cargarEstacionamientos() async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'https://website-parking-ulagos.onrender.com/usuarios/selectEstacionamientoEstado'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> data = json.decode(response.body);
+        setState(() {
+          // Filtrar estacionamientos válidos entre 1 y 60
+          estacionamientos = data
+              .map((item) => EspacioEstacionamientoCentral.fromJson(item))
+              .where((estacionamiento) =>
+                  int.tryParse(estacionamiento.idEspacio) != null &&
+                  int.parse(estacionamiento.idEspacio) >= 61 &&
+                  int.parse(estacionamiento.idEspacio) <= 107)
+              .toList();
+        });
+      } else {
+        throw Exception('Error al cargar los estacionamientos');
+      }
+    } catch (e) {
+      print('Error de conexión: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error al cargar los estacionamientos')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Reservar Estacionamiento'),
-          backgroundColor: Color(0xFF003DA6),
-        ),
-        body: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Container(
-            width: 1500,
-            height: 500,
-            color: Color(0xFFE0E0E0),
-            child: Stack(
-              children: [
-                ParkingSpot(id: 'spot61', top: 410, left: 20),
-                ParkingSpot(id: 'spot62', top: 410, left: 60),
-                ParkingSpot(id: 'spot63', top: 410, left: 100),
-                ParkingSpot(id: 'spot64', top: 410, left: 140),
-                ParkingSpot(id: 'spot65', top: 410, left: 180),
-                ParkingSpot(id: 'spot66', top: 410, left: 220),
-                ParkingSpot(id: 'spot67', top: 410, left: 260),
-                ParkingSpot(id: 'spot68', top: 410, left: 300),
-                ParkingSpot(id: 'spot69', top: 410, left: 340),
-                ParkingSpot(id: 'spot70', top: 410, left: 380),
-                ParkingSpot(id: 'spot71', top: 410, left: 420),
-                ParkingSpot(id: 'spot72', top: 410, left: 460),
-                ParkingSpot(id: 'spot73', top: 410, left: 500),
-                ParkingSpot(id: 'spot74', top: 290, left: 20),
-                ParkingSpot(id: 'spot75', top: 290, left: 60),
-                ParkingSpot(id: 'spot76', top: 290, left: 100),
-                ParkingSpot(id: 'spot77', top: 290, left: 140),
-                ParkingSpot(id: 'spot78', top: 290, left: 180),
-                ParkingSpot(id: 'spot79', top: 290, left: 220),
-                ParkingSpot(id: 'spot80', top: 290, left: 260),
-                ParkingSpot(id: 'spot81', top: 290, left: 300),
-                ParkingSpot(id: 'spot82', top: 290, left: 340),
-                ParkingSpot(id: 'spot83', top: 290, left: 380),
-                ParkingSpot(id: 'spot84', top: 290, left: 420),
-                ParkingSpot(id: 'spot85', top: 290, left: 460),
-                ParkingSpot(id: 'spot86', top: 290, left: 500),
-                ParkingSpot(id: 'spot87', top: 410, left: 840),
-                ParkingSpot(id: 'spot88', top: 410, left: 880),
-                ParkingSpot(id: 'spot89', top: 410, left: 920),
-                ParkingSpot(id: 'spot90', top: 410, left: 960),
-                ParkingSpot(id: 'spot91', top: 410, left: 1000),
-                ParkingSpot(id: 'spot92', top: 410, left: 1040),
-                ParkingSpot(id: 'spot93', top: 410, left: 1080),
-                ParkingSpot(id: 'spot94', top: 410, left: 1120),
-                ParkingSpot(id: 'spot95', top: 290, left: 840),
-                ParkingSpot(id: 'spot96', top: 290, left: 880),
-                ParkingSpot(id: 'spot97', top: 290, left: 920),
-                ParkingSpot(id: 'spot98', top: 290, left: 960),
-                ParkingSpot(id: 'spot99', top: 290, left: 1000),
-                ParkingSpot(id: 'spot100', top: 290, left: 1040),
-                ParkingSpot(id: 'spot101', top: 290, left: 1080),
-                ParkingSpot(id: 'spot102', top: 290, left: 1120),
-                ParkingSpot(id: 'spot103', top: 290, left: 1160),
-                ParkingSpot(id: 'spot104', top: 290, left: 1200),
-                ParkingSpot(id: 'spot105', top: 290, left: 1240),
-                ParkingSpot(id: 'spot106', top: 290, left: 1280),
-                ParkingSpot(id: 'spot107', top: 290, left: 1320),
-                DisabledSpot(
-                    id: 'Pasillo E',
-                    top: 40,
-                    left: 30,
-                    width: 400,
-                    height: 220),
-                DisabledSpot(
-                    id: 'Central', top: 40, left: 450, width: 490, height: 220),
-                DisabledSpot(
-                    id: 'Biblioteca',
-                    top: 40,
-                    left: 970,
-                    width: 400,
-                    height: 220),
-                DisabledSpot(
-                    id: '',
-                    top: 330,
-                    left: 10,
-                    width: 1410,
-                    height: 70,
-                    color: Colors.white),
-                DisabledSpot(
-                    id: '',
-                    top: 400,
-                    left: 570,
-                    width: 230,
-                    height: 150,
-                    color: Colors.white),
-                DisabledSpot(
-                    id: '',
-                    top: 430,
-                    left: 1050,
-                    width: 400,
-                    height: 70,
-                    rotation: -30,
-                    color: Colors.white),
-                DisabledSpot(
-                    id: '',
-                    top: 40,
-                    left: 1410,
-                    width: 60,
-                    height: 640,
-                    color: Colors.white),
-                DisabledSpot(
-                    id: '',
-                    top: 200,
-                    left: 1050,
-                    width: 100,
-                    height: 700,
-                    rotation: -80,
-                    color: Colors.white),
-              ],
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(60.0),
+          child: AppBar(
+            backgroundColor: const Color(0xFF003DA6),
+            title: Align(
+              alignment: Alignment(0.0, 0.8),
+              child: Text(
+                'Reservar Estacionamiento',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
         ),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: ParkingLayout(estacionamientos: estacionamientos),
+        ),
+      ),
+    );
+  }
+}
+
+class ParkingLayout extends StatelessWidget {
+  final List<EspacioEstacionamientoCentral> estacionamientos;
+
+  ParkingLayout({required this.estacionamientos});
+
+  List<ParkingSpot> parkingSpots = [
+    ParkingSpot(
+      id: 'spot61',
+      top: 410,
+      left: 20,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot62',
+      top: 410,
+      left: 60,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot63',
+      top: 410,
+      left: 100,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot64',
+      top: 410,
+      left: 140,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot65',
+      top: 410,
+      left: 180,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot66',
+      top: 410,
+      left: 220,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot67',
+      top: 410,
+      left: 260,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot68',
+      top: 410,
+      left: 300,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot69',
+      top: 410,
+      left: 340,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot70',
+      top: 410,
+      left: 380,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot71',
+      top: 410,
+      left: 420,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot72',
+      top: 410,
+      left: 460,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot73',
+      top: 410,
+      left: 500,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot74',
+      top: 290,
+      left: 20,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot75',
+      top: 290,
+      left: 60,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot76',
+      top: 290,
+      left: 100,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot77',
+      top: 290,
+      left: 140,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot78',
+      top: 290,
+      left: 180,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot79',
+      top: 290,
+      left: 220,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot80',
+      top: 290,
+      left: 260,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot81',
+      top: 290,
+      left: 300,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot82',
+      top: 290,
+      left: 340,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot83',
+      top: 290,
+      left: 380,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot84',
+      top: 290,
+      left: 420,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot85',
+      top: 290,
+      left: 460,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot86',
+      top: 290,
+      left: 500,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot87',
+      top: 410,
+      left: 840,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot88',
+      top: 410,
+      left: 880,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot89',
+      top: 410,
+      left: 920,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot90',
+      top: 410,
+      left: 960,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot91',
+      top: 410,
+      left: 1000,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot92',
+      top: 410,
+      left: 1040,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot93',
+      top: 410,
+      left: 1080,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot94',
+      top: 410,
+      left: 1120,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot95',
+      top: 290,
+      left: 840,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot96',
+      top: 290,
+      left: 880,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot97',
+      top: 290,
+      left: 920,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot98',
+      top: 290,
+      left: 960,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot99',
+      top: 290,
+      left: 1000,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot100',
+      top: 290,
+      left: 1040,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot101',
+      top: 290,
+      left: 1080,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot102',
+      top: 290,
+      left: 1120,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot103',
+      top: 290,
+      left: 1160,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot104',
+      top: 290,
+      left: 1200,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot105',
+      top: 290,
+      left: 1240,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot106',
+      top: 290,
+      left: 1280,
+      estado: '',
+    ),
+    ParkingSpot(
+      id: 'spot107',
+      top: 290,
+      left: 1320,
+      estado: '',
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 1500, // Ajustar según el número de espacios de estacionamiento
+      height: 600,
+      color: Color(0xFFE0E0E0),
+      child: Stack(
+        children: [
+          ...estacionamientos.map((espacio) {
+            // Buscar el ParkingSpot correspondiente en parkingSpots por id
+            ParkingSpot? matchingSpot = parkingSpots.firstWhere(
+              (spot) => spot.id == 'spot${espacio.idEspacio}',
+              orElse: () => ParkingSpot(
+                id: espacio.idEspacio,
+                top: espacio.top,
+                left: espacio.left,
+                estado: espacio.estado,
+              ),
+            );
+
+            return ParkingSpot(
+              id: espacio.idEspacio,
+              top: matchingSpot.top,
+              left: matchingSpot.left,
+              estado: espacio.estado,
+            );
+          }).toList(),
+          DisabledSpot(
+              id: 'Pasillo E', top: 40, left: 30, width: 400, height: 220),
+          DisabledSpot(
+              id: 'Central', top: 40, left: 450, width: 490, height: 220),
+          DisabledSpot(
+              id: 'Biblioteca', top: 40, left: 970, width: 400, height: 220),
+          DisabledSpot(
+              id: '',
+              top: 330,
+              left: 10,
+              width: 1410,
+              height: 70,
+              color: Colors.white),
+          DisabledSpot(
+              id: '',
+              top: 400,
+              left: 570,
+              width: 230,
+              height: 150,
+              color: Colors.white),
+          DisabledSpot(
+              id: '',
+              top: 430,
+              left: 1050,
+              width: 400,
+              height: 70,
+              rotation: -30,
+              color: Colors.white),
+          DisabledSpot(
+              id: '',
+              top: 40,
+              left: 1410,
+              width: 60,
+              height: 640,
+              color: Colors.white),
+          DisabledSpot(
+              id: '',
+              top: 200,
+              left: 1050,
+              width: 100,
+              height: 700,
+              rotation: -80,
+              color: Colors.white),
+        ],
       ),
     );
   }
@@ -131,29 +473,40 @@ class ParkingSpot extends StatelessWidget {
   final String id;
   final double top;
   final double left;
+  final String estado; // Estado del estacionamiento
 
-  ParkingSpot({required this.id, required this.top, required this.left});
+  ParkingSpot({
+    required this.id,
+    required this.top,
+    required this.left,
+    required this.estado,
+  });
 
   @override
   Widget build(BuildContext context) {
+    Color spotColor = estado == 'Disponible'
+        ? Colors.blue.withOpacity(0.3)
+        : Colors.red.withOpacity(0.3);
+    Color borderColor = estado == 'Disponible' ? Colors.blue : Colors.red;
+
     return Positioned(
       top: top,
       left: left,
       child: GestureDetector(
-        onTap: () => mostrarDialogo(context, id.substring(4)),
+        onTap: () => mostrarDialogo(context, id),
         child: Stack(
           children: [
             Container(
               width: 30,
               height: 30,
               decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.3),
-                border: Border.all(color: Colors.blue),
+                color: spotColor,
+                border: Border.all(color: borderColor),
               ),
             ),
             Center(
               child: Text(
-                id.substring(4),
+                id,
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
@@ -171,7 +524,7 @@ class ParkingSpot extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Reservar Estacionamiento'),
+          title: Text('Reservar estacionamiento'),
           content: Text('¿Deseas reservar el estacionamiento $id?'),
           actions: <Widget>[
             TextButton(
@@ -183,8 +536,7 @@ class ParkingSpot extends StatelessWidget {
             TextButton(
               child: Text('Confirmar'),
               onPressed: () {
-                final espacioSeleccionado =
-                    id; // Aquí el id ya es el espacio seleccionado
+                final espacioSeleccionado = id;
                 print('Espacio seleccionado: $espacioSeleccionado');
                 Navigator.pop(context); // Cerrar el AlertDialog
                 Navigator.pop(context, espacioSeleccionado);

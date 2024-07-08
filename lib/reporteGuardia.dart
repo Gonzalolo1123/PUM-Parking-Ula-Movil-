@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, prefer_const_constructors, use_build_context_synchronously, use_key_in_widget_constructors, library_private_types_in_public_api, prefer_const_constructors_in_immutables, non_constant_identifier_names, prefer_final_fields, unused_field, unused_element
+// ignore_for_file: avoid_print, prefer_const_constructors, use_build_context_synchronously, use_key_in_widget_constructors, library_private_types_in_public_api, prefer_const_constructors_in_immutables, non_constant_identifier_names, prefer_final_fields, unused_field, unused_element, must_be_immutable
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -22,7 +22,8 @@ class _ReportesGuardiaState extends State<ReportesGuardia> {
     final String patente = patenteController.text;
     final String reporte = reporteController.text;
 
-    final Uri url = Uri.parse('https://website-parking-ulagos.onrender.com/usuarios/reporteGuardia');
+    final Uri url = Uri.parse(
+        'https://website-parking-ulagos.onrender.com/usuarios/reporteGuardia');
     final response = await http.post(
       url,
       headers: {
@@ -228,8 +229,8 @@ class _EliminarReservaGuardiaState extends State<EliminarReservaGuardia> {
   final TextEditingController patenteController = TextEditingController();
 
   Future<void> eliminarReserva() async {
-    final Uri url =
-        Uri.parse('https://website-parking-ulagos.onrender.com/usuarios/eliminarReservaGuardia');
+    final Uri url = Uri.parse(
+        'https://website-parking-ulagos.onrender.com/usuarios/eliminarReservaGuardia');
     final response = await http.post(
       url,
       headers: {
@@ -403,7 +404,8 @@ class _IngresarReservaGuardiaState extends State<IngresarReservaGuardia> {
     final String patente = patenteController.text;
     final String horaSalida = horaSalidaSeleccionada;
 
-    final Uri url = Uri.parse('https://website-parking-ulagos.onrender.com/usuarios/reservaGuardia');
+    final Uri url = Uri.parse(
+        'https://website-parking-ulagos.onrender.com//usuarios/reservaGuardia');
     final response = await http.post(
       url,
       headers: {
@@ -651,6 +653,86 @@ class _IngresarReservaGuardiaState extends State<IngresarReservaGuardia> {
           ],
         ),
       ],
+    );
+  }
+}
+
+class ReportesUsuario extends StatefulWidget {
+  final String usuarioId;
+  ReportesUsuario(this.usuarioId);
+
+  @override
+  _ReportesUsuarioState createState() => _ReportesUsuarioState();
+}
+
+class _ReportesUsuarioState extends State<ReportesUsuario> {
+  String? _usuarioId;
+  List<dynamic> reportes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _usuarioId = widget.usuarioId;
+    _fetchReportes();
+  }
+
+  Future<void> _fetchReportes() async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'https://sitio-web-parking-ulagos.onrender.com/usuarios/reporteGuardiaSelect?usuarioId=${_usuarioId!}'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+      print('Response: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        if (responseData.containsKey('reportes') &&
+            responseData['reportes'] != null) {
+          setState(() {
+            reportes = responseData['reportes'];
+          });
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('No se encontraron reportes.')),
+          );
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(
+                  'Error al obtener los reportes: ${response.statusCode}')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error de conexión: $e')),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Reportes del Usuario'),
+      ),
+      body: reportes.isEmpty
+          ? Center(child: Text('No hay reportes disponibles.'))
+          : ListView.builder(
+              itemCount: reportes.length,
+              itemBuilder: (context, index) {
+                final reporte = reportes[index];
+                return ListTile(
+                  title: Text('Reporte de Estacionamiento'),
+                  subtitle: Text(reporte['reporte']),
+                  onTap: () {
+                    // Aquí puedes manejar el evento de toque del reporte si es necesario
+                  },
+                );
+              },
+            ),
     );
   }
 }

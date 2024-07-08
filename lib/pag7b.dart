@@ -1,10 +1,12 @@
-// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, avoid_print, prefer_const_constructors
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-
 class SeleccionarVehiculo extends StatefulWidget {
+  final String? usuarioId;
+
+  SeleccionarVehiculo(this.usuarioId);
+
   @override
   _SeleccionarVehiculoState createState() => _SeleccionarVehiculoState();
 }
@@ -12,32 +14,32 @@ class SeleccionarVehiculo extends StatefulWidget {
 class _SeleccionarVehiculoState extends State<SeleccionarVehiculo> {
   List<Map<String, dynamic>> vehiculos = [];
   String vehiculoSeleccionado = '';
+  String? _usuarioId;
 
   @override
   void initState() {
     super.initState();
+    _usuarioId = widget.usuarioId;
     recibirDatos();
   }
 
   Future<void> recibirDatos() async {
     try {
       final response = await http.get(
-        Uri.parse('https://website-parking-ulagos.onrender.com/usuarios/vehiculos'),
+        Uri.parse(
+            'https://website-parking-ulagos.onrender.com/usuarios/vehiculos?usuarioId=${_usuarioId!}'),
+        headers: {'Content-Type': 'application/json'},
       );
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body) as List;
         setState(() {
           vehiculos = data.map((item) {
-            return {
-              'patente': item['patente'],
-              'modelo': item['modelo'],
-            };
+            return {'patente': item['patente'], 'modelo': item['modelo']};
           }).toList();
         });
       } else {
-        print('Error al recibir los datos');
-        print(response.statusCode);
+        print('Error al recibir los datos: ${response.statusCode}');
       }
     } catch (e) {
       print('Error de conexión: $e');
@@ -47,22 +49,16 @@ class _SeleccionarVehiculoState extends State<SeleccionarVehiculo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60.0),
-        child: AppBar(
-          backgroundColor: const Color(0xFF003DA6),
-          flexibleSpace: Align(
-            alignment: const Alignment(0.0, 0.8),
-            child: GestureDetector(
-              onTap: () {
-                print('Imagen presionada');
-                Navigator.pushNamed(context, '/');
-              },
-              child: Image.asset(
-                'assets/logoGPS.png',
-                height: 55,
-              ),
-            ),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF003DA6),
+        title: GestureDetector(
+          onTap: () {
+            print('Imagen presionada');
+            Navigator.pushNamed(context, '/');
+          },
+          child: Image.asset(
+            'assets/logoGPS.png',
+            height: 55,
           ),
         ),
       ),
@@ -80,26 +76,22 @@ class _SeleccionarVehiculoState extends State<SeleccionarVehiculo> {
               ),
               const SizedBox(height: 20.0),
               Expanded(
-                child: ListView.builder(
+                child: ListView.separated(
                   itemCount: vehiculos.length,
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const Divider(color: Colors.black54, thickness: 1),
                   itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        RadioListTile<String>(
-                          title: Text('${vehiculos[index]['patente']} - ${vehiculos[index]['modelo']}'),
-                          value: vehiculos[index]['patente'],
-                          groupValue: vehiculoSeleccionado,
-                          onChanged: (String? value) {
-                            setState(() {
-                              vehiculoSeleccionado = value!;
-                            });
-                          },
-                        ),
-                        Divider(
-                          color: Colors.black54,
-                          thickness: 1,
-                        ),
-                      ],
+                    return RadioListTile<String>(
+                      title: Text(
+                        '${vehiculos[index]['patente']} - ${vehiculos[index]['modelo']}',
+                      ),
+                      value: vehiculos[index]['patente'],
+                      groupValue: vehiculoSeleccionado,
+                      onChanged: (String? value) {
+                        setState(() {
+                          vehiculoSeleccionado = value!;
+                        });
+                      },
                     );
                   },
                 ),
@@ -108,7 +100,8 @@ class _SeleccionarVehiculoState extends State<SeleccionarVehiculo> {
               ElevatedButton(
                 onPressed: () {
                   if (vehiculoSeleccionado.isNotEmpty) {
-                    print('Registrar Auto presionado con vehículo seleccionado: $vehiculoSeleccionado');
+                    print(
+                        'Registrar Auto presionado con vehículo seleccionado: $vehiculoSeleccionado');
                     Navigator.pop(context, vehiculoSeleccionado);
                   } else {
                     print('No se ha seleccionado ningún vehículo');

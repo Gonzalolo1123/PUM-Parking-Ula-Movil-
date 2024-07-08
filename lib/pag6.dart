@@ -12,6 +12,7 @@ class ConfirmacionReserva extends StatelessWidget {
   final String EdiSel;
   final String VehSel;
   final String idEspacioSel;
+  final String UsuarioId;
 
   const ConfirmacionReserva({
     required this.EdiSel,
@@ -20,6 +21,7 @@ class ConfirmacionReserva extends StatelessWidget {
     Key? key,
     required this.HoraEntradaSel,
     required this.HoraSalidaSel,
+    required this.UsuarioId,
     required String SedeSel,
   }) : super(key: key);
 
@@ -31,6 +33,7 @@ class ConfirmacionReserva extends StatelessWidget {
       'id_espacio': idEspacioSel,
       'hora_entrada': HoraEntradaSel,
       'hora_salida': HoraSalidaSel,
+      'usuarioId': UsuarioId,
     };
 
     try {
@@ -42,30 +45,27 @@ class ConfirmacionReserva extends StatelessWidget {
         },
         body: jsonEncode(datos),
       );
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+
       if (response.statusCode == 201) {
+        // Mostrar mensaje de éxito y redirigir a la página de inicio de sesión
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Reserva registrada exitosamente')),
         );
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ReservaCompletada()),
+          MaterialPageRoute(builder: (context) => ReservaCompletada(UsuarioId)),
         );
       } else if (response.statusCode == 121) {
+        // Mostrar mensaje de error si la respuesta no es 200
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Ya tienes una reserva')),
         );
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ReservaCompletada()),
+          MaterialPageRoute(builder: (context) => ReservaCompletada(UsuarioId)),
         );
-      } else {
-        // Manejo de otros posibles estados de respuesta
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text('Error al registrar la reserva: ${response.body}')),
-        );
+        print(response.statusCode);
       }
     } catch (e) {
       // Mostrar mensaje de error si hay un error de conexión

@@ -48,10 +48,10 @@ class CodigoManual extends StatelessWidget {
               // Lógica para el botón de Edificio
               print('Reservar ha sido presionado!');
               Navigator.of(context).pop();
-              Navigator.push(
+              /*Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const ReservaCompletada()),
-              );
+                MaterialPageRoute(builder: (context) => ReservaCompletada()),
+              );*/
             },
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(320, 40),

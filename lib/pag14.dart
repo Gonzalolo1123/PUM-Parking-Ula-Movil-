@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, non_constant_identifier_names, prefer_const_constructors, use_build_context_synchronously, avoid_print, unused_local_variable, prefer_const_literals_to_create_immutables
+// ignore_for_file: library_private_types_in_public_api, non_constant_identifier_names, prefer_const_constructors, use_build_context_synchronously, avoid_print, unused_local_variable, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors, unnecessary_brace_in_string_interps
 
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -6,7 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 class ReservaCompletada extends StatefulWidget {
-  const ReservaCompletada({super.key});
+  final String UsuarioId;
+  const ReservaCompletada(this.UsuarioId);
 
   @override
   _ReservaCompletadaState createState() => _ReservaCompletadaState();
@@ -19,10 +20,12 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
   String patente = '';
   String horaEntrada = '';
   String horaSalida = '';
+  String? _usuarioId;
 
   @override
   void initState() {
     super.initState();
+    _usuarioId = widget.UsuarioId;
     _selectReserva();
   }
 
@@ -30,7 +33,7 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
     try {
       final response = await http.get(
         Uri.parse(
-            'https://website-parking-ulagos.onrender.com/usuarios/selectReserva'), // Endpoint correcto para selectReserva
+            'https://website-parking-ulagos.onrender.com/usuarios/selectReserva?usuarioId=${_usuarioId!}'), // Endpoint correcto para selectReserva
         headers: {
           'Content-Type': 'application/json',
         },
@@ -52,6 +55,13 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
             Edificio = reserva['nombre_edificio'] ?? '';
             idEspacio = reserva['id_espacio']?.toString() ?? '';
             patente = reserva['patente'] ?? '';
+            // Dentro de _selectReserva en _ReservaCompletadaState
+            final entrada = DateTime.parse(reserva['hora_entrada_reserva'])
+                .add(Duration(hours: 4));
+            final salida = DateTime.parse(reserva['hora_salida_reserva'])
+                .add(Duration(hours: 4));
+
+// Formatear las horas sumando 4 horas
             horaEntrada = formatoHora.format(entrada);
             horaSalida = formatoHora.format(salida);
           });
@@ -67,6 +77,9 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
       } else {
         // Mostrar mensaje de error si la solicitud falla
         print('Error al obtener la reserva: ${response.statusCode}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al obtener la reserva')),
+        );
       }
     } catch (e) {
       // Mostrar mensaje de error si hay un problema de conexión
@@ -77,15 +90,20 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
     }
   }
 
-  Future<void> _eliminarReserva(String patente, String idEspacio) async {
+  Future<void> _eliminarReserva(
+      String patente, String idEspacio, usuarioId) async {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://10.0.2.2:3000/usuarios/reservaEliminar'), // Endpoint para eliminarReserva
+            'https://website-parking-ulagos.onrender.com/usuarios/reservaEliminar'), // Endpoint para eliminarReserva
         headers: {
           'Content-Type': 'application/json',
         },
-        body: jsonEncode({"patente": patente, "id_espacio": idEspacio}),
+        body: jsonEncode({
+          "patente": patente,
+          "id_espacio": idEspacio,
+          "usuarioId": usuarioId
+        }),
       );
 
       if (response.statusCode == 201) {
@@ -98,9 +116,13 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
         Navigator.pop(context);
         Navigator.pop(context);
         Navigator.pop(context);
+        Navigator.pop(context);
       } else {
         // Mostrar mensaje de error si falla la eliminación
         print('Error al eliminar la reserva ${response.statusCode}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al eliminar la reserva')),
+        );
       }
     } catch (e) {
       // Mostrar mensaje de error si hay un problema de conexión
@@ -111,30 +133,23 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
     }
   }
 
-  Future<void> _aumentarReserva(String patente, String idEspacio) async {
+  Future<void> _aumentarReserva(
+      String patente, String idEspacio, String usuarioId) async {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://10.0.2.2:3000/usuarios/reservaActualizar'), // Endpoint para aumentarReserva
+            'https://website-parking-ulagos.onrender.com/usuarios/reservaActualizar}'), // Endpoint para aumentarReserva
         headers: {
           'Content-Type': 'application/json',
         },
-        body: jsonEncode({"patente": patente, "id_espacio": idEspacio}),
+        body: jsonEncode({
+          "patente": patente,
+          "id_espacio": idEspacio,
+          "usuarioId": usuarioId
+        }),
       );
 
       if (response.statusCode == 201) {
-        // Parsear la respuesta JSON si es necesario
-        final Map<String, dynamic>? responseData = jsonDecode(response.body);
-        if (responseData != null) {
-          if (responseData.containsKey('reserva')) {
-            final Map<String, dynamic> reserva = responseData['reserva'];
-          }
-        } else {
-          // Mostrar mensaje de error de respuesta nula
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error: respuesta nula')),
-          );
-        }
         // Mostrar mensaje o realizar acciones según la respuesta
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Reserva aumentada correctamente')),
@@ -142,18 +157,19 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
 
         // Navegar de regreso a la pantalla anterior
         Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.pop(context);
       } else {
-        // Mostrar mensaje de error si no se encontró 'reserva' en la respuesta
+        // Mostrar mensaje de error si no se pudo aumentar la reserva
+        print('Error al aumentar la reserva ${response.statusCode}');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('No se pudo aumentar la reserva')),
+          SnackBar(content: Text('Error al aumentar la reserva')),
         );
-        print(response.statusCode);
       }
     } catch (e) {
       // Mostrar mensaje de error si hay un problema de conexión
       print('Error de conexión: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error de conexión')),
+      );
     }
   }
 
@@ -326,8 +342,7 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
                           child: Text('Sí'),
                           onPressed: () {
                             // Llamar a la función para eliminar la reserva
-                            _eliminarReserva(patente, idEspacio);
-                            print('$patente $idEspacio');
+                            _eliminarReserva(patente, idEspacio, _usuarioId!);
                           },
                         ),
                       ],
@@ -363,7 +378,7 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('¿Está seguro de aumentar esta reserva?'),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Text('Solo se puede aumentar 1 vez'),
                         ],
                       ),
@@ -378,7 +393,7 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
                           child: Text('Sí'),
                           onPressed: () {
                             // Llamar al método para aumentar la reserva
-                            _aumentarReserva(patente, idEspacio);
+                            _aumentarReserva(patente, idEspacio, _usuarioId!);
                             Navigator.of(context)
                                 .pop(); // Cerrar el diálogo de confirmación
                           },
@@ -389,11 +404,11 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
                 );
               },
               style: ElevatedButton.styleFrom(
-                minimumSize: Size(320, 40),
-                padding: EdgeInsets.all(10.0),
-                side: BorderSide(width: 2, color: Color(0xFF003DA6)),
+                minimumSize: const Size(320, 40),
+                padding: const EdgeInsets.all(10.0),
+                side: const BorderSide(width: 2, color: Color(0xFF003DA6)),
               ),
-              child: Text(
+              child: const Text(
                 'Aumentar Reserva',
                 style: TextStyle(
                   fontSize: 25,
@@ -402,7 +417,7 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
                 ),
               ),
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             // Otros widgets que tengas en tu columna
           ],
         ),
