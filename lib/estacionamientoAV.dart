@@ -54,8 +54,13 @@ class _EstacionamientoAVState extends State<EstacionamientoAV> {
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
         setState(() {
+          // Filtrar estacionamientos válidos entre 1 y 60
           estacionamientos = data
               .map((item) => EspacioEstacionamiento.fromJson(item))
+              .where((estacionamiento) =>
+                  int.tryParse(estacionamiento.idEspacio) != null &&
+                  int.parse(estacionamiento.idEspacio) >= 1 &&
+                  int.parse(estacionamiento.idEspacio) <= 60)
               .toList();
         });
       } else {
@@ -73,9 +78,21 @@ class _EstacionamientoAVState extends State<EstacionamientoAV> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Reservar Estacionamiento'),
-          backgroundColor: Color(0xFF003DA6),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(60.0),
+          child: AppBar(
+            backgroundColor: const Color(0xFF003DA6),
+            title: Align(
+              alignment: Alignment(0.0, 0.8),
+              child: Text(
+                'Reservar Estacionamiento',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -165,8 +182,13 @@ class ParkingLayout extends StatelessWidget {
           ...estacionamientos.map((espacio) {
             // Buscar el ParkingSpot correspondiente en parkingSpots por id
             ParkingSpot? matchingSpot = parkingSpots.firstWhere(
-              (spot) => spot.id == 'spot'+espacio.idEspacio,
-              orElse: () => ParkingSpot(id: espacio.idEspacio, top: espacio.top, left: espacio.left, estado: espacio.estado,),
+              (spot) => spot.id == 'spot${espacio.idEspacio}',
+              orElse: () => ParkingSpot(
+                id: espacio.idEspacio,
+                top: espacio.top,
+                left: espacio.left,
+                estado: espacio.estado,
+              ),
             );
 
             return ParkingSpot(
@@ -243,7 +265,6 @@ class ParkingLayout extends StatelessWidget {
     );
   }
 }
-
 
 class ParkingSpot extends StatelessWidget {
   final String id;

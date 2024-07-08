@@ -19,12 +19,20 @@ class IndexSeguridad extends StatefulWidget {
 }
 
 class _IndexSeguridadState extends State<IndexSeguridad> {
+  String? _usuarioId;
+
+  @override
+  void initState() {
+    super.initState();
+    _usuarioId = widget.usuarioId;
+  }
+
   // Método para seleccionar el guardia y dirigir a la pantalla correspondiente
   Future<void> _selectGuardia() async {
     try {
       // Hacer la solicitud GET para obtener los datos del guardia
       final Uri url = Uri.parse(
-          'https://website-parking-ulagos.onrender.com/usuarios/selectGuardia');
+          'https://website-parking-ulagos.onrender.com/usuarios/selectGuardia?usuarioId=${_usuarioId!}');
       final response =
           await http.get(url); // Cambiado a GET según tu comentario
 

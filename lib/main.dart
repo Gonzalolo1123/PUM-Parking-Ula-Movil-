@@ -7,8 +7,6 @@ import 'pag3.dart';
 import 'pag4.dart';
 
 
-import 'estacionamientoAV.dart';
-
 void main() {
   runApp(const MyApp());
 }
@@ -34,7 +32,8 @@ class Inicio extends StatelessWidget {
           context: context,
           builder: (context) => AlertDialog(
             title: const Text('Cerrar aplicación'),
-            content: const Text('¿Estás seguro de que quieres cerrar la aplicación?'),
+            content: const Text(
+                '¿Estás seguro de que quieres cerrar la aplicación?'),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
@@ -88,14 +87,15 @@ class Inicio extends StatelessWidget {
                       SizedBox(height: 10), // Espacio entre los textos
                       Text(
                         'Ingresa con tus credenciales universitarias o como visita para registrar tu estancia.',
-                        style:
-                            TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
                         textAlign: TextAlign.center,
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 20.0), // Espacio entre la imagen y los botones
+                const SizedBox(
+                    height: 20.0), // Espacio entre la imagen y los botones
                 ElevatedButton(
                   onPressed: () async {
                     Navigator.push(
@@ -144,7 +144,8 @@ class Inicio extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const LogInGuest()),
+                      MaterialPageRoute(
+                          builder: (context) => const LogInGuest()),
                     );
                   },
                   style: TextButton.styleFrom(
@@ -158,32 +159,6 @@ class Inicio extends StatelessWidget {
                     ),
                   ),
                 ),
-
-
-                const SizedBox(height: 20.0), // Espacio entre los botones
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => EstacionamientoAV()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(300, 40),
-                    padding: const EdgeInsets.all(10.0),
-                    backgroundColor: const Color(0xFF87CEEB),
-                  ),
-                  child: const Text(
-                    'TESTING EstacionamientoAV',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Color(0xFF003DA6),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-
-
               ],
             ),
           ),
