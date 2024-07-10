@@ -4,7 +4,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:pum/pag5.dart';
+
+import 'pag8b.dart';
 
 class RegistroVehiculo extends StatefulWidget {
   final String? usuarioId;
@@ -69,7 +70,7 @@ class _RegistroVehiculoState extends State<RegistroVehiculo> {
         Future.delayed(Duration(seconds: 1), () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) =>  MyHomePage(usuarioId:_usuarioId!)),
+            MaterialPageRoute(builder: (context) =>  Sede()),
           );
         });
       } else if (response.statusCode == 500) {

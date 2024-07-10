@@ -94,8 +94,8 @@ Future<bool> _onWillPop(BuildContext context) async {
 }
 
 class Sede extends StatefulWidget {
-  final String usuarioId;
-  Sede(this.usuarioId);
+  final String? usuarioId;
+  Sede({this.usuarioId});
 
   @override
   _SedeState createState() => _SedeState();
