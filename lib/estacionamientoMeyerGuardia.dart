@@ -31,6 +31,8 @@ class EspacioEstacionamientoMeyerGuardiaGuardia {
 }
 
 class EstacionamientoMeyerGuardia extends StatefulWidget {
+  final String usuarioId;
+  EstacionamientoMeyerGuardia(this.usuarioId);
   @override
   _EstacionamientoMeyerGuardiaState createState() =>
       _EstacionamientoMeyerGuardiaState();
@@ -38,12 +40,14 @@ class EstacionamientoMeyerGuardia extends StatefulWidget {
 
 class _EstacionamientoMeyerGuardiaState
     extends State<EstacionamientoMeyerGuardia> {
+  late String _usuarioId;
   List<EspacioEstacionamientoMeyerGuardiaGuardia> estacionamientos = [];
 
   @override
   void initState() {
     super.initState();
     _cargarEstacionamientos();
+    _usuarioId = widget.usuarioId;
   }
 
   Future<void> _cargarEstacionamientos() async {
@@ -102,7 +106,8 @@ class _EstacionamientoMeyerGuardiaState
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: ParkingLayout(estacionamientos: estacionamientos),
+          child: ParkingLayout(
+              estacionamientos: estacionamientos, usuarioId: _usuarioId),
         ),
       ),
     );
@@ -110,202 +115,198 @@ class _EstacionamientoMeyerGuardiaState
 }
 
 class ParkingLayout extends StatelessWidget {
+  final String usuarioId;
   final List<EspacioEstacionamientoMeyerGuardiaGuardia> estacionamientos;
 
-  ParkingLayout({required this.estacionamientos});
+  ParkingLayout({required this.estacionamientos, required this.usuarioId});
 
   List<ParkingSpot> parkingSpots = [
-    ParkingSpot(
-      id: 'spot108',
-      top: 430,
-      left: 40,
-      estado: '',
-    ),
+    ParkingSpot(id: 'spot108', top: 430, left: 40, estado: '', usuarioId: ''),
     ParkingSpot(
       id: 'spot109',
       top: 430,
       left: 100,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot110',
       top: 430,
       left: 160,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot111',
       top: 430,
       left: 220,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot112',
       top: 430,
       left: 280,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot113',
       top: 430,
       left: 340,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot114',
       top: 430,
       left: 400,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot115',
       top: 430,
       left: 460,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot116',
       top: 290,
       left: 40,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot117',
       top: 290,
       left: 100,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot118',
       top: 290,
       left: 160,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot119',
       top: 290,
       left: 220,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot120',
       top: 290,
       left: 280,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot121',
       top: 290,
       left: 340,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot122',
       top: 290,
       left: 400,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot123',
       top: 290,
       left: 460,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot124',
       top: 430,
       left: 860,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot125',
       top: 430,
       left: 920,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot126',
       top: 430,
       left: 980,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot127',
       top: 430,
       left: 1040,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot128',
       top: 430,
       left: 1100,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot129',
       top: 430,
       left: 1160,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot130',
       top: 430,
       left: 1220,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot131',
       top: 430,
       left: 1280,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot132',
       top: 290,
       left: 860,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot133',
       top: 290,
       left: 920,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot134',
       top: 290,
       left: 980,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot135',
       top: 290,
       left: 1040,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot136',
       top: 290,
       left: 1100,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot137',
       top: 290,
       left: 1160,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot138',
       top: 290,
       left: 1220,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot139',
       top: 290,
       left: 1280,
-      estado: '',
+      estado: '',usuarioId: '',
     ),
   ];
 
@@ -325,7 +326,7 @@ class ParkingLayout extends StatelessWidget {
                 id: espacio.idEspacio,
                 top: espacio.top,
                 left: espacio.left,
-                estado: espacio.estado,
+                estado: espacio.estado, usuarioId: usuarioId,
               ),
             );
 
@@ -334,6 +335,7 @@ class ParkingLayout extends StatelessWidget {
               top: matchingSpot.top,
               left: matchingSpot.left,
               estado: espacio.estado,
+              usuarioId: usuarioId,
             );
           }).toList(),
           DisabledSpot(
@@ -370,12 +372,14 @@ class ParkingSpot extends StatelessWidget {
   final double top;
   final double left;
   final String estado; // Estado del estacionamiento
+  final String usuarioId;
 
   ParkingSpot({
     required this.id,
     required this.top,
     required this.left,
     required this.estado,
+    required this.usuarioId,
   });
 
   @override
@@ -517,7 +521,7 @@ class ParkingSpot extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => ReportesGuardia(
-                            idEspacio: id, Edificio: 'Central')),
+                            idEspacio: id, Edificio: 'Central', usuarioId: usuarioId,)),
                   );
                 },
                 style: TextButton.styleFrom(

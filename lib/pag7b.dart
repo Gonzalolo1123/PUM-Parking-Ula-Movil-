@@ -24,10 +24,15 @@ class _SeleccionarVehiculoState extends State<SeleccionarVehiculo> {
   }
 
   Future<void> recibirDatos() async {
+    if (_usuarioId == null) {
+      print('Usuario ID no proporcionado');
+      return;
+    }
+
     try {
       final response = await http.get(
         Uri.parse(
-            'https://website-parking-ulagos.onrender.com/usuarios/vehiculos?usuarioId=${_usuarioId!}'),
+            'https://website-parking-ulagos.onrender.com/usuarios/vehiculos?usuarioId=$_usuarioId'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -40,9 +45,15 @@ class _SeleccionarVehiculoState extends State<SeleccionarVehiculo> {
         });
       } else {
         print('Error al recibir los datos: ${response.statusCode}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al recibir los datos: ${response.statusCode}')),
+        );
       }
     } catch (e) {
       print('Error de conexión: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Error de conexión')),
+      );
     }
   }
 
@@ -76,25 +87,27 @@ class _SeleccionarVehiculoState extends State<SeleccionarVehiculo> {
               ),
               const SizedBox(height: 20.0),
               Expanded(
-                child: ListView.separated(
-                  itemCount: vehiculos.length,
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const Divider(color: Colors.black54, thickness: 1),
-                  itemBuilder: (context, index) {
-                    return RadioListTile<String>(
-                      title: Text(
-                        '${vehiculos[index]['patente']} - ${vehiculos[index]['modelo']}',
+                child: vehiculos.isEmpty
+                    ? const Center(child: CircularProgressIndicator())
+                    : ListView.separated(
+                        itemCount: vehiculos.length,
+                        separatorBuilder: (BuildContext context, int index) =>
+                            const Divider(color: Colors.black54, thickness: 1),
+                        itemBuilder: (context, index) {
+                          return RadioListTile<String>(
+                            title: Text(
+                              '${vehiculos[index]['patente']} - ${vehiculos[index]['modelo']}',
+                            ),
+                            value: vehiculos[index]['patente'],
+                            groupValue: vehiculoSeleccionado,
+                            onChanged: (String? value) {
+                              setState(() {
+                                vehiculoSeleccionado = value!;
+                              });
+                            },
+                          );
+                        },
                       ),
-                      value: vehiculos[index]['patente'],
-                      groupValue: vehiculoSeleccionado,
-                      onChanged: (String? value) {
-                        setState(() {
-                          vehiculoSeleccionado = value!;
-                        });
-                      },
-                    );
-                  },
-                ),
               ),
               const SizedBox(height: 20.0),
               ElevatedButton(
@@ -105,6 +118,9 @@ class _SeleccionarVehiculoState extends State<SeleccionarVehiculo> {
                     Navigator.pop(context, vehiculoSeleccionado);
                   } else {
                     print('No se ha seleccionado ningún vehículo');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('No se ha seleccionado ningún vehículo')),
+                    );
                   }
                 },
                 style: ElevatedButton.styleFrom(

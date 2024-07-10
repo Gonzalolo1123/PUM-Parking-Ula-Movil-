@@ -30,18 +30,23 @@ class EspacioEstacionamientoAVGuardia {
 }
 
 class EstacionamientoAVGuardia extends StatefulWidget {
+  final String usuarioId;
+  EstacionamientoAVGuardia(this.usuarioId);
+
   @override
   _EstacionamientoAVGuardiaState createState() =>
       _EstacionamientoAVGuardiaState();
 }
 
 class _EstacionamientoAVGuardiaState extends State<EstacionamientoAVGuardia> {
+  late String _usuarioId;
   List<EspacioEstacionamientoAVGuardia> estacionamientos = [];
 
   @override
   void initState() {
     super.initState();
     _cargarEstacionamientos();
+    _usuarioId = widget.usuarioId;
   }
 
   Future<void> _cargarEstacionamientos() async {
@@ -99,7 +104,10 @@ class _EstacionamientoAVGuardiaState extends State<EstacionamientoAVGuardia> {
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: ParkingLayout(estacionamientos: estacionamientos),
+          child: ParkingLayout(
+            estacionamientos: estacionamientos,
+            usuarioId: _usuarioId,
+          ),
         ),
       ),
     );
@@ -107,71 +115,73 @@ class _EstacionamientoAVGuardiaState extends State<EstacionamientoAVGuardia> {
 }
 
 class ParkingLayout extends StatelessWidget {
+  final String usuarioId;
   final List<EspacioEstacionamientoAVGuardia> estacionamientos;
 
-  ParkingLayout({required this.estacionamientos});
+  ParkingLayout({required this.estacionamientos, required this.usuarioId});
 
   List<ParkingSpot> parkingSpots = [
-    ParkingSpot(id: 'spot1', top: 20, left: 60, estado: ''),
-    ParkingSpot(id: 'spot2', top: 60, left: 60, estado: ''),
-    ParkingSpot(id: 'spot3', top: 100, left: 60, estado: ''),
-    ParkingSpot(id: 'spot4', top: 140, left: 60, estado: ''),
-    ParkingSpot(id: 'spot5', top: 20, left: 180, estado: ''),
-    ParkingSpot(id: 'spot6', top: 60, left: 180, estado: ''),
-    ParkingSpot(id: 'spot7', top: 100, left: 180, estado: ''),
-    ParkingSpot(id: 'spot8', top: 140, left: 180, estado: ''),
-    ParkingSpot(id: 'spot9', top: 380, left: 300, estado: ''),
-    ParkingSpot(id: 'spot10', top: 380, left: 340, estado: ''),
-    ParkingSpot(id: 'spot11', top: 380, left: 380, estado: ''),
-    ParkingSpot(id: 'spot12', top: 380, left: 420, estado: ''),
-    ParkingSpot(id: 'spot13', top: 380, left: 460, estado: ''),
-    ParkingSpot(id: 'spot14', top: 380, left: 500, estado: ''),
-    ParkingSpot(id: 'spot15', top: 380, left: 540, estado: ''),
-    ParkingSpot(id: 'spot16', top: 380, left: 580, estado: ''),
-    ParkingSpot(id: 'spot17', top: 380, left: 620, estado: ''),
-    ParkingSpot(id: 'spot18', top: 380, left: 660, estado: ''),
-    ParkingSpot(id: 'spot19', top: 380, left: 700, estado: ''),
-    ParkingSpot(id: 'spot20', top: 380, left: 740, estado: ''),
-    ParkingSpot(id: 'spot21', top: 380, left: 780, estado: ''),
-    ParkingSpot(id: 'spot22', top: 475, left: 300, estado: ''),
-    ParkingSpot(id: 'spot23', top: 475, left: 340, estado: ''),
-    ParkingSpot(id: 'spot24', top: 475, left: 380, estado: ''),
-    ParkingSpot(id: 'spot25', top: 475, left: 420, estado: ''),
-    ParkingSpot(id: 'spot26', top: 475, left: 460, estado: ''),
-    ParkingSpot(id: 'spot27', top: 475, left: 500, estado: ''),
-    ParkingSpot(id: 'spot28', top: 475, left: 540, estado: ''),
-    ParkingSpot(id: 'spot29', top: 475, left: 580, estado: ''),
-    ParkingSpot(id: 'spot30', top: 475, left: 620, estado: ''),
-    ParkingSpot(id: 'spot31', top: 475, left: 660, estado: ''),
-    ParkingSpot(id: 'spot32', top: 475, left: 700, estado: ''),
-    ParkingSpot(id: 'spot33', top: 475, left: 740, estado: ''),
-    ParkingSpot(id: 'spot34', top: 475, left: 780, estado: ''),
-    ParkingSpot(id: 'spot35', top: 380, left: 860, estado: ''),
-    ParkingSpot(id: 'spot36', top: 380, left: 900, estado: ''),
-    ParkingSpot(id: 'spot37', top: 380, left: 940, estado: ''),
-    ParkingSpot(id: 'spot38', top: 380, left: 980, estado: ''),
-    ParkingSpot(id: 'spot39', top: 380, left: 1020, estado: ''),
-    ParkingSpot(id: 'spot40', top: 380, left: 1060, estado: ''),
-    ParkingSpot(id: 'spot41', top: 380, left: 1100, estado: ''),
-    ParkingSpot(id: 'spot42', top: 380, left: 1140, estado: ''),
-    ParkingSpot(id: 'spot43', top: 380, left: 1180, estado: ''),
-    ParkingSpot(id: 'spot44', top: 475, left: 860, estado: ''),
-    ParkingSpot(id: 'spot45', top: 475, left: 900, estado: ''),
-    ParkingSpot(id: 'spot46', top: 475, left: 940, estado: ''),
-    ParkingSpot(id: 'spot47', top: 475, left: 980, estado: ''),
-    ParkingSpot(id: 'spot48', top: 475, left: 1020, estado: ''),
-    ParkingSpot(id: 'spot49', top: 475, left: 1060, estado: ''),
-    ParkingSpot(id: 'spot50', top: 475, left: 1100, estado: ''),
-    ParkingSpot(id: 'spot51', top: 475, left: 1140, estado: ''),
-    ParkingSpot(id: 'spot52', top: 475, left: 1180, estado: ''),
-    ParkingSpot(id: 'spot53', top: 380, left: 1280, estado: ''),
-    ParkingSpot(id: 'spot54', top: 380, left: 1320, estado: ''),
-    ParkingSpot(id: 'spot55', top: 380, left: 1360, estado: ''),
-    ParkingSpot(id: 'spot56', top: 380, left: 1400, estado: ''),
-    ParkingSpot(id: 'spot57', top: 475, left: 1280, estado: ''),
-    ParkingSpot(id: 'spot58', top: 475, left: 1320, estado: ''),
-    ParkingSpot(id: 'spot59', top: 475, left: 1360, estado: ''),
-    ParkingSpot(id: 'spot60', top: 475, left: 1400, estado: ''),
+    ParkingSpot(
+        id: 'spot1', top: 20, left: 60, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot2', top: 60, left: 60, estado: '', usuarioId: '',),
+    ParkingSpot(id: 'spot3', top: 100, left: 60, estado: '', usuarioId: '',),
+    ParkingSpot(id: 'spot4', top: 140, left: 60, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot5', top: 20, left: 180, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot6', top: 60, left: 180, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot7', top: 100, left: 180, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot8', top: 140, left: 180, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot9', top: 380, left: 300, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot10', top: 380, left: 340, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot11', top: 380, left: 380, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot12', top: 380, left: 420, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot13', top: 380, left: 460, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot14', top: 380, left: 500, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot15', top: 380, left: 540, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot16', top: 380, left: 580, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot17', top: 380, left: 620, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot18', top: 380, left: 660, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot19', top: 380, left: 700, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot20', top: 380, left: 740, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot21', top: 380, left: 780, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot22', top: 475, left: 300, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot23', top: 475, left: 340, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot24', top: 475, left: 380, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot25', top: 475, left: 420, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot26', top: 475, left: 460, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot27', top: 475, left: 500, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot28', top: 475, left: 540, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot29', top: 475, left: 580, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot30', top: 475, left: 620, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot31', top: 475, left: 660, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot32', top: 475, left: 700, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot33', top: 475, left: 740, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot34', top: 475, left: 780, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot35', top: 380, left: 860, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot36', top: 380, left: 900, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot37', top: 380, left: 940, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot38', top: 380, left: 980, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot39', top: 380, left: 1020, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot40', top: 380, left: 1060, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot41', top: 380, left: 1100, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot42', top: 380, left: 1140, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot43', top: 380, left: 1180, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot44', top: 475, left: 860, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot45', top: 475, left: 900, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot46', top: 475, left: 940, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot47', top: 475, left: 980, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot48', top: 475, left: 1020, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot49', top: 475, left: 1060, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot50', top: 475, left: 1100, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot51', top: 475, left: 1140, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot52', top: 475, left: 1180, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot53', top: 380, left: 1280, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot54', top: 380, left: 1320, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot55', top: 380, left: 1360, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot56', top: 380, left: 1400, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot57', top: 475, left: 1280, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot58', top: 475, left: 1320, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot59', top: 475, left: 1360, estado: '', usuarioId: ''),
+    ParkingSpot(id: 'spot60', top: 475, left: 1400, estado: '', usuarioId: ''),
   ];
 
   @override
@@ -191,6 +201,7 @@ class ParkingLayout extends StatelessWidget {
                 top: espacio.top,
                 left: espacio.left,
                 estado: espacio.estado,
+                usuarioId:usuarioId,
               ),
             );
 
@@ -198,7 +209,7 @@ class ParkingLayout extends StatelessWidget {
               id: espacio.idEspacio,
               top: matchingSpot.top,
               left: matchingSpot.left,
-              estado: espacio.estado,
+              estado: espacio.estado, usuarioId: usuarioId,
             );
           }).toList(),
           DisabledSpot(
@@ -274,12 +285,14 @@ class ParkingSpot extends StatelessWidget {
   final double top;
   final double left;
   final String estado; // Estado del estacionamiento
+  final String usuarioId;
 
   ParkingSpot({
     required this.id,
     required this.top,
     required this.left,
     required this.estado,
+    required this.usuarioId,
   });
 
   @override
@@ -421,7 +434,10 @@ class ParkingSpot extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => ReportesGuardia(
-                            idEspacio: id, Edificio: 'Central')),
+                              idEspacio: id,
+                              Edificio: 'Central',
+                              usuarioId: usuarioId,
+                            )),
                   );
                 },
                 style: TextButton.styleFrom(
@@ -511,4 +527,3 @@ class DisabledSpot extends StatelessWidget {
   }
 }
 
-void main() => runApp(EstacionamientoAVGuardia());

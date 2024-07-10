@@ -1,17 +1,28 @@
-// ignore_for_file: avoid_print, prefer_const_constructors, use_build_context_synchronously, use_key_in_widget_constructors, library_private_types_in_public_api
+// ignore_for_file: avoid_print, prefer_const_constructors, use_build_context_synchronously, use_key_in_widget_constructors, library_private_types_in_public_api, prefer_const_constructors_in_immutables
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Importa este paquete para usar TextInputFormatter
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:pum/pag5.dart';
 
 class RegistroVehiculo extends StatefulWidget {
+  final String? usuarioId;
+
+  RegistroVehiculo(this.usuarioId);
   @override
   _RegistroVehiculoState createState() => _RegistroVehiculoState();
 }
 
 class _RegistroVehiculoState extends State<RegistroVehiculo> {
+  String? _usuarioId;
+
+  @override
+  void initState() {
+    super.initState();
+    _usuarioId = widget.usuarioId; // Correct initialization
+  }
+
   final TextEditingController modeloController = TextEditingController();
   final TextEditingController patenteController = TextEditingController();
   final TextEditingController colorController = TextEditingController();
@@ -23,6 +34,13 @@ class _RegistroVehiculoState extends State<RegistroVehiculo> {
   List<String> tamanos = ['Pequeño', 'Mediano', 'Grande'];
 
   Future<void> registrarUsuario() async {
+    if (_usuarioId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Usuario ID no proporcionado')),
+      );
+      return;
+    }
+
     final String modelo = modeloController.text;
     final String patente = patenteController.text;
     final String color = colorController.text;
@@ -33,11 +51,13 @@ class _RegistroVehiculoState extends State<RegistroVehiculo> {
       'color': color,
       'tamaño': tamanoSeleccionado,
       'modelo': modelo,
+      'usuarioId': _usuarioId!, // Safe to use now
     };
 
     try {
       final response = await http.post(
-        Uri.parse('https://website-parking-ulagos.onrender.com/usuarios/principal'),
+        Uri.parse(
+            'https://website-parking-ulagos.onrender.com/usuarios/principal'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(datos),
       );
@@ -49,7 +69,7 @@ class _RegistroVehiculoState extends State<RegistroVehiculo> {
         Future.delayed(Duration(seconds: 1), () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const Index()),
+            MaterialPageRoute(builder: (context) =>  MyHomePage(usuarioId:_usuarioId!)),
           );
         });
       } else if (response.statusCode == 500) {
@@ -194,20 +214,20 @@ class _RegistroVehiculoState extends State<RegistroVehiculo> {
                         ),
                       ),
                     ),
-                    
                     const SizedBox(height: 10.0),
                     SizedBox(
                       width: 300,
                       height: 80,
                       child: TextFormField(
                         controller: patenteController,
-                        maxLength: 6, // Permite hasta 7 caracteres con guiones
+                        maxLength: 7, // Permite hasta 7 caracteres con guiones
                         inputFormatters: [
                           UpperCaseTextFormatter(), // Convierte a mayúsculas
-                          FilteringTextInputFormatter.deny(RegExp(r'[^A-Z0-9-]')), // Acepta solo letras mayúsculas, números y guiones
+                          FilteringTextInputFormatter.deny(RegExp(
+                              r'[^A-Z0-9-]')), // Acepta solo letras mayúsculas, números y guiones
                         ],
                         decoration: const InputDecoration(
-                          labelText: 'Patente (Ej. XH6640)',
+                          labelText: 'Patente (Ej. AABB-40)',
                           hintStyle: TextStyle(
                             fontSize: 20,
                             color: Colors.white,

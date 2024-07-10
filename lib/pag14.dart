@@ -56,10 +56,8 @@ class _ReservaCompletadaState extends State<ReservaCompletada> {
             idEspacio = reserva['id_espacio']?.toString() ?? '';
             patente = reserva['patente'] ?? '';
             // Dentro de _selectReserva en _ReservaCompletadaState
-            final entrada = DateTime.parse(reserva['hora_entrada_reserva'])
-                .add(Duration(hours: 4));
-            final salida = DateTime.parse(reserva['hora_salida_reserva'])
-                .add(Duration(hours: 4));
+            final entrada = DateTime.parse(reserva['hora_entrada_reserva']);
+            final salida = DateTime.parse(reserva['hora_salida_reserva']);
 
 // Formatear las horas sumando 4 horas
             horaEntrada = formatoHora.format(entrada);

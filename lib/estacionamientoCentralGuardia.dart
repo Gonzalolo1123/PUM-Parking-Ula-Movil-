@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, use_build_context_synchronously, avoid_print, prefer_const_constructors, prefer_const_constructors_in_immutables, must_be_immutable, unnecessary_to_list_in_spreads
+// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, use_build_context_synchronously, avoid_print, prefer_const_constructors, prefer_const_constructors_in_immutables, must_be_immutable, unnecessary_to_list_in_spreads, unused_field
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -31,17 +31,22 @@ class EspacioEstacionamientoCentralGuardiaGuardia {
 }
 
 class EstacionamientoCentralGuardia extends StatefulWidget {
+  final String usuarioId;
+
+  EstacionamientoCentralGuardia(this.usuarioId);
   @override
   _EstacionamientoAVState createState() => _EstacionamientoAVState();
 }
 
 class _EstacionamientoAVState extends State<EstacionamientoCentralGuardia> {
+  late String _usuarioId;
   List<EspacioEstacionamientoCentralGuardiaGuardia> estacionamientos = [];
 
   @override
   void initState() {
     super.initState();
     _cargarEstacionamientos();
+    _usuarioId = widget.usuarioId;
   }
 
   Future<void> _cargarEstacionamientos() async {
@@ -100,7 +105,7 @@ class _EstacionamientoAVState extends State<EstacionamientoCentralGuardia> {
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: ParkingLayout(estacionamientos: estacionamientos),
+          child: ParkingLayout(estacionamientos: estacionamientos, usuarioId: _usuarioId,),
         ),
       ),
     );
@@ -108,292 +113,293 @@ class _EstacionamientoAVState extends State<EstacionamientoCentralGuardia> {
 }
 
 class ParkingLayout extends StatelessWidget {
+    final String usuarioId;
   final List<EspacioEstacionamientoCentralGuardiaGuardia> estacionamientos;
 
-  ParkingLayout({required this.estacionamientos});
+  ParkingLayout({required this.estacionamientos, required this.usuarioId});
 
   List<ParkingSpot> parkingSpots = [
     ParkingSpot(
       id: 'spot61',
       top: 410,
       left: 20,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot62',
       top: 410,
       left: 60,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot63',
       top: 410,
       left: 100,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot64',
       top: 410,
       left: 140,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot65',
       top: 410,
       left: 180,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot66',
       top: 410,
       left: 220,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot67',
       top: 410,
       left: 260,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot68',
       top: 410,
       left: 300,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot69',
       top: 410,
       left: 340,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot70',
       top: 410,
       left: 380,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot71',
       top: 410,
       left: 420,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot72',
       top: 410,
       left: 460,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot73',
       top: 410,
       left: 500,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot74',
       top: 290,
       left: 20,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot75',
       top: 290,
       left: 60,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot76',
       top: 290,
       left: 100,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot77',
       top: 290,
       left: 140,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot78',
       top: 290,
       left: 180,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot79',
       top: 290,
       left: 220,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot80',
       top: 290,
       left: 260,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot81',
       top: 290,
       left: 300,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot82',
       top: 290,
       left: 340,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot83',
       top: 290,
       left: 380,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot84',
       top: 290,
       left: 420,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot85',
       top: 290,
       left: 460,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot86',
       top: 290,
       left: 500,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot87',
       top: 410,
       left: 840,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot88',
       top: 410,
       left: 880,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot89',
       top: 410,
       left: 920,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot90',
       top: 410,
       left: 960,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot91',
       top: 410,
       left: 1000,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot92',
       top: 410,
       left: 1040,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot93',
       top: 410,
       left: 1080,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot94',
       top: 410,
       left: 1120,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot95',
       top: 290,
       left: 840,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot96',
       top: 290,
       left: 880,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot97',
       top: 290,
       left: 920,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot98',
       top: 290,
       left: 960,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot99',
       top: 290,
       left: 1000,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot100',
       top: 290,
       left: 1040,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot101',
       top: 290,
       left: 1080,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot102',
       top: 290,
       left: 1120,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot103',
       top: 290,
       left: 1160,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot104',
       top: 290,
       left: 1200,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot105',
       top: 290,
       left: 1240,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot106',
       top: 290,
       left: 1280,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
     ParkingSpot(
       id: 'spot107',
       top: 290,
       left: 1320,
-      estado: '',
+      estado: '', usuarioId: '',
     ),
   ];
 
@@ -413,7 +419,7 @@ class ParkingLayout extends StatelessWidget {
                 id: espacio.idEspacio,
                 top: espacio.top,
                 left: espacio.left,
-                estado: espacio.estado,
+                estado: espacio.estado, usuarioId: usuarioId,
               ),
             );
 
@@ -421,7 +427,7 @@ class ParkingLayout extends StatelessWidget {
               id: espacio.idEspacio,
               top: matchingSpot.top,
               left: matchingSpot.left,
-              estado: espacio.estado,
+              estado: espacio.estado, usuarioId: usuarioId,
             );
           }).toList(),
           DisabledSpot(
@@ -478,12 +484,14 @@ class ParkingSpot extends StatelessWidget {
   final double top;
   final double left;
   final String estado; // Estado del estacionamiento
+  final String usuarioId;
 
   ParkingSpot({
     required this.id,
     required this.top,
     required this.left,
     required this.estado,
+    required this.usuarioId,
   });
 
   @override
@@ -625,7 +633,7 @@ class ParkingSpot extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => ReportesGuardia(
-                            idEspacio: id, Edificio: 'Central')),
+                            idEspacio: id, Edificio: 'Central', usuarioId: usuarioId,)),
                   );
                 },
                 style: TextButton.styleFrom(

@@ -71,7 +71,6 @@ class BuildingCard extends StatelessWidget {
     );
   }
 }
-
 class Edificio extends StatefulWidget {
   final String? sede;
 
@@ -86,7 +85,14 @@ class _EdificioState extends State<Edificio> {
   int _currentIndex = 0;
 
   List<Map<String, String>> get buildings {
-    return widget.sede == 'Meyer' ? buildingsMeyer : buildingsChuyaca;
+    if (widget.sede == 'Meyer') {
+      return buildingsMeyer;
+    } else if (widget.sede == 'Chuyaca') {
+      return buildingsChuyaca;
+    } else {
+      // Proveer un valor por defecto o manejar el caso de error
+      return [];
+    }
   }
 
   @override
@@ -143,10 +149,14 @@ class _EdificioState extends State<Edificio> {
             ),
             ElevatedButton(
               onPressed: () {
-                final edificioSeleccionado =
-                    buildings[_currentIndex]['description']!;
-                print('Edificio seleccionado: $edificioSeleccionado');
-                Navigator.pop(context, edificioSeleccionado);
+                if (_currentIndex >= 0 && _currentIndex < buildings.length) {
+                  final edificioSeleccionado =
+                      buildings[_currentIndex]['description'];
+                  print('Edificio seleccionado: $edificioSeleccionado');
+                  Navigator.pop(context, edificioSeleccionado);
+                } else {
+                  print('Índice de edificio seleccionado fuera de los límites');
+                }
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(320, 40),
